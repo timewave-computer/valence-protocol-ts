@@ -1,4 +1,4 @@
-import { SigningChainClient } from './ChainClient';
+import { SigningChainClient } from '../common/ChainClient';
 import { EncodeObject, OfflineSigner, Registry } from '@cosmjs/proto-signing';
 import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes } from '@cosmjs/stargate';
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';

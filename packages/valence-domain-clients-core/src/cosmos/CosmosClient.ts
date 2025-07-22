@@ -1,4 +1,4 @@
-import { ChainClient } from './ChainClient';
+import { ChainClient } from '../common/ChainClient';
 import { StargateClient } from '@cosmjs/stargate';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { z } from 'zod';
