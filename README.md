@@ -5,15 +5,17 @@ This repository is a [Turborepo](https://turbo.build/) monorepo managed with [pn
 
 ## Prerequisities
 
-1. **Install pnpm**
+1. **NixOs**
+This codebase uses Nix to create a reproducible development environment.
 [https://pnpm.io/installation](https://pnpm.io/installation)
 
 ## Getting Started
 
 1. **Install dependencies:**
    ```sh
-   pnpm install
+   nix develop
    ```
+   This will create an isolated development environment. Run project commands within the nix shell.
 
 2. **Run builds:**
    ```sh
