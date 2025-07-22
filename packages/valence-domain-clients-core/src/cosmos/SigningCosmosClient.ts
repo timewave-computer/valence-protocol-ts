@@ -1,4 +1,4 @@
-import { SigningChainClient } from '../common/ChainClient';
+import { SigningChainClient } from '../common/';
 import { EncodeObject, OfflineSigner, Registry } from '@cosmjs/proto-signing';
 import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes } from '@cosmjs/stargate';
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
@@ -42,21 +42,6 @@ export class SigningCosmosClient extends SigningChainClient {
     );
   }
 
-  // Inherited required methods
-  async getBalance(address: string, denom: string): Promise<any> {
-    const client = await this.getSigningStargateClient();
-    return client.getBalance(address, denom);
-  }
-
-  async queryContract<T extends object>(
-    address: string,
-    queryObject: object | string,
-    responseSchema: any // z.ZodTypeAny, but avoid import cycle
-  ): Promise<any> {
-    const client = await this.getSigningCosmwasmClient();
-    const result = await client.queryContractSmart(address, queryObject);
-    return responseSchema.parse(result);
-  }
 
   async sendTokens(
     recipient: string,

@@ -1,5 +1,5 @@
-import { ChainClient } from '../common/ChainClient';
-import { StargateClient } from '@cosmjs/stargate';
+import { ChainClient } from '../common/';
+import { StargateClient, Coin } from '@cosmjs/stargate';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { z } from 'zod';
 
@@ -18,7 +18,7 @@ export class CosmosClient extends ChainClient {
   }
 
   // Inherited required methods
-  async getBalance(address: string, denom: string): Promise<any> {
+  async getDenomBalance(address: string, denom: string): Promise<Coin> {
     const client = await this.getStargateClient();
     return client.getBalance(address, denom);
   }
