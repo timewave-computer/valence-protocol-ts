@@ -1,3 +1,3 @@
-import { createConfig } from "@wagmi/core";
+import { Config } from "@wagmi/core";
 
-export type EvmConfig =  ReturnType<typeof createConfig>;
+export type EvmConfig = Config;

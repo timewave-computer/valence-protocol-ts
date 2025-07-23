@@ -1,4 +1,4 @@
-import { ChainClient } from '../common/';
+import { ChainClient, ClientErrorType, throwClientError } from '@/common';
 import { StargateClient, Coin } from '@cosmjs/stargate';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { z } from 'zod';
@@ -10,11 +10,19 @@ export class CosmosClient extends ChainClient {
 
   // Cosmos specific
   async getStargateClient(): Promise<StargateClient> {
-    return StargateClient.connect(this.rpcUrl);
+    try {
+      return StargateClient.connect(this.rpcUrl);
+    } catch (error) {
+      throwClientError(ClientErrorType.InvalidClient, 'Could not initialize stargate client');
+    }
   }
 
   async getCosmwasmClient(): Promise<CosmWasmClient> {
-    return CosmWasmClient.connect(this.rpcUrl);
+    try {
+      return CosmWasmClient.connect(this.rpcUrl);
+    } catch (error) {
+      throwClientError(ClientErrorType.InvalidClient, 'Could not initialize cosmwasm client');
+    }
   }
 
   // Inherited required methods

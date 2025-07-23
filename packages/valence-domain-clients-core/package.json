@@ -16,9 +16,8 @@
     "@cosmjs/cosmwasm-stargate": "^0.31.0",
     "@cosmjs/proto-signing": "^0.31.0",
     "@cosmjs/stargate": "^0.31.0",
-    "@wagmi/core": "^2.18.0",
+    "@wagmi/core": "^2.16.4",
     "viem": "^2.33.0",
-    "wagmi": "^1.4.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {

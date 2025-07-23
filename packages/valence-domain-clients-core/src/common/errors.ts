@@ -1,36 +1,21 @@
+export enum ClientErrorType {
+  InvalidClient = 'InvalidClient',
+  InvalidAddress = 'InvalidAddress'
+}
+
 export type ClientError =
   | {
-      type: 'InvalidClient';
+      type: ClientErrorType.InvalidClient;
       message: string;
     }
   | {
-      type: 'ConnectionError';
+      type: ClientErrorType.InvalidAddress;
       message: string;
-    }
-  | {
-      type: 'InvalidAddress';
-      message: string;
-    }
-  | {
-      type: 'QueryError';
-      message: string;
-    }
-  | {
-      type: 'ExecutionError';
-      message: string;
-    }
-  | {
-      type: 'SchemaValidationError';
-      message: string;
-    }
-  | {
-      type: 'UnknownError';
-      message: string;
-    };
+  }
 
 /**
  * Utility to construct and throw a ClientError in a concise way.
  */
-export function throwClientError(type: ClientError["type"], message: string): never {
+export function throwClientError(type: ClientErrorType, message: string): never {
   throw { type, message } as ClientError;
 } 

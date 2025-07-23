@@ -1,8 +1,9 @@
-import {  SigningChainClient,throwClientError } from '../common/';
-import {  Address, WalletClient } from 'wagmi';
-import { getWalletClient } from '@wagmi/core'
-import { EvmConfig } from './types';
-import { Abi, ContractFunctionArgs, ContractFunctionName, SendTransactionReturnType, WriteContractParameters, WriteContractReturnType } from 'viem';
+import { getWalletClient } from '@wagmi/core';
+import { Abi, Address, ContractFunctionArgs, ContractFunctionName, SendTransactionReturnType, WriteContractParameters, WriteContractReturnType, WalletClient, isAddress } from 'viem';
+
+import { SigningChainClient, ClientErrorType, throwClientError } from '@/common';
+import { EvmConfig } from '@/evm';
+
 
 export class EvmSigningClient extends SigningChainClient {
   public readonly config: EvmConfig;
@@ -12,7 +13,7 @@ export class EvmSigningClient extends SigningChainClient {
       rpcUrl: string,
       gas: number,
       signer: any, // WalletClient or similar
-      senderAddress: string,
+      senderAddress: Address,
       config: EvmConfig
     ) {
       super(chainId, rpcUrl, gas, signer, senderAddress);
@@ -25,7 +26,7 @@ export class EvmSigningClient extends SigningChainClient {
   
       const client = await getWalletClient(this.config);
       if (!client) {
-        throwClientError('InvalidClient', 'Could not initialize wallet client');
+        throwClientError(ClientErrorType.InvalidClient, 'Could not initialize wallet client');
       }
       return client;
     }
@@ -48,10 +49,20 @@ export class EvmSigningClient extends SigningChainClient {
       value: bigint;
 
     }): Promise<SendTransactionReturnType> {
-      const client = await this.getWalletClient();
+      const client = await this.getWalletClient()
+      
+      if (!isAddress(this.senderAddress)) {
+        throwClientError(ClientErrorType.InvalidAddress, 'Sender address is not set');
+      }
+      if (!isAddress(args.to)) {
+        throwClientError(ClientErrorType.InvalidAddress, 'Recipient address is not set');
+      }
+     
       return client.sendTransaction({
+        account: this.senderAddress,
         to: args.to,
         value: args.value,
+        chain: null,
       });
     }
   

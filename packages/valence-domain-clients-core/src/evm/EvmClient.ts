@@ -1,10 +1,8 @@
-import { ChainClient } from '../common/ChainClient';
-import {  throwClientError } from '../common/errors';
-import {  PublicClient } from 'wagmi';
-import { isAddress } from './typeguards';
-import { getPublicClient } from '@wagmi/core'
-import { EvmConfig } from './types';
-import { Abi, ReadContractParameters, ContractFunctionName, ContractFunctionArgs, erc20Abi, ReadContractReturnType, Address } from 'viem';
+import { getPublicClient } from '@wagmi/core';
+import { Abi, ReadContractParameters, ContractFunctionName, ContractFunctionArgs, erc20Abi, ReadContractReturnType, Address, PublicClient } from 'viem';
+
+import { ChainClient, ClientErrorType, throwClientError } from '@/common';
+import { isAddress,EvmConfig } from '@/evm';
 
 
 export class EvmClient extends ChainClient {
@@ -18,16 +16,16 @@ export class EvmClient extends ChainClient {
   // EVM specific
   getPublicClient(): PublicClient {
     // You may need to adjust this to pass config as needed
-    const client= getPublicClient(this.config);
+    const client = getPublicClient(this.config);
     if (!client) {
-      throwClientError('InvalidClient', 'Could not initialize public client');
+      throwClientError(ClientErrorType.InvalidClient, 'Could not initialize public client');
     }
     return client;
   }
 
   async getEthBalance(address: string): Promise<any> {
     if (!isAddress(address)) {
-      throwClientError('InvalidAddress', 'Invalid address');
+      throwClientError(ClientErrorType.InvalidAddress, 'Invalid address');
     }
     const client = this.getPublicClient();
     return client.getBalance({ address });
@@ -35,10 +33,10 @@ export class EvmClient extends ChainClient {
 
   async getErc20Balance(erc20Address: Address, address: Address): Promise<bigint> {
     if (!isAddress(erc20Address)) {
-      throwClientError('InvalidAddress', 'Invalid address');
+      throwClientError(ClientErrorType.InvalidAddress, 'Invalid erc20 address');
     }
     if (!isAddress(address)) {
-      throwClientError('InvalidAddress', 'Invalid address');
+      throwClientError(ClientErrorType.InvalidAddress, 'Invalid wallet address');
     }
     return this.queryContract({
       abi: erc20Abi,
@@ -57,7 +55,7 @@ export class EvmClient extends ChainClient {
   ): Promise<ReadContractReturnType<abi, functionName, args>> {
     const client = this.getPublicClient();
     if (!isAddress(args.address as string)) {
-      throwClientError('InvalidAddress', 'Invalid address');
+      throwClientError(ClientErrorType.InvalidAddress, 'Invalid contract address');
     }
     return client.readContract(args);
   }

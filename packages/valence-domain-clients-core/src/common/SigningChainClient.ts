@@ -1,4 +1,3 @@
-
 export abstract class SigningChainClient {
     public readonly gas: number;
     public readonly signer: any;

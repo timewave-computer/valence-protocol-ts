@@ -1,7 +1,9 @@
-import { SigningChainClient } from '../common/';
 import { EncodeObject, OfflineSigner, Registry } from '@cosmjs/proto-signing';
 import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes } from '@cosmjs/stargate';
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+
+import { SigningChainClient, ClientErrorType, throwClientError } from '@/common';
+
 
 export class SigningCosmosClient extends SigningChainClient {
   public readonly protobufRegistry?: Registry;
@@ -23,6 +25,7 @@ export class SigningCosmosClient extends SigningChainClient {
 
   // Cosmos specific
   async getSigningStargateClient(): Promise<SigningStargateClient> {
+    try {
     return SigningStargateClient.connectWithSigner(
       this.rpcUrl,
       this.signer,
@@ -32,14 +35,21 @@ export class SigningCosmosClient extends SigningChainClient {
         gasPrice: undefined // Optionally set gas price here
       }
     );
+    } catch (error) {
+      throwClientError(ClientErrorType.InvalidClient, 'Could not initialize stargate client');
+    }
   }
 
   async getSigningCosmwasmClient(): Promise<SigningCosmWasmClient> {
+    try {
     return SigningCosmWasmClient.connectWithSigner(
       this.rpcUrl,
       this.signer
       // Optionally add gas price, registry, aminoTypes
     );
+    } catch (error) {
+      throwClientError(ClientErrorType.InvalidClient, 'Could not initialize cosmwasm client');
+    }
   }
 
 
@@ -70,8 +80,10 @@ export class SigningCosmosClient extends SigningChainClient {
     fee: StdFee | 'auto',
     memo = ''
   ): Promise<DeliverTxResponse> {
-    const client = await this.getSigningStargateClient();
-    return client.signAndBroadcast(this.senderAddress, messages, fee, memo);
+
+      const client = await this.getSigningStargateClient();
+      return client.signAndBroadcast(this.senderAddress, messages, fee, memo);
+
   }
 
   // Cosmos only
