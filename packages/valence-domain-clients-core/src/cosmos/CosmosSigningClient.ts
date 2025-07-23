@@ -1,6 +1,8 @@
 import { EncodeObject, OfflineSigner, Registry } from '@cosmjs/proto-signing';
-import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes } from '@cosmjs/stargate';
+import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes,  } from '@cosmjs/stargate';
 import { SigningCosmWasmClient, ExecuteResult } from '@cosmjs/cosmwasm-stargate';
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+
 
 import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
 
@@ -65,16 +67,36 @@ export class SigningCosmosClient extends SigningChainClient {
     return client.sendTokens(this.senderAddress, recipient, amount, fee, memo);
   }
 
-  async executeMessage(
+  async signTransaction(
     sender: string,
-    contractAddress: string,
-    messageBody: object,
-    fee: StdFee | 'auto',
+    messages: EncodeObject[],
+    fee: StdFee,
     memo = '',
     funds: Coin[] = []
-  ): Promise<ExecuteResult> {
+  ): Promise<TxRaw> {
     const client = await this.getSigningCosmwasmClient();
-    return client.execute(sender, contractAddress, messageBody, fee, memo, funds);
+    return client.sign(sender, messages, fee, memo);
+  }
+
+
+  async submitTransaction(
+    txRaw: TxRaw,
+  ): Promise<string> {
+    const client = await this.getSigningCosmwasmClient();
+    const txBytes = TxRaw.encode(txRaw).finish();
+    return client.broadcastTxSync(txBytes);
+  }
+
+
+  async signAndSubmitTransaction(
+    sender: string,
+    messages: EncodeObject[],
+    fee: StdFee,
+    memo = '',
+    funds: Coin[] = []
+  ): Promise<string> {
+    const txRaw = await this.signTransaction(sender, messages, fee, memo, funds);
+    return this.submitTransaction(txRaw);
   }
 
   async executeMessageBatch(
@@ -88,8 +110,7 @@ export class SigningCosmosClient extends SigningChainClient {
 
   }
 
-  // Cosmos only
-  buildExecuteContractMsg(
+  buildMsgExecuteContract(
     contractAddress: string,
     msg: object,
     funds: Coin[] = [],
