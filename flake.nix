@@ -1,5 +1,5 @@
 {
-  description = "Turborepo monorepo with Node 22 and PNPM";
+  description = "Valence TS Dev Environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -24,7 +24,7 @@
 
           shellHook = ''
             export NODE_OPTIONS=--max_old_space_size=8192
-            echo "🚀 Turborepo Dev Shell with Node ${nodejs.version} and PNPM ${pnpm.version}"
+            echo "Started Valence TS Dev Shell"
           '';
         };
       });
