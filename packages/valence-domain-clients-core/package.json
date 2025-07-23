@@ -2,8 +2,26 @@
   "name": "@valence-protocol/valence-domain-clients-core",
   "version": "0.1.0",
   "description": "Core abstract classes for Valence Protocol blockchain clients.",
-  "main": "dist/ChainClient.js",
-  "types": "dist/ChainClient.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./common": {
+      "types": "./dist/common/index.d.ts",
+      "default": "./dist/common/index.js"
+    },
+    "./evm": {
+      "types": "./dist/evm/index.d.ts",
+      "default": "./dist/evm/index.js"
+    },
+    "./cosmos": {
+      "types": "./dist/cosmos/index.d.ts",
+      "default": "./dist/cosmos/index.js"
+    }
+  },
   "files": [
     "dist"
   ],

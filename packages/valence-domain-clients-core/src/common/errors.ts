@@ -3,19 +3,10 @@ export enum ClientErrorType {
   InvalidAddress = 'InvalidAddress'
 }
 
-export type ClientError =
-  | {
-      type: ClientErrorType.InvalidClient;
-      message: string;
-    }
-  | {
-      type: ClientErrorType.InvalidAddress;
-      message: string;
+export class ClientError extends Error {
+  constructor(type: ClientErrorType, message: string) {
+    super(message);
+    this.name = type;
+    this.stack = new Error().stack;
   }
-
-/**
- * Utility to construct and throw a ClientError in a concise way.
- */
-export function throwClientError(type: ClientErrorType, message: string): never {
-  throw { type, message } as ClientError;
-} 
+}

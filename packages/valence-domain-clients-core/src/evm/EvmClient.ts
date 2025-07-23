@@ -1,7 +1,7 @@
 import { getPublicClient } from '@wagmi/core';
 import { Abi, ReadContractParameters, ContractFunctionName, ContractFunctionArgs, erc20Abi, ReadContractReturnType, Address, PublicClient } from 'viem';
 
-import { ChainClient, ClientErrorType, throwClientError } from '@/common';
+import { ChainClient, ClientError, ClientErrorType } from '@/common';
 import { isAddress,EvmConfig } from '@/evm';
 
 
@@ -18,14 +18,14 @@ export class EvmClient extends ChainClient {
     // You may need to adjust this to pass config as needed
     const client = getPublicClient(this.config);
     if (!client) {
-      throwClientError(ClientErrorType.InvalidClient, 'Could not initialize public client');
+      throw new ClientError(ClientErrorType.InvalidClient, 'Could not initialize public client');
     }
     return client;
   }
 
-  async getEthBalance(address: string): Promise<any> {
+  async getEthBalance(address: string): Promise<bigint> {
     if (!isAddress(address)) {
-      throwClientError(ClientErrorType.InvalidAddress, 'Invalid address');
+      throw new ClientError(ClientErrorType.InvalidAddress, 'Invalid address');
     }
     const client = this.getPublicClient();
     return client.getBalance({ address });
@@ -33,10 +33,10 @@ export class EvmClient extends ChainClient {
 
   async getErc20Balance(erc20Address: Address, address: Address): Promise<bigint> {
     if (!isAddress(erc20Address)) {
-      throwClientError(ClientErrorType.InvalidAddress, 'Invalid erc20 address');
+      throw new ClientError(ClientErrorType.InvalidAddress, 'Invalid erc20 address');
     }
     if (!isAddress(address)) {
-      throwClientError(ClientErrorType.InvalidAddress, 'Invalid wallet address');
+      throw new ClientError(ClientErrorType.InvalidAddress, 'Invalid wallet address');
     }
     return this.queryContract({
       abi: erc20Abi,
@@ -55,7 +55,7 @@ export class EvmClient extends ChainClient {
   ): Promise<ReadContractReturnType<abi, functionName, args>> {
     const client = this.getPublicClient();
     if (!isAddress(args.address as string)) {
-      throwClientError(ClientErrorType.InvalidAddress, 'Invalid contract address');
+      throw new ClientError(ClientErrorType.InvalidAddress, 'Invalid contract address');
     }
     return client.readContract(args);
   }

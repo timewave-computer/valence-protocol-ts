@@ -1,24 +1,25 @@
 import { getWalletClient } from '@wagmi/core';
 import { Abi, Address, ContractFunctionArgs, ContractFunctionName, SendTransactionReturnType, WriteContractParameters, WriteContractReturnType, WalletClient, isAddress } from 'viem';
 
-import { SigningChainClient, ClientErrorType, throwClientError } from '@/common';
+import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
 import { EvmConfig } from '@/evm';
 
 
 export class EvmSigningClient extends SigningChainClient {
   public readonly config: EvmConfig;
+  public readonly signer: WalletClient;
   
     constructor(
       chainId: string,
       rpcUrl: string,
       gas: number,
-      signer: any, // WalletClient or similar
+      signer: WalletClient,
       senderAddress: Address,
       config: EvmConfig
     ) {
-      super(chainId, rpcUrl, gas, signer, senderAddress);
+      super(chainId, rpcUrl, gas, senderAddress);
       this.config = config;
-
+      this.signer = signer;
     }
   
     // EVM specific
@@ -26,7 +27,7 @@ export class EvmSigningClient extends SigningChainClient {
   
       const client = await getWalletClient(this.config);
       if (!client) {
-        throwClientError(ClientErrorType.InvalidClient, 'Could not initialize wallet client');
+        throw new ClientError(ClientErrorType.InvalidClient, 'Could not initialize wallet client');
       }
       return client;
     }
@@ -35,8 +36,8 @@ export class EvmSigningClient extends SigningChainClient {
   
     async executeMessage<
     abi extends Abi | readonly unknown[] = Abi,
-    functionName extends ContractFunctionName<abi, 'pure' | 'view'> = ContractFunctionName<abi, 'pure' | 'view'>,
-    args extends ContractFunctionArgs<abi, 'pure' | 'view', functionName> = ContractFunctionArgs<abi, 'pure' | 'view', functionName>,
+    functionName extends ContractFunctionName<abi, 'payable' | 'nonpayable'> = ContractFunctionName<abi, 'payable' | 'nonpayable'>,
+    args extends ContractFunctionArgs<abi, 'payable' | 'nonpayable', functionName> = ContractFunctionArgs<abi, 'payable' | 'nonpayable', functionName>,
     >(
       args: WriteContractParameters<abi, functionName, args>
     ): Promise<WriteContractReturnType> {
@@ -52,10 +53,10 @@ export class EvmSigningClient extends SigningChainClient {
       const client = await this.getWalletClient()
       
       if (!isAddress(this.senderAddress)) {
-        throwClientError(ClientErrorType.InvalidAddress, 'Sender address is not set');
+        throw new ClientError(ClientErrorType.InvalidAddress, 'Sender address is not set');
       }
       if (!isAddress(args.to)) {
-        throwClientError(ClientErrorType.InvalidAddress, 'Recipient address is not set');
+        throw new ClientError(ClientErrorType.InvalidAddress, 'Recipient address is not set');
       }
      
       return client.sendTransaction({
@@ -66,8 +67,7 @@ export class EvmSigningClient extends SigningChainClient {
       });
     }
   
-    // Batch execution for EVM is not standard, so executeMessageBatch can be left unimplemented or throw
-    async executeMessageBatch(): Promise<any> {
-      throw new Error('Batch execution is not supported for EVM by default.');
+    async executeMessageBatch(): Promise<unknown> {
+      throw new Error('Not implemented');
     }
   } 

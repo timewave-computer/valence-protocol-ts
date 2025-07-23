@@ -1,13 +1,14 @@
 import { EncodeObject, OfflineSigner, Registry } from '@cosmjs/proto-signing';
 import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes } from '@cosmjs/stargate';
-import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+import { SigningCosmWasmClient, ExecuteResult } from '@cosmjs/cosmwasm-stargate';
 
-import { SigningChainClient, ClientErrorType, throwClientError } from '@/common';
+import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
 
 
 export class SigningCosmosClient extends SigningChainClient {
   public readonly protobufRegistry?: Registry;
   public readonly aminoTypes?: AminoTypes;
+  public readonly signer: OfflineSigner;
 
   constructor(
     chainId: string,
@@ -18,7 +19,8 @@ export class SigningCosmosClient extends SigningChainClient {
     protobufRegistry?: Registry,
     aminoTypes?: AminoTypes
   ) {
-    super(chainId, rpcUrl, gas, signer, senderAddress);
+    super(chainId, rpcUrl, gas, senderAddress);
+    this.signer = signer;
     this.protobufRegistry = protobufRegistry;
     this.aminoTypes = aminoTypes;
   }
@@ -36,7 +38,7 @@ export class SigningCosmosClient extends SigningChainClient {
       }
     );
     } catch (error) {
-      throwClientError(ClientErrorType.InvalidClient, 'Could not initialize stargate client');
+      throw new ClientError(ClientErrorType.InvalidClient, 'Could not initialize stargate client');
     }
   }
 
@@ -48,7 +50,7 @@ export class SigningCosmosClient extends SigningChainClient {
       // Optionally add gas price, registry, aminoTypes
     );
     } catch (error) {
-      throwClientError(ClientErrorType.InvalidClient, 'Could not initialize cosmwasm client');
+      throw new ClientError(ClientErrorType.InvalidClient, 'Could not initialize cosmwasm client');
     }
   }
 
@@ -70,7 +72,7 @@ export class SigningCosmosClient extends SigningChainClient {
     fee: StdFee | 'auto',
     memo = '',
     funds: Coin[] = []
-  ): Promise<any> { // Use any to avoid type mismatch
+  ): Promise<ExecuteResult> {
     const client = await this.getSigningCosmwasmClient();
     return client.execute(sender, contractAddress, messageBody, fee, memo, funds);
   }
