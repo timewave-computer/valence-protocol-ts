@@ -5,7 +5,7 @@ import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
 import { EvmConfig } from '@/evm';
 
 
-export class EvmSigningClient extends SigningChainClient {
+export class SigningEvmClient extends SigningChainClient {
   public readonly config: EvmConfig;
   public readonly signer: WalletClient;
   
