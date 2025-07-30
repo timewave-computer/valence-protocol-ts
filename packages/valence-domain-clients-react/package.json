@@ -1,0 +1,29 @@
+{
+  "name": "@valence-protocol/valence-domain-clients-react",
+  "version": "0.1.0",
+  "description": "React hooks and components for Valence Protocol blockchain clients.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.0.0",
+    "@valence-protocol/valence-domain-clients-core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/react": "^18.0.0"
+  }
+} 
