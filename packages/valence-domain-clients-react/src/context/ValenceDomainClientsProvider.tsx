@@ -1,9 +1,8 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import  { createContext, useContext, ReactNode } from 'react';
 
-// Types for config
 export interface ValenceDomainClientsConfig {
-  evm?: Record<string, any>; // flexible, per-chain config
-  cosmos?: Record<string, any>; // flexible, per-chain config
+  evm?: Record<string, unknown>;
+  cosmos?: Record<string, unknown>; 
 }
 
 const ValenceDomainClientsConfigContext = createContext<ValenceDomainClientsConfig | undefined>(undefined);

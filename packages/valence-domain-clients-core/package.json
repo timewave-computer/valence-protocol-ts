@@ -31,12 +31,14 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "zod": "^3.22.2"
+  },
+  "peerDependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.31.0",
     "@cosmjs/proto-signing": "^0.31.0",
     "@cosmjs/stargate": "^0.31.0",
     "@wagmi/core": "^2.16.4",
-    "viem": "^2.33.0",
-    "zod": "^3.22.2"
+    "viem": "^2.33.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.8",

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useValenceDomainConfig } from '@/context';
 import { SigningCosmosClient } from '@valence-protocol/valence-domain-clients-core/cosmos';
 // import { useAccount as useCosmosAccount, useOfflineSigner, connect, disconnect } from 'graz';
@@ -10,7 +10,7 @@ export function useSigningCosmosClient(chainId: string) {
   const account = undefined; // const { data: account } = useCosmosAccount();
   const signer = undefined; // const { data: signer } = useOfflineSigner();
 
-  // TODO: needs better state mgmt
+  // TODO: replace with zustand
   const [client, setClient] = useState<SigningCosmosClient | null>(null);
 
   useEffect(() => {
@@ -22,12 +22,14 @@ export function useSigningCosmosClient(chainId: string) {
     // }));
   }, [config, account, chainId]);
 
-  // TODO: memoize return value
-  return {
+  // Memoize to prevent unnecessary re-renders
+  const result = useMemo(() => ({
     client,
     account,
     signer,
     // connect,
     // disconnect,
-  };
+  }), [client, account, signer]);
+
+  return result;
 } 

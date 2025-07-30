@@ -19,8 +19,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "react": "^18.0.0",
     "@valence-protocol/valence-domain-clients-core": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0",

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useValenceDomainConfig } from '@/context';
 import { SigningEvmClient } from '@valence-protocol/valence-domain-clients-core/evm';
 // import { useAccount, useWalletClient } from 'wagmi';
@@ -11,7 +11,7 @@ export function useSigningEvmClient(chainId: string) {
   const account = undefined; // const { data: account } = useAccount();
   const signer = undefined; // const { data: signer } = useWalletClient();
 
-  // TODO: needs better state mgmt
+  // TODO: replace with zustand
   const [client, setClient] = useState<SigningEvmClient | null>(null);
 
   useEffect(() => {
@@ -23,12 +23,13 @@ export function useSigningEvmClient(chainId: string) {
     // }));
   }, [account, chainId, config]);
 
-  // TODO: memoize return value
-  return {
+  // Memoize to prevent unnecessary re-renders
+  return useMemo(() => ({
     client,
     account,
     signer,
     // connect,
     // disconnect,
-  };
+  }), [client, account, signer]);
+
 } 
