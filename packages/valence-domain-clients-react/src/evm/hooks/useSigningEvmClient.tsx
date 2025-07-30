@@ -1,15 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useValenceDomainConfig } from '@/context';
+import {  useValenceEvmConfig } from '@/evm';
 import { SigningEvmClient } from '@valence-protocol/valence-domain-clients-core/evm';
-// import { useAccount, useWalletClient } from 'wagmi';
-
+import { useAccount, useWalletClient } from 'wagmi';
 
 
 export function useSigningEvmClient(chainId: string) {
-  const config = useValenceDomainConfig(chainId);
-  // TODO: Replace with actual wagmi hooks
-  const account = undefined; // const { data: account } = useAccount();
-  const signer = undefined; // const { data: signer } = useWalletClient();
+  const config = useValenceEvmConfig();
+  const account = useAccount({config});
+  const { data: signer } = useWalletClient();
 
   // TODO: replace with zustand
   const [client, setClient] = useState<SigningEvmClient | null>(null);
