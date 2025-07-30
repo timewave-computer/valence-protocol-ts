@@ -1,13 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useValenceDomainConfig } from '@/context';
-// TODO: Replace with actual imports from your client/core packages
-// import { SigningCosmosClient } from '@valence-protocol/valence-domain-clients-core/cosmos';
+import { SigningCosmosClient } from '@valence-protocol/valence-domain-clients-core/cosmos';
 // import { useAccount as useCosmosAccount, useOfflineSigner, connect, disconnect } from 'graz';
 
-// Placeholder type for demonstration
-class SigningCosmosClient {
-  constructor(args: any) {}
-}
 
 export function useSigningCosmosClient(chainId: string) {
   const config = useValenceDomainConfig(chainId);
@@ -20,11 +15,11 @@ export function useSigningCosmosClient(chainId: string) {
 
   useEffect(() => {
     if (!account) return;
-    setClient(new SigningCosmosClient({
-      config,
-      chainId,
-      // signer, // pass signer if needed
-    }));
+    // setClient(new SigningCosmosClient({
+    //   config,
+    //   chainId,
+    //   // signer, // pass signer if needed
+    // }));
   }, [config, account, chainId]);
 
   // TODO: memoize return value

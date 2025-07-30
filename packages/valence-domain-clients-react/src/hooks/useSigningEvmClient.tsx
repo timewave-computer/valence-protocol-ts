@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useValenceDomainConfig } from '@/context';
-// TODO: Replace with actual imports from your client/core packages
-// import { SigningEvmClient } from '@valence-protocol/valence-domain-clients-core/evm';
+import { SigningEvmClient } from '@valence-protocol/valence-domain-clients-core/evm';
 // import { useAccount, useWalletClient } from 'wagmi';
 
-// Placeholder type for demonstration
-class SigningEvmClient {
-  constructor(args: any) {}
-}
+
 
 export function useSigningEvmClient(chainId: string) {
   const config = useValenceDomainConfig(chainId);
@@ -20,11 +16,11 @@ export function useSigningEvmClient(chainId: string) {
 
   useEffect(() => {
     if (!account) return;
-    setClient(new SigningEvmClient({
-      config,
-      chainId,
-      // signer, // pass signer if needed
-    }));
+    // setClient(new SigningEvmClient({
+    //   config,
+    //   chainId,
+    //   // signer, // pass signer if needed
+    // }));
   }, [account, chainId, config]);
 
   // TODO: memoize return value
