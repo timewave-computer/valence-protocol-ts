@@ -4,7 +4,7 @@ import { WagmiProvider } from "wagmi";
 
 
   
- export const EvmProvider = ({  children }: { children: ReactNode }) => {
+ export const ValenceDomainEvmProvider = ({  children }: { children: ReactNode }) => {
     const config = useValenceEvmConfig();
     return   <WagmiProvider config={config}>{children}</WagmiProvider>
   };

@@ -7,6 +7,7 @@ import { useAccount, useWalletClient } from 'wagmi';
 export function useSigningEvmClient(chainId: string) {
   const config = useValenceEvmConfig();
   const account = useAccount({config});
+  const { data: walletClient } = useWalletClient({config});
   const { data: signer } = useWalletClient();
 
   // TODO: replace with zustand
@@ -14,11 +15,7 @@ export function useSigningEvmClient(chainId: string) {
 
   useEffect(() => {
     if (!account) return;
-    // setClient(new SigningEvmClient({
-    //   config,
-    //   chainId,
-    //   // signer, // pass signer if needed
-    // }));
+    setClient(new SigningEvmClient( config, walletClient));
   }, [account, chainId, config]);
 
   // Memoize to prevent unnecessary re-renders

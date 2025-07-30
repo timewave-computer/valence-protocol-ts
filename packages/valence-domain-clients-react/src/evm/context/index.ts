@@ -1,1 +1,1 @@
-export * from './WagmiProvider';
+export * from './ValenceDomainEvmProvider';

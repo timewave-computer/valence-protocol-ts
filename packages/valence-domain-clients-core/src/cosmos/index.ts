@@ -1,2 +1,2 @@
 export * from './CosmosClient';
-export * from './CosmosSigningClient';
+export * from './SigningCosmosClient';
