@@ -16,7 +16,7 @@ type CosmosChainConfig = {
 };
 
 
-export function useCosmosConfig(): CosmosConfig {
+export function useAllCosmosConfig(): CosmosConfig {
     const config = useDomainConfig();
     if (!config.cosmos) throw new Error('useCosmosConfig must be used within a DomainClientsProvider');
     return config.cosmos;
@@ -24,7 +24,7 @@ export function useCosmosConfig(): CosmosConfig {
   
 
   export function useCosmosChainConfig(chainId: string): CosmosChainConfig {
-    const config = useCosmosConfig();
+    const config = useAllCosmosConfig();
     const chainInfo = config.grazOptions.chains.find(chain => chain.chainId === chainId);
     if (!chainInfo) throw new Error(`Chain ${chainId} not found in config`);
     const chainConfig = config.grazOptions.chainsConfig?.[chainInfo.chainId];
@@ -36,7 +36,7 @@ export function useCosmosConfig(): CosmosConfig {
   }
 
   export function useCosmosSigningTypes() {
-    const config = useCosmosConfig();
+    const config = useAllCosmosConfig();
     return {
       protobufRegistry: config.protobufRegistry,
       aminoTypes: config.aminoTypes,

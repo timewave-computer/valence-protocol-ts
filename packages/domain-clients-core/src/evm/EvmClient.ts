@@ -4,14 +4,14 @@ import { Abi, ReadContractParameters, ContractFunctionName, ContractFunctionArgs
 import { ChainClient, ClientError, ClientErrorType } from '@/common';
 import { isAddress,EvmConfig } from '@/evm';
 
-export interface EvmClientConfig {
+export interface EvmClientArgs {
   config: EvmConfig;
 }
 
 export class EvmClient extends ChainClient {
   public readonly config: EvmConfig;
   
-  constructor(args: EvmClientConfig) {
+  constructor(args: EvmClientArgs) {
     super()
     this.config = args.config;
   }

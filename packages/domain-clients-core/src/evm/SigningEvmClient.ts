@@ -3,7 +3,7 @@ import { Abi, Address, ContractFunctionArgs, ContractFunctionName, SendTransacti
 import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
 import { EvmConfig } from '@/evm';
 
-export interface SigningEvmClientConfig {
+export interface SigningEvmClientArgs {
   config: EvmConfig;
   signer?: WalletClient;
 }
@@ -13,7 +13,7 @@ export class SigningEvmClient extends SigningChainClient {
   public readonly signer?: WalletClient;
   
     constructor(
-      args: SigningEvmClientConfig
+      args: SigningEvmClientArgs
     ) {
       super();
       this.config = args.config;
