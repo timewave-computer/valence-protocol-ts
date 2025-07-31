@@ -46,3 +46,18 @@ This codebase uses Nix to create a reproducible development environment.
 - `turbo test` — Run tests across the monorepo
 
 For more, see the [Turborepo docs](https://turbo.build/repo/docs) and [pnpm docs](https://pnpm.io/).
+
+## Working with turborepo
+### Add dependency to a package
+```bash
+pnpm install <X> --filter @valence-protocol/valence-domain-clients-core
+
+pnpm install <X> --filter @valence-protocol/valence-domain-clients-react
+```
+
+### Build a package
+```bash
+turbo build --filter @valence-protocol/valence-domain-clients-core
+
+turbo build --filter @valence-protocol/valence-domain-clients-react
+```
