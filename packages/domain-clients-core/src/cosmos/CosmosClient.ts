@@ -4,8 +4,12 @@ import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { z } from 'zod';
 
 export class CosmosClient extends ChainClient {
+  public readonly rpcUrl: string;
+  public readonly chainId: string;
   constructor(chainId: string, rpcUrl: string) {
-    super(chainId, rpcUrl);
+    super();
+    this.rpcUrl = rpcUrl;
+    this.chainId = chainId;
   }
 
   // Cosmos specific

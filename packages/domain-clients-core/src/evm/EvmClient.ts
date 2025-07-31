@@ -7,9 +7,9 @@ import { isAddress,EvmConfig } from '@/evm';
 
 export class EvmClient extends ChainClient {
   public readonly config: EvmConfig;
-
-  constructor(chainId: string, rpcUrl: string, config: EvmConfig) {
-    super(chainId, rpcUrl);
+  
+  constructor(config: EvmConfig) {
+    super()
     this.config = config;
   }
 
