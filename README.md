@@ -50,14 +50,14 @@ For more, see the [Turborepo docs](https://turbo.build/repo/docs) and [pnpm docs
 ## Working with turborepo
 ### Add dependency to a package
 ```bash
-pnpm install <X> --filter @valence-protocol/valence-domain-clients-core
+pnpm install <X> --filter @valence-protocol/domain-clients-core
 
-pnpm install <X> --filter @valence-protocol/valence-domain-clients-react
+pnpm install <X> --filter @valence-protocol/domain-clients-react
 ```
 
 ### Build a package
 ```bash
-turbo build --filter @valence-protocol/valence-domain-clients-core
+turbo build --filter @valence-protocol/domain-clients-core
 
-turbo build --filter @valence-protocol/valence-domain-clients-react
+turbo build --filter @valence-protocol/domain-clients-react
 ```

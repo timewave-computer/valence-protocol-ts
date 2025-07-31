@@ -1,3 +1,3 @@
-# @valence-protocol/valence-domain-clients-core
+# @valence-protocol/domain-clients-core
 
 This package provides classes for blockchain client implementations.
