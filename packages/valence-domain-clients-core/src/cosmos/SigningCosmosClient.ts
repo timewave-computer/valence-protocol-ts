@@ -1,7 +1,7 @@
 import { EncodeObject, OfflineSigner, Registry } from '@cosmjs/proto-signing';
 import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes } from '@cosmjs/stargate';
 import { SigningCosmWasmClient, ExecuteResult } from '@cosmjs/cosmwasm-stargate';
-
+import { TextEncoder } from 'util';
 import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
 
 
@@ -9,6 +9,10 @@ export class SigningCosmosClient extends SigningChainClient {
   public readonly protobufRegistry?: Registry;
   public readonly aminoTypes?: AminoTypes;
   public readonly signer: OfflineSigner;
+  public readonly gas: number;
+  public readonly senderAddress: string;
+  public readonly chainId: string;
+  public readonly rpcUrl: string;
 
   constructor(
     chainId: string,
@@ -19,7 +23,11 @@ export class SigningCosmosClient extends SigningChainClient {
     protobufRegistry?: Registry,
     aminoTypes?: AminoTypes
   ) {
-    super(chainId, rpcUrl, gas, senderAddress);
+    super();
+    this.chainId = chainId;
+    this.rpcUrl = rpcUrl;
+    this.gas = gas;
+    this.senderAddress = senderAddress;
     this.signer = signer;
     this.protobufRegistry = protobufRegistry;
     this.aminoTypes = aminoTypes;

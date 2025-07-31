@@ -7,19 +7,26 @@ import { EvmConfig } from '@/evm';
 
 export class SigningEvmClient extends SigningChainClient {
   public readonly config: EvmConfig;
-  public readonly signer: WalletClient;
+  public readonly signer?: WalletClient;
   
     constructor(
-      chainId: string,
-      rpcUrl: string,
-      gas: number,
-      signer: WalletClient,
-      senderAddress: Address,
-      config: EvmConfig
+      config: EvmConfig,
+      signer?: WalletClient,
     ) {
-      super(chainId, rpcUrl, gas, senderAddress);
+      super();
       this.config = config;
       this.signer = signer;
+    }
+
+    async getSenderAddress(): Promise<Address> {
+      if (!this.signer?.account) {
+        throw new ClientError(ClientErrorType.InvalidSigner, 'Signer account is not set');
+      }
+      const senderAddress = this.signer.account.address;
+      if (!isAddress(senderAddress)) {
+        throw new ClientError(ClientErrorType.InvalidAddress, 'Sender address is not set');
+      }
+      return this.signer.account.address;
     }
   
     // EVM specific
@@ -51,16 +58,14 @@ export class SigningEvmClient extends SigningChainClient {
 
     }): Promise<SendTransactionReturnType> {
       const client = await this.getWalletClient()
+      const senderAddress = await this.getSenderAddress();
       
-      if (!isAddress(this.senderAddress)) {
-        throw new ClientError(ClientErrorType.InvalidAddress, 'Sender address is not set');
-      }
       if (!isAddress(args.to)) {
         throw new ClientError(ClientErrorType.InvalidAddress, 'Recipient address is not set');
       }
      
       return client.sendTransaction({
-        account: this.senderAddress,
+        account: senderAddress,
         to: args.to,
         value: args.value,
         chain: null,

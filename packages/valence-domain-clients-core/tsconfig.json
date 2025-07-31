@@ -1,21 +1,13 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "esnext", // which version of ecmascript to support
-    "module": "esnext", // how imports and exports are handled
-    "moduleResolution": "bundler", // module resolution strategy
-    "declaration": true, // for declaring types
-    "declarationMap": true, // for dev tooling to jump to source
-    "emitDeclarationOnly": false, // emits both .js and .d.ts files. technically not called directly because bundling happens with tsup, and not tsc
-    "esModuleInterop": true, // allows for importing commonjs modules as esm modules
-    "outDir": "dist", 
     "rootDir": "src",
-    "baseUrl": ".",
+    "outDir": "dist",
+    "baseUrl": ".", 
     "paths": {
       "@/*": ["src/*"]
-    },
-    "strict": true, // enables all strict type-checking options
-    "skipLibCheck": true, // skips type checking of declaration files in node_modules
-    "forceConsistentCasingInFileNames": true
+    }
   },
-  "include": ["src/**/*"]
-} 
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

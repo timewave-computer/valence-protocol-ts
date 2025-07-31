@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useValenceDomainConfig } from '@/context';
+import { useValenceCosmosConfig } from '@/cosmos';
 import { SigningCosmosClient } from '@valence-protocol/valence-domain-clients-core/cosmos';
 // import { useAccount as useCosmosAccount, useOfflineSigner, connect, disconnect } from 'graz';
 
 
 export function useSigningCosmosClient(chainId: string) {
-  const config = useValenceDomainConfig(chainId);
+  const config = useValenceCosmosConfig();
   // TODO: Replace with actual graz hooks
   const account = undefined; // const { data: account } = useCosmosAccount();
   const signer = undefined; // const { data: signer } = useOfflineSigner();
