@@ -1,7 +1,7 @@
 import { EncodeObject, OfflineSigner, Registry } from '@cosmjs/proto-signing';
 import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes } from '@cosmjs/stargate';
 import { SigningCosmWasmClient, ExecuteResult } from '@cosmjs/cosmwasm-stargate';
-
+import { TextEncoder } from 'util';
 import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
 
 
