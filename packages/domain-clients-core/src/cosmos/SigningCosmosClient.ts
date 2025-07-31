@@ -1,40 +1,53 @@
-import { EncodeObject, OfflineSigner, Registry } from '@cosmjs/proto-signing';
+import { EncodeObject, OfflineDirectSigner, Registry } from '@cosmjs/proto-signing';
 import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes } from '@cosmjs/stargate';
 import { SigningCosmWasmClient, ExecuteResult } from '@cosmjs/cosmwasm-stargate';
+import { OfflineAminoSigner } from '@cosmjs/amino';
 import { TextEncoder } from 'util';
 import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
 
+export type CosmosSigner = OfflineAminoSigner & OfflineDirectSigner;
+export type CosmosGas = {
+  price: string;
+  denom: string;
+}
+
+export interface SigningCosmosClientConfig {
+  chainId: string;
+  rpcUrl: string;
+  gas?: CosmosGas;
+  signer?: CosmosSigner;
+  senderAddress?: string;
+  protobufRegistry?: Registry;
+  aminoTypes?: AminoTypes;
+}
 
 export class SigningCosmosClient extends SigningChainClient {
   public readonly protobufRegistry?: Registry;
   public readonly aminoTypes?: AminoTypes;
-  public readonly signer: OfflineSigner;
-  public readonly gas: number;
-  public readonly senderAddress: string;
+  public readonly signer?: CosmosSigner;
+  public readonly gas?: CosmosGas;
+  public readonly senderAddress?: string;
   public readonly chainId: string;
   public readonly rpcUrl: string;
 
   constructor(
-    chainId: string,
-    rpcUrl: string,
-    gas: number,
-    signer: OfflineSigner,
-    senderAddress: string,
-    protobufRegistry?: Registry,
-    aminoTypes?: AminoTypes
+    args: SigningCosmosClientConfig
   ) {
     super();
-    this.chainId = chainId;
-    this.rpcUrl = rpcUrl;
-    this.gas = gas;
-    this.senderAddress = senderAddress;
-    this.signer = signer;
-    this.protobufRegistry = protobufRegistry;
-    this.aminoTypes = aminoTypes;
+    this.chainId = args.chainId;
+    this.rpcUrl = args.rpcUrl;
+    this.gas = args.gas;
+    this.senderAddress = args.senderAddress;
+    this.signer = args.signer;
+    this.protobufRegistry = args.protobufRegistry;
+    this.aminoTypes = args.aminoTypes;
   }
 
   // Cosmos specific
   async getSigningStargateClient(): Promise<SigningStargateClient> {
+    if (!this.signer) {
+      throw new ClientError(ClientErrorType.InvalidSigner, 'Cosmos offline signer is not set');
+    }
     try {
     return SigningStargateClient.connectWithSigner(
       this.rpcUrl,
@@ -51,6 +64,9 @@ export class SigningCosmosClient extends SigningChainClient {
   }
 
   async getSigningCosmwasmClient(): Promise<SigningCosmWasmClient> {
+    if (!this.signer) {
+      throw new ClientError(ClientErrorType.InvalidSigner, 'Cosmos offline signer is not set');
+    }
     try {
     return SigningCosmWasmClient.connectWithSigner(
       this.rpcUrl,
@@ -69,7 +85,11 @@ export class SigningCosmosClient extends SigningChainClient {
     fee: StdFee | 'auto',
     memo = ''
   ): Promise<DeliverTxResponse> {
+    if (!this.senderAddress) {
+      throw new ClientError(ClientErrorType.InvalidAddress, 'Sender address is not set');
+    }
     const client = await this.getSigningStargateClient();
+
     return client.sendTokens(this.senderAddress, recipient, amount, fee, memo);
   }
 
@@ -90,7 +110,9 @@ export class SigningCosmosClient extends SigningChainClient {
     fee: StdFee | 'auto',
     memo = ''
   ): Promise<DeliverTxResponse> {
-
+    if (!this.senderAddress) {
+      throw new ClientError(ClientErrorType.InvalidAddress, 'Sender address is not set');
+    }
       const client = await this.getSigningStargateClient();
       return client.signAndBroadcast(this.senderAddress, messages, fee, memo);
 

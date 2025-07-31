@@ -5,6 +5,6 @@ import { GrazProvider } from "graz";
 export const CosmosClientProvider = ({ children }: { children: ReactNode }) => {
   const config = useCosmosConfig();
 
-  return   <GrazProvider grazOptions={config}>{children}</GrazProvider>
+  return  <GrazProvider grazOptions={config.grazOptions}>{children}</GrazProvider>
 
 };
