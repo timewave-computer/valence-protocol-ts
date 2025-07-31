@@ -4,5 +4,5 @@ This package provides React hooks and components for blockchain client implement
 
 ## Build
 ```bash
-turbo build --filter @valence-protocol/valence-domain-clients-core
+turbo build --filter @valence-protocol/valence-domain-clients-react
 ```
