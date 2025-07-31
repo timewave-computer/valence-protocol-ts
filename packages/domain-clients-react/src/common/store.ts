@@ -1,4 +1,3 @@
-// clientStore.ts
 import { create } from 'zustand'
 
 type ClientState<T> = {
@@ -7,7 +6,6 @@ type ClientState<T> = {
   clearClient: () => void
 }
 
-// Generic store factory function
 export const createClientStore = <T>() => 
   create<ClientState<T>>((set) => ({
     client: null,

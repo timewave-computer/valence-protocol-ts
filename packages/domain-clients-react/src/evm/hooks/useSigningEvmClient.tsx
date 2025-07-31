@@ -1,5 +1,5 @@
 import {  useEffect, useMemo } from 'react';
-import {  useEvmConfig, useEvmSigningClientStore } from '@/evm';
+import {  useEvmConfig, useSigningEvmClientStore } from '@/evm';
 import { SigningEvmClient } from '@valence-protocol/domain-clients-core/evm';
 import { useAccount, useDisconnect, useWalletClient } from 'wagmi';
 
@@ -9,8 +9,7 @@ export function useSigningEvmClient(chainId: string) {
   const {disconnect} = useDisconnect();
   const { data: walletClient } = useWalletClient();
 
-  const {client, setClient} = useEvmSigningClientStore();
-
+  const {client, setClient} = useSigningEvmClientStore();
 
   useEffect(() => {
     if (!account || !walletClient) return;
@@ -19,8 +18,6 @@ export function useSigningEvmClient(chainId: string) {
 
   }, [account, walletClient, chainId, config]);
 
-
-  // Memoize to prevent unnecessary re-renders
   return useMemo(() => ({
     client,
     account,
