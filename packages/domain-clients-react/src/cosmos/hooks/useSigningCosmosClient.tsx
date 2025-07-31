@@ -12,7 +12,7 @@ export interface UseSigningCosmosClientResult {
 }
 
 export function useSigningCosmosClient(chainId: string): UseSigningCosmosClientResult {
-  const {protobufRegistry, aminoTypes} = useCosmosSigningTypes();
+  const signingTypes = useCosmosSigningTypes();
   const config = useCosmosChainConfig(chainId);
 
   const {data: account} = useAccount({chainId});
@@ -37,10 +37,10 @@ export function useSigningCosmosClient(chainId: string): UseSigningCosmosClientR
       gas: config.chainConfig.gas,
       signer: offlineSigner,
       senderAddress: accountAddress,
-      protobufRegistry,
-      aminoTypes,
+      protobufRegistry: signingTypes.protobufRegistry,
+      aminoTypes: signingTypes.aminoTypes,
     }));
-  }, [signers,config, account]);
+  }, [signers,config, account, offlineSigner, accountAddress, signingTypes,setClient]);
 
   return useMemo(() => ({
     client,
@@ -48,6 +48,6 @@ export function useSigningCosmosClient(chainId: string): UseSigningCosmosClientR
     signer: offlineSigner,
     disconnect,
  
-  }), [client, account, offlineSigner]);
+  }), [client, offlineSigner, accountAddress]);
 
 } 

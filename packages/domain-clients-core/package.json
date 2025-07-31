@@ -42,7 +42,9 @@
     "@cosmjs/amino": "^0.34.0",
     "@cosmjs/encoding": "^0.34.0",
     "@wagmi/core": "^2.16.4",
-    "tsup": "^8.5.0",
     "viem": "^2.33.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0"
   }
 }
