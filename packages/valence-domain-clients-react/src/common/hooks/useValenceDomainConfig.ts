@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ValenceDomainClientsConfigContext } from "@/common";
+import { ValenceDomainClientsConfigContext } from "@/common/context";
 
 export function useValenceDomainConfig() {
     const config = useContext(ValenceDomainClientsConfigContext);

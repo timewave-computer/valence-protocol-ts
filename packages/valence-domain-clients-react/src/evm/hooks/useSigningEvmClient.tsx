@@ -8,7 +8,6 @@ export function useSigningEvmClient(chainId: string) {
   const config = useValenceEvmConfig();
   const account = useAccount({config});
   const { data: walletClient } = useWalletClient({config});
-  const { data: signer } = useWalletClient();
 
   // TODO: replace with zustand
   const [client, setClient] = useState<SigningEvmClient | null>(null);
@@ -22,9 +21,9 @@ export function useSigningEvmClient(chainId: string) {
   return useMemo(() => ({
     client,
     account,
-    signer,
+    walletClient,
     // connect,
     // disconnect,
-  }), [client, account, signer]);
+  }), [client, account, walletClient]);
 
 } 

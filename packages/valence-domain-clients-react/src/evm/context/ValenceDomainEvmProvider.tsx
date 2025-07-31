@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useValenceEvmConfig } from "@/evm";
+import { useValenceEvmConfig } from "@/evm/hooks"; 
 import { WagmiProvider } from 'wagmi';
 
 export const ValenceDomainEvmProvider = ({ children }: { children: ReactNode }) => {
