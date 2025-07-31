@@ -1,5 +1,5 @@
 {
-  "name": "@valence-protocol/valence-domain-clients-core",
+  "name": "@valence-protocol/domain-clients-core",
   "version": "0.1.0",
   "description": "Core abstract classes for Valence Protocol blockchain clients.",
   "main": "./dist/index.js",
@@ -39,6 +39,7 @@
     "@cosmjs/proto-signing": "^0.31.0",
     "@cosmjs/stargate": "^0.31.0",
     "@wagmi/core": "^2.16.4",
-    "viem": "^2.33.0"
+    "viem": "^2.33.0",
+    "tsup": "^8.5.0"
   }
 }
