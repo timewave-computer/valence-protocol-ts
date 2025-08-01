@@ -13,5 +13,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   external: ['react', 'react-dom'], // exclude packages from bundle (peer dependencies)
-  target: 'es2020' // which version of ecmascript to compile to
+  target: 'es2017' // which version of ecmascript to compile to
 });

@@ -7,7 +7,7 @@ This repository is a [Turborepo](https://turbo.build/) monorepo managed with [pn
 
 1. **NixOs**
 This codebase uses Nix to create a reproducible development environment.
-[https://pnpm.io/installation](https://pnpm.io/installation)
+[https://nixos.org/download/](https://nixos.org/download/)
 
 ## Getting Started
 
@@ -62,3 +62,12 @@ turbo build --filter @valence-protocol/domain-clients-core
 turbo build --filter @valence-protocol/domain-clients-react
 ```
 
+
+### Run apps
+Start apps in development mode.
+
+```bash
+turbo dev 
+
+turbo dev --filter @valence-protocol/domain-clients-example-app
+```
