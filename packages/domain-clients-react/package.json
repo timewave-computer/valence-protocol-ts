@@ -1,7 +1,7 @@
 {
   "name": "@valence-protocol/domain-clients-react",
   "version": "0.1.0",
-  "description": "React hooks and components for Valence Protocol blockchain clients.",
+  "description": "React hooks and components for Valence Protocol domain clients.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
