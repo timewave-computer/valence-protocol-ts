@@ -1,10 +1,8 @@
 import { useDomainConfig } from "@/common";
-import { type Config } from 'wagmi';
+import { EvmConfig } from "@valence-protocol/domain-clients-core/evm";
 
 
-export type WagmiConfig = Config;
-
-export function useEvmConfig(): WagmiConfig {
+export function useEvmConfig(): EvmConfig {
     const config = useDomainConfig();
     if (!config.evm) throw new Error('useEvmConfig must be used within a DomainClientsProvider');
     return config.evm;

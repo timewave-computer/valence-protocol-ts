@@ -1,6 +1,6 @@
-import { useDomainConfig,CosmosConfig } from "@/common";
+import { useDomainConfig, } from "@/common";
 import {  defineChainInfo, Dictionary  } from 'graz';
-import { CosmosGas } from "@valence-protocol/domain-clients-core/cosmos";
+import { CosmosGas,CosmosConfig } from "@valence-protocol/domain-clients-core/cosmos";
 
 // reimplemented from graz because it's not exported
 interface GrazChainConfig  {

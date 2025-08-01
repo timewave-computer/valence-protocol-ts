@@ -1,20 +1,11 @@
 import  { createContext, ReactNode, useMemo } from 'react';
-import { type Config as WagmiConfig } from 'wagmi';
-import { ConfigureGrazArgs, ConfigureGrazArgs as GrazConfig } from 'graz';
 import { EvmClientProvider } from '@/evm';
 import { CosmosClientProvider } from '@/cosmos';
-import { AminoTypes } from '@cosmjs/stargate';
-import { Registry } from '@cosmjs/proto-signing';
-
-export type CosmosConfig = {
-  grazOptions: ConfigureGrazArgs;
-  protobufRegistry?: Registry;
-  aminoTypes?: AminoTypes;
-}
-
+import { CosmosConfig } from '@valence-protocol/domain-clients-core/cosmos';
+import { EvmConfig } from '@valence-protocol/domain-clients-core/evm';
 
 export interface DomainClientsConfig {
-  evm?: WagmiConfig;
+  evm?: EvmConfig;
   cosmos?: CosmosConfig;
 }
 
