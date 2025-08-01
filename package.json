@@ -5,7 +5,7 @@
    "main": "index.js",
   "keywords": [],
   "author": "Valence",
-  "license": "ISC",
+  "license": "MIT",
   "private": true,
   "workspaces": [
     "packages/*",
