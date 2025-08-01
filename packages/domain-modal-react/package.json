@@ -2,13 +2,13 @@
   "name": "@valence-protocol/domain-modal-react",
   "version": "1.0.0",
   "description": "React hooks and components for connecting to blockchains across one or more domains.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsup"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "react": "18.3.1",
     "react-dom": "18.3.0"

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 
 type DomainModalContent = ReactNode | null;
@@ -11,18 +11,22 @@ interface DomainModalContextType {
 const DomainModalContext = createContext<DomainModalContextType | undefined>(undefined);
 
 export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
+
   const [modalContent, setModalContent] = useState<DomainModalContent>(null);
 
-  const showModal = (content: ReactNode) => {
+  const showModal = useCallback((content: ReactNode) => {
     setModalContent(content);
-  };
+  }, []);
 
-  const hideModal = () => {
+  const hideModal = useCallback(() => {
     setModalContent(null);
-  };
+  }, []);
+
+  const value = useMemo(() => ({ showModal, hideModal }), [showModal, hideModal]);
+
 
   return (
-    <DomainModalContext.Provider value={{ showModal, hideModal }}>
+    <DomainModalContext.Provider value={value}>
       {children}
       {modalContent && ReactDOM.createPortal(
         <div className="modal-overlay">
