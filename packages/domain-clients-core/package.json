@@ -32,10 +32,10 @@
   "license": "MIT",
   "dependencies": {
     "@types/node": "^24.1.0",
-    "graz": "^0.3.3",
     "zod": "^3.22.2"
   },
   "peerDependencies": {
+    "graz": "^0.3.3",
     "@cosmjs/amino": "^0.34.0",
     "@cosmjs/cosmwasm-stargate": "^0.34.0",
     "@cosmjs/encoding": "^0.34.0",
