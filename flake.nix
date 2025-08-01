@@ -24,6 +24,7 @@
 
           shellHook = ''
             export NODE_OPTIONS=--max_old_space_size=8192
+            export PS1="\[\033[1;36m\]Dev Shell\[\033[0m\] \[\033[1;34m\]\w\[\033[0m\] \[\033[1;32m\]$\[\033[0m\] "
             echo "Started Valence TS Dev Shell"
           '';
         };
