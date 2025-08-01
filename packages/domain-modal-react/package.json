@@ -1,10 +1,10 @@
 {
   "name": "@valence-protocol/domain-modal-react",
   "version": "1.0.0",
-  "description": "",
+  "description": "React hooks and components for connecting to blockchains across one or more domains.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
