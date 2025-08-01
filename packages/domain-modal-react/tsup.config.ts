@@ -2,7 +2,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: {
-    'index': 'src/index.tsx',
+    'index': 'src/index.ts',
   },
   outDir: 'dist', // output directory
   format: ['esm', 'cjs'],
