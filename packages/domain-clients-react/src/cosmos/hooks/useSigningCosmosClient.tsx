@@ -1,35 +1,53 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useCosmosConfig } from '@/cosmos';
+import {  useEffect, useMemo } from 'react';
+import { useCosmosChainConfig, useCosmosSigningTypes, useSigningCosmosClientStore } from '@/cosmos';
 import { SigningCosmosClient } from '@valence-protocol/domain-clients-core/cosmos';
-// import { useAccount as useCosmosAccount, useOfflineSigner, connect, disconnect } from 'graz';
+import { useAccount, useOfflineSigners, disconnect } from 'graz';
+import { OfflineSigner } from '@cosmjs/proto-signing';
 
+export interface UseSigningCosmosClientResult {
+  client: SigningCosmosClient | null;
+  account?: string;
+  signer?: OfflineSigner;
+  disconnect: () => void;
+}
 
-export function useSigningCosmosClient(chainId: string) {
-  const config = useCosmosConfig();
-  // TODO: Replace with actual graz hooks
-  const account = undefined; // const { data: account } = useCosmosAccount();
-  const signer = undefined; // const { data: signer } = useOfflineSigner();
+export function useSigningCosmosClient(chainId: string): UseSigningCosmosClientResult {
+  const signingTypes = useCosmosSigningTypes();
+  const config = useCosmosChainConfig(chainId);
 
-  // TODO: replace with zustand
-  const [client, setClient] = useState<SigningCosmosClient | null>(null);
+  const {data: account} = useAccount({chainId});
+  const {data: signers} = useOfflineSigners({chainId}); 
+
+  const {client, setClient} = useSigningCosmosClientStore();
+
+  const offlineSigner = useMemo(() => {
+    return signers?.offlineSigner;
+  }, [signers]);
+
+  const accountAddress = useMemo(() => {
+    return account?.bech32Address;
+  }, [account]);
 
   useEffect(() => {
     if (!account) return;
-    // setClient(new SigningCosmosClient({
-    //   config,
-    //   chainId,
-    //   // signer, // pass signer if needed
-    // }));
-  }, [config, account, chainId]);
+ 
+    setClient(new SigningCosmosClient({
+      chainId,
+      rpcUrl: config.chainInfo.rpc,
+      gas: config.chainConfig.gas,
+      signer: offlineSigner,
+      senderAddress: accountAddress,
+      protobufRegistry: signingTypes.protobufRegistry,
+      aminoTypes: signingTypes.aminoTypes,
+    }));
+  }, [signers,config, account, offlineSigner, accountAddress, signingTypes,setClient]);
 
-  // Memoize to prevent unnecessary re-renders
-  const result = useMemo(() => ({
+  return useMemo(() => ({
     client,
-    account,
-    signer,
-    // connect,
-    // disconnect,
-  }), [client, account, signer]);
+    account: accountAddress,
+    signer: offlineSigner,
+    disconnect,
+ 
+  }), [client, offlineSigner, accountAddress]);
 
-  return result;
 } 

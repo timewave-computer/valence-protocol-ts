@@ -13,7 +13,10 @@ export function useSigningEvmClient() {
 
   useEffect(() => {
     if (!account || !walletClient) return;
-    const client = new SigningEvmClient( config, walletClient);
+    const client = new SigningEvmClient({
+      config,
+      signer: walletClient,
+    });
     setClient(client);
 
   }, [account, walletClient, config]);

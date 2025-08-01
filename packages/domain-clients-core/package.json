@@ -31,15 +31,20 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+  
     "@types/node": "^24.1.0",
     "zod": "^3.22.2"
   },
   "peerDependencies": {
-    "@cosmjs/cosmwasm-stargate": "^0.31.0",
-    "@cosmjs/proto-signing": "^0.31.0",
-    "@cosmjs/stargate": "^0.31.0",
+    "@cosmjs/cosmwasm-stargate": "^0.34.0",
+    "@cosmjs/proto-signing": "^0.34.0",
+    "@cosmjs/stargate": "^0.34.0",
+    "@cosmjs/amino": "^0.34.0",
+    "@cosmjs/encoding": "^0.34.0",
     "@wagmi/core": "^2.16.4",
-    "viem": "^2.33.0",
+    "viem": "^2.33.0"
+  },
+  "devDependencies": {
     "tsup": "^8.5.0"
   }
 }

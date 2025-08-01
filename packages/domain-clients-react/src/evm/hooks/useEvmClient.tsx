@@ -12,7 +12,7 @@ export function useEvmClient() {
 
   useEffect(() => {
     if (!account || !publicClient) return;
-    const client = new EvmClient(config);
+    const client = new EvmClient({config});
     setClient(client);
 
   }, [account, publicClient, config, setClient]);

@@ -1,11 +1,21 @@
 import  { createContext, ReactNode, useMemo } from 'react';
 import { type Config as WagmiConfig } from 'wagmi';
+import { ConfigureGrazArgs, ConfigureGrazArgs as GrazConfig } from 'graz';
 import { EvmClientProvider } from '@/evm';
-// import { DomainCosmosProvider } from '@/cosmos'; // TODO: Import when available
+import { CosmosClientProvider } from '@/cosmos';
+import { AminoTypes } from '@cosmjs/stargate';
+import { Registry } from '@cosmjs/proto-signing';
+
+export type CosmosConfig = {
+  grazOptions: ConfigureGrazArgs;
+  protobufRegistry?: Registry;
+  aminoTypes?: AminoTypes;
+}
+
 
 export interface DomainClientsConfig {
   evm?: WagmiConfig;
-  cosmos?: Record<string, unknown>;
+  cosmos?: CosmosConfig;
 }
 
 export const DomainClientsConfigContext = createContext<DomainClientsConfig | undefined>(undefined);
@@ -16,10 +26,9 @@ export const DomainClientsProvider = ({ config, children }: { config: DomainClie
   const content = useMemo(() => {
     let result = children;
     
-    // TODO: Add cosmos provider when available
-    // if (config.cosmos) {
-    //   result = <ValenceDomainCosmosProvider>{result}</ValenceDomainCosmosProvider>;
-    // }
+    if (config.cosmos) {
+      result = <CosmosClientProvider>{result}</CosmosClientProvider>;
+    }
     
     if (config.evm) {
       result = <EvmClientProvider>{result}</EvmClientProvider>;

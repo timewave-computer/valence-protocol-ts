@@ -20,12 +20,17 @@
   "license": "MIT",
   "dependencies": {
     "@valence-protocol/domain-clients-core": "workspace:*",
+    "graz": "^0.3.3",
     "zustand": "^5.0.7"
   },
   "peerDependencies": {
     "react": "18.3.1",
     "react-dom": "18.3.0",
-    "wagmi": "^2.16.0"
+    "wagmi": "^2.16.0",
+    "@cosmjs/cosmwasm-stargate": "^0.34.0",
+    "@cosmjs/encoding": "^0.34.0",
+    "@cosmjs/proto-signing": "^0.34.0",
+    "@cosmjs/stargate": "^0.34.0"
   },
   "devDependencies": {
     "@types/react": "18.3.1",

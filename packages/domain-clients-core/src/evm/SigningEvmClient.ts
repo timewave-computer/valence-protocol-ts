@@ -3,18 +3,21 @@ import { Abi, Address, ContractFunctionArgs, ContractFunctionName, SendTransacti
 import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
 import { EvmConfig } from '@/evm';
 
+export interface SigningEvmClientArgs {
+  config: EvmConfig;
+  signer?: WalletClient;
+}
 
 export class SigningEvmClient extends SigningChainClient {
   public readonly config: EvmConfig;
   public readonly signer?: WalletClient;
   
     constructor(
-      config: EvmConfig,
-      signer?: WalletClient,
+      args: SigningEvmClientArgs
     ) {
       super();
-      this.config = config;
-      this.signer = signer;
+      this.config = args.config;
+      this.signer = args.signer;
     }
 
     async getSenderAddress(): Promise<Address> {

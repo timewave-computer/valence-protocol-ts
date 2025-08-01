@@ -3,13 +3,19 @@ import { StargateClient, Coin } from '@cosmjs/stargate';
 import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { z } from 'zod';
 
+export interface CosmosClientArgs {
+  chainId: string;
+  rpcUrl: string;
+}
+
 export class CosmosClient extends ChainClient {
   public readonly rpcUrl: string;
   public readonly chainId: string;
-  constructor(chainId: string, rpcUrl: string) {
+  
+  constructor(args: CosmosClientArgs) {
     super();
-    this.rpcUrl = rpcUrl;
-    this.chainId = chainId;
+    this.rpcUrl = args.rpcUrl;
+    this.chainId = args.chainId;
   }
 
   // Cosmos specific
