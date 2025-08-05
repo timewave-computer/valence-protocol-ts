@@ -1,3 +1,3 @@
 export const ModalContent = () => {
-  return <div>ModalContentssa</div>;
+  return <div className="text-xl">ModalContentssa</div>;
 };

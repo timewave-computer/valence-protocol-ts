@@ -15,7 +15,7 @@ export default function Home() {
       <h1 className="text-lg font-semibold">Valence Domain Modal Example App</h1>
       <Button onClick={handleConnect}>Connect</Button>
     </header>
-    <main className="p-4">
+    <main className="grow p-4">
         <p>This app is a simple example of how to use the Valence Domain Modal and Domain Clients API.</p>
       </main>
     </>
