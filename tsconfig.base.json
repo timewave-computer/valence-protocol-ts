@@ -2,8 +2,8 @@
     "compilerOptions": {
       "target": "es2017", // which version of ecmascript to compile to
       "module": "ESNext", // allows bundlers to use latest features
-      "moduleResolution": "bundler", // module resolution strategy
       "lib": ["es2017"], // which built in types to include
+      "moduleResolution": "bundler", // module resolution strategy
       "declaration": true, // declare types
       "declarationMap": true, //  dev tooling can jump to source
       "emitDeclarationOnly": true, // tsup handles JS, tsc handles types

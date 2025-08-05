@@ -1,7 +1,9 @@
 
 import { createContext, useContext, useState, ReactNode, useCallback, useMemo } from 'react';
-import ReactDOM from 'react-dom';
 import { ModalContent } from './ModalContent';
+import * as Dialog from '@radix-ui/react-dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import './globals.css';
 
 interface DomainModalContextType {
   showModal: () => void;
@@ -25,19 +27,21 @@ export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
 
   const value = useMemo(() => ({ showModal, closeModal, isModalOpen }), [showModal, closeModal, isModalOpen]);
 
-
   return (
+   
     <DomainModalContext.Provider value={value}>
       {children}
-      {isModalOpen && ReactDOM.createPortal(
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <ModalContent />
-            <button onClick={closeModal}>Close</button>
-          </div>
-        </div>,
-        document.body
-      )}
+      <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black" />
+          <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded-md">
+           <VisuallyHidden asChild><Dialog.Title>Connect to a domain</Dialog.Title></VisuallyHidden> 
+            <VisuallyHidden asChild><Dialog.Description>Modal for connecting to multiple blockchain domains.</Dialog.Description></VisuallyHidden>
+            <ModalContent /> a
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+
     </DomainModalContext.Provider>
   );
 };
