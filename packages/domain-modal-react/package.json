@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "React hooks and components for connecting to blockchains across one or more domains.",
   "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./dist/index.css"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch"
@@ -29,5 +36,6 @@
     "@types/react-dom": "18.3.0",
     "autoprefixer": "^10.4.20",
     "tsup": "^8.5.0"
+
   }
 }

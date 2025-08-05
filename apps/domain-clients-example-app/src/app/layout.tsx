@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ValenceDomainModalProvider } from "@/context";
+import "@valence-protocol/domain-modal-react/index.css";
 
 import "./globals.css";
 
