@@ -11,7 +11,9 @@
   "license": "MIT",
   "peerDependencies": {
     "react": "18.3.1",
-    "react-dom": "18.3.0"
+    "react-dom": "18.3.0",
+    "@valence-protocol/domain-clients-react": "workspace:*",
+    "@valence-protocol/domain-clients-core": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "18.3.1",

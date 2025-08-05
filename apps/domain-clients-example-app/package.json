@@ -10,19 +10,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@valence-protocol/domain-clients-core": "workspace:*",
+    "@valence-protocol/domain-clients-react": "workspace:*",
+    "@valence-protocol/domain-modal-react": "workspace:*",
+    "next": "15.4.5",
     "react": "18.3.1",
-    "react-dom": "18.3.0",
-    "next": "15.4.5"
+    "react-dom": "18.3.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
