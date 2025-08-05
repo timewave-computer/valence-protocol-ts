@@ -1,38 +1,39 @@
+
 import { createContext, useContext, useState, ReactNode, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
-
-type DomainModalContent = ReactNode | null;
+import { ModalContent } from './ModalContent';
 
 interface DomainModalContextType {
-  showModal: (content: ReactNode) => void;
-  hideModal: () => void;
+  showModal: () => void;
+  closeModal: () => void;
+  isModalOpen: boolean;
 }
 
 const DomainModalContext = createContext<DomainModalContextType | undefined>(undefined);
 
 export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
 
-  const [modalContent, setModalContent] = useState<DomainModalContent>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal = useCallback((content: ReactNode) => {
-    setModalContent(content);
+  const showModal = useCallback(() => {
+    setIsModalOpen(true);
   }, []);
 
-  const hideModal = useCallback(() => {
-    setModalContent(null);
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
   }, []);
 
-  const value = useMemo(() => ({ showModal, hideModal }), [showModal, hideModal]);
+  const value = useMemo(() => ({ showModal, closeModal, isModalOpen }), [showModal, closeModal, isModalOpen]);
 
 
   return (
     <DomainModalContext.Provider value={value}>
       {children}
-      {modalContent && ReactDOM.createPortal(
+      {isModalOpen && ReactDOM.createPortal(
         <div className="modal-overlay">
           <div className="modal-content">
-            {modalContent}
-            <button onClick={hideModal}>Close</button>
+            <ModalContent />
+            <button onClick={closeModal}>Close</button>
           </div>
         </div>,
         document.body
