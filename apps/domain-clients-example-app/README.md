@@ -11,3 +11,6 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+
+## Bundle analyzer
+run `ANALYZE=true pnpm build` to inspect bundle size.

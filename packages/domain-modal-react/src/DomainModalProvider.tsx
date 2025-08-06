@@ -9,7 +9,7 @@ import './globals.css';
 
 interface DomainModalContextType {
   showModal: () => void;
-  closeModal: () => void;
+closeModal: () => void;
   isModalOpen: boolean;
 }
 
