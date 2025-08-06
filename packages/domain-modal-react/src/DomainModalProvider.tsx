@@ -4,6 +4,7 @@ import { ModalContent } from './ModalContent';
 import * as Dialog from '@radix-ui/react-dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { cn } from '@/util';
+import {  DomainClientsProvider, type DomainClientsConfig } from '@valence-protocol/domain-clients-react';
 import './globals.css';
 
 interface DomainModalContextType {
@@ -14,7 +15,7 @@ interface DomainModalContextType {
 
 const DomainModalContext = createContext<DomainModalContextType | undefined>(undefined);
 
-export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
+export const DomainModalProvider = ({ children, config }: { children: ReactNode, config: DomainClientsConfig }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,6 +32,7 @@ export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
   return (
 
     <DomainModalContext.Provider value={value}>
+      <DomainClientsProvider config={config}>
       {children}
       <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
         <Dialog.Portal>
@@ -43,7 +45,7 @@ export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-
+      </DomainClientsProvider>
     </DomainModalContext.Provider>
   );
 };
