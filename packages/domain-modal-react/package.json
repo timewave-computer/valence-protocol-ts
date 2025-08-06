@@ -3,19 +3,38 @@
   "version": "1.0.0",
   "description": "React hooks and components for connecting to blockchains across one or more domains.",
   "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./dist/index.css"
+  },
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "peerDependencies": {
+    "@valence-protocol/domain-clients-core": "workspace:*",
+    "@valence-protocol/domain-clients-react": "workspace:*",
     "react": "18.3.1",
     "react-dom": "18.3.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-visually-hidden": "^1.2.3",
+    "@tailwindcss/postcss": "^4",
+    "clsx": "^2.1.1",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4"
   },
   "devDependencies": {
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
+    "autoprefixer": "^10.4.20",
     "tsup": "^8.5.0"
   }
 }
