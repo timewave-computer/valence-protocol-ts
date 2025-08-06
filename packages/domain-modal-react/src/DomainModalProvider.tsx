@@ -16,7 +16,7 @@ const DomainModalContext = createContext<DomainModalContextType | undefined>(und
 
 export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
 
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
