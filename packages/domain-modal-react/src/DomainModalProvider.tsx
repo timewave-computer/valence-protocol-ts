@@ -35,7 +35,7 @@ export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
       <Dialog.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
         <Dialog.Portal>
           <Dialog.Overlay className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-[1000] bg-slate-500 opacity-50" />
-          <Dialog.Content className={cn("fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 rounded-sm bg-white z-[1001] shadow-md",
+          <Dialog.Content className={cn("fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 rounded-sm bg-white z-[1001] shadow-md outline-none",
             "md:w-[50vw] md:max-w-[640px] md:max-h-[80vh]", "w-[90vw] max-w-full max-h-[90vh] ")}>
             <VisuallyHidden asChild><Dialog.Title>Connect to a domain</Dialog.Title></VisuallyHidden>
             <VisuallyHidden asChild><Dialog.Description>Modal for connecting to multiple blockchain domains.</Dialog.Description></VisuallyHidden>
