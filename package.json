@@ -11,9 +11,6 @@
     "packages/*",
     "apps/*"
   ],
-  "scripts": {
-    "install:clean": "rm -rf node_modules && pnpm install"
-  },
   "packageManager": "pnpm@9.15.0", 
   "devDependencies": {
     "turbo": "^2.5.5", 

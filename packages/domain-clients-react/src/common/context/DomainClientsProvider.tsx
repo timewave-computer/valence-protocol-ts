@@ -1,4 +1,5 @@
-import  { createContext, ReactNode, useMemo } from 'react';
+'use client';
+import  { createContext, ReactNode, useContext, useMemo } from 'react';
 import { EvmClientProvider } from '@/evm';
 import { CosmosClientProvider } from '@/cosmos';
 import { CosmosConfig } from '@valence-protocol/domain-clients-core/cosmos';
@@ -9,7 +10,7 @@ export interface DomainClientsConfig {
   cosmos?: CosmosConfig;
 }
 
-export const DomainClientsConfigContext = createContext<DomainClientsConfig | undefined>(undefined);
+const DomainClientsConfigContext = createContext<DomainClientsConfig | undefined>(undefined);
 
 
 export const DomainClientsProvider = ({ config, children }: { config: DomainClientsConfig; children: ReactNode }) => {
@@ -36,7 +37,11 @@ export const DomainClientsProvider = ({ config, children }: { config: DomainClie
 };
 
 
-
+export function useDomainConfig() {
+  const config = useContext(DomainClientsConfigContext);
+  if (!config) throw new Error('useDomainConfig must be used within a DomainClientsProvider');
+  return config;
+} 
 
 
 

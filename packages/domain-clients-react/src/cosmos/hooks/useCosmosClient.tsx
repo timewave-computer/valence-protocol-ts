@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useMemo } from 'react';
 import { useCosmosChainConfig, useCosmosClientStore } from '@/cosmos';
 import { CosmosClient } from '@valence-protocol/domain-clients-core/cosmos';

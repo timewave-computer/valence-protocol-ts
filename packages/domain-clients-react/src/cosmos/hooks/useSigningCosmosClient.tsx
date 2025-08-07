@@ -1,3 +1,4 @@
+'use client';
 import {  useEffect, useMemo } from 'react';
 import { useCosmosChainConfig, useCosmosSigningTypes, useSigningCosmosClientStore } from '@/cosmos';
 import { SigningCosmosClient } from '@valence-protocol/domain-clients-core/cosmos';

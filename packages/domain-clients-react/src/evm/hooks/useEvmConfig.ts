@@ -1,3 +1,4 @@
+'use client';
 import { useDomainConfig } from "@/common";
 import { EvmConfig } from "@valence-protocol/domain-clients-core/evm";
 
