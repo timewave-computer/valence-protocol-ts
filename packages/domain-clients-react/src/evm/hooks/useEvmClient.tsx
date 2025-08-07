@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useMemo } from 'react';
 import { useEvmClientStore, useEvmConfig } from '@/evm';
 import { EvmClient } from '@valence-protocol/domain-clients-core/evm';

@@ -1,3 +1,4 @@
+'use client';
 import { useDomainConfig, } from "@/common";
 import {  defineChainInfo, Dictionary  } from 'graz';
 import { CosmosGas,CosmosConfig } from "@valence-protocol/domain-clients-core/cosmos";

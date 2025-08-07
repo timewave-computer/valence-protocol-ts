@@ -1,11 +1,27 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "tasks": {
+    "@valence-protocol/domain-clients-react#build": {
+      "dependsOn": ["@valence-protocol/domain-clients-core#build"],
+      "outputs": ["dist/**"]
+    },
+    "@valence-protocol/domain-modal-react#build": {
+      "dependsOn": ["@valence-protocol/domain-clients-react#build", "@valence-protocol/domain-clients-core#build"],
+      "outputs": ["dist/**"]
+    },
+    "@valence-protocol/domain-clients-example#build": {
+      "dependsOn": ["@valence-protocol/domain-modal-react#build", "@valence-protocol/domain-clients-react#build", "@valence-protocol/domain-clients-core#build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
     "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start":{
       "cache": false,
       "persistent": true
     },

@@ -1,4 +1,5 @@
-import {  createConfig, type Config } from "@wagmi/core";
+import { createConfig, type Config } from "@wagmi/core";
 
-export const createEvmConfig = createConfig
+// Explicitly type the function to preserve generic type parameters
+export const createEvmConfig: typeof createConfig = createConfig;
 export type EvmConfig = Config;

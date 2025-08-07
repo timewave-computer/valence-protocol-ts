@@ -1,3 +1,4 @@
+'use client';
 import {  useEffect, useMemo } from 'react';
 import {  useEvmConfig, useSigningEvmClientStore } from '@/evm';
 import { SigningEvmClient } from '@valence-protocol/domain-clients-core/evm';
