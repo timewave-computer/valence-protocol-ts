@@ -1,6 +1,6 @@
 import {  mainnet } from "wagmi/chains";
 import {  http, } from "wagmi";
-import { Chain, createClient } from "viem";
+import {  createClient } from "viem";
 
 import { createEvmConfig } from "@valence-protocol/domain-clients-core";
 
