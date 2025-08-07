@@ -31,7 +31,6 @@ export const DomainModalProvider = ({ children, config }: { children: ReactNode,
   const value = useMemo(() => ({ showModal, closeModal, isModalOpen }), [showModal, closeModal, isModalOpen]);
 
   return (
-
     <DomainModalContext.Provider value={value}>
       <DomainClientsProvider config={config}>
       {children}

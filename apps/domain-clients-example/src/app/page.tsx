@@ -1,7 +1,13 @@
+'use client'; // TODO: remove this
 import {  Header, ConfigDisplay } from "@/components";
+import { useEvmConnectors, useCosmosConnectors } from "@valence-protocol/domain-modal-react";
 
 export default function Home() {
 
+  const evmConnectors = useEvmConnectors();
+  const cosmosConnectors = useCosmosConnectors();
+  console.log('cosmosConnectors', cosmosConnectors);
+  console.log('evmConnectors', evmConnectors);
  
 
   return (

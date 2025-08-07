@@ -25,3 +25,5 @@ There are ecosystem-specific tools for generating chain configuration. For clari
 ## Bundle analyzer
 run `ANALYZE=true pnpm build` to inspect bundle size.
 
+## Dependencies
+`DomainModalContext.Provider` must be wrapped in a QueryProvider from `@tanstack/react-query`.

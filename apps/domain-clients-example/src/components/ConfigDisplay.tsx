@@ -2,6 +2,7 @@
 import { useDomainConfig } from "@valence-protocol/domain-clients-react";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { Button } from "@/components";
+import { safeStringify } from "@/utils";
 
 export const ConfigDisplay = () => {
   const config = useDomainConfig();
@@ -12,8 +13,8 @@ export const ConfigDisplay = () => {
       </Button>
     </Collapsible.Trigger>
     <Collapsible.Content className="pt-2">
-    {config &&   <pre className="font-mono text-sm">{JSON.stringify(config, null, 2)}</pre>}
-  
+      {config && <pre className="font-mono text-sm">{safeStringify(config, 2)}</pre>}
+
     </Collapsible.Content>
   </Collapsible.Root>;
 };
