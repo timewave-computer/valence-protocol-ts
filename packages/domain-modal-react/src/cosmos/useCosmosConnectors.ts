@@ -1,15 +1,16 @@
-import { WalletType, getWallet, connect, useDisconnect } from "graz";
-import { ChainType, type DomainConnector } from "@/common";
+import { WalletType, getWallet, connect, useDisconnect, getChainInfo } from "graz";
+import { ChainType } from "@/common";
 import { useMemo } from "react";
 import { getCosmosWalletInfo } from "@/cosmos/const";
-
-export type CosmosConnector = Omit<DomainConnector, 'connect' | 'disconnect'> & {
-    connect: (chainId: string) => Promise<void>;
-    disconnect: (chainId?: string) => Promise<void>;
-}
+import { type CosmosConnector } from "@/cosmos/types";
+import {  cosmosWalletAtom } from "@/cosmos/store";
+import {  useSetAtom } from "jotai";
 
 export const useCosmosConnectors = ():CosmosConnector[] => {
     const { disconnectAsync } = useDisconnect();
+
+    const setCosmosWallet = useSetAtom(cosmosWalletAtom);
+
 
 
     const cosmosConnectors = useMemo(() => {
@@ -17,13 +18,50 @@ export const useCosmosConnectors = ():CosmosConnector[] => {
 
         const supportedWallets = getSupportedCosmosConnectors();
 
+        const connectWallet = async (walletType:WalletType,chainId:string) => {
+
+          const chainInfo = getChainInfo({chainId});
+          const wallet = getWallet(walletType);
+          const walletInfo = getCosmosWalletInfo(walletType);
+    
+          if (!wallet) {
+            throw new Error("Wallet not found");
+          }
+          if (walletType === WalletType.KEPLR && !!chainInfo) {
+            await wallet.experimentalSuggestChain(chainInfo);
+          }
+    
+          const response = await connect({
+            chainId: chainId,
+            walletType: walletType,
+            autoReconnect: false,
+          });
+    
+          if (!response?.accounts) {
+            throw new Error("failed to get accounts from wallet");
+          }
+    
+            const address = response?.accounts[chainId].bech32Address;
+    
+          if (!address) {
+            throw new Error("failed to get address from wallet");
+          }
+    
+          setCosmosWallet({
+            id: walletType,
+            walletName: walletInfo.name,
+            chainType: ChainType.Cosmos,
+            logo: walletInfo.imgSrc,
+          });
+        }
+
         supportedWallets.forEach(walletType => {
             const walletInfo = getCosmosWalletInfo(walletType);
     
             connectorList.push({
                 walletName: walletInfo.name,
                 walletPrettyName: walletInfo.name,
-                walletChainType: ChainType.Cosmos,
+                chainType: ChainType.Cosmos,
                 walletInfo: {
                   logo: walletInfo.imgSrc,
                 },
@@ -35,14 +73,8 @@ export const useCosmosConnectors = ():CosmosConnector[] => {
                     return false;
                   }
                 })(),
-                connect: async (chainId: string) => {
-                  await connect({  chainId,
-                    walletType: walletType,
-                    autoReconnect: false, });
-                },
-                disconnect: async (chainId?: string) => {
-                  await disconnectAsync({ chainId });
-                },
+                connect: (chainId:string) => connectWallet(walletType, chainId),
+    
             })
         })
 
