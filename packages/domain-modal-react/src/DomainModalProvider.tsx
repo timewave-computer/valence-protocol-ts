@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode, useCallback, useMemo } from 'react';
-import { ModalContent } from './ModalContent';
+import { ModalContent } from './ui/ModalContent';
 import * as Dialog from '@radix-ui/react-dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { cn } from '@/util';

@@ -18,7 +18,6 @@ export default function Home() {
         <div>
           <ConfigDisplay />
     </div>
-
       </main>
     </>
 
