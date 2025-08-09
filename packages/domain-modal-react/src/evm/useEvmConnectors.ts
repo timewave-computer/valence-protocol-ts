@@ -28,7 +28,7 @@ export const useEvmConnectors = (): EvmConnector[] => {
     connectors.forEach(connector => {
       // same wallet can be injected multiple times
       // TODO: this workaround may cause issues in the future, depending on which wallet user intends to use
-      const isConnectorAdded = connectorList.findIndex(c => c.walletName === connector.id) !== -1;
+      const isConnectorAdded = connectorList.findIndex(c => c.walletInfo.walletName === connector.id) !== -1;
       if (isConnectorAdded) {
         return
       }
@@ -67,11 +67,11 @@ export const useEvmConnectors = (): EvmConnector[] => {
       }
         
       connectorList.push({
-        walletName: connector.id,
-        walletPrettyName: connector.name,
         chainType: ChainType.Evm,
         walletInfo: {
           logo: connector.icon,
+          walletName: connector.id,
+          walletPrettyName: connector.name,
         },
         isAvailable: true, // always true because the connector was found in browser context
         connect: (chainId:number) => connectWallet(chainId),

@@ -1,3 +1,4 @@
+"use client";
 import { WalletType, getWallet, connect, useDisconnect, getChainInfo } from "graz";
 import { ChainType } from "@/common";
 import { useMemo } from "react";
@@ -59,11 +60,12 @@ export const useCosmosConnectors = ():CosmosConnector[] => {
             const walletInfo = getCosmosWalletInfo(walletType);
     
             connectorList.push({
-                walletName: walletInfo.name,
-                walletPrettyName: walletInfo.name,
+              
                 chainType: ChainType.Cosmos,
                 walletInfo: {
                   logo: walletInfo.imgSrc,
+                  walletName: walletInfo.name,
+                  walletPrettyName: walletInfo.name,
                 },
                 isAvailable: (() => {
                   try {

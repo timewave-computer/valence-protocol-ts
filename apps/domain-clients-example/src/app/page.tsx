@@ -1,4 +1,4 @@
-'use client'; // TODO: remove this
+'use client'
 import {  Header, ConfigDisplay } from "@/components";
 import { useEvmConnectors, useCosmosConnectors } from "@valence-protocol/domain-modal-react";
 

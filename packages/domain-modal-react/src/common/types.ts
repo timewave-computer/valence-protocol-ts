@@ -4,11 +4,11 @@ export enum ChainType {
   }
 
 export type DomainConnector = {
-    walletName: string;
-    walletPrettyName: string;
     chainType: ChainType;
     walletInfo: {
-      logo?: string;
+        logo?: string;
+        walletName: string;
+        walletPrettyName: string;
     };
     connect: (chainId:unknown) => Promise<void>;
     isAvailable: boolean;
