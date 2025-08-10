@@ -3,22 +3,23 @@ export enum ChainType {
     Cosmos = "cosmos",
   }
 
+export type MinimalWalletInfo = {
+    logo?: string;
+    walletName: string;
+    walletPrettyName: string;
+}
+
 export type DomainConnector = {
     chainType: ChainType;
-    walletInfo: {
-        logo?: string;
-        walletName: string;
-        walletPrettyName: string;
-    };
+    walletInfo: MinimalWalletInfo;
     connect: (chainId:unknown) => Promise<void>;
     isAvailable: boolean;
   };
 
 
-  export interface MinimalWalletState {
-    id?: string;
-    walletName: string;
+  export interface  MinimalWalletState {
+    id?: string; // pubkey, to detect if user changed connected wallet
+    walletInfo: MinimalWalletInfo;
     chainType: ChainType;
-    logo?: string;
   }
 

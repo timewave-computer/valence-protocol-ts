@@ -54,9 +54,12 @@ export const useEvmConnectors = (): EvmConnector[] => {
 
           setEvmWallet({
             id: connector.id,
-            walletName: connector.name,
+            walletInfo: {
+              walletName: connector.id,
+              walletPrettyName: connector.name,
+              logo: connector.icon,
+            },
             chainType: ChainType.Evm,
-            logo: connector.icon,
           });
         } catch (e) {
           const error = e as Error;

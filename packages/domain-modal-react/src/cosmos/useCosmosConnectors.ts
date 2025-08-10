@@ -50,9 +50,12 @@ export const useCosmosConnectors = ():CosmosConnector[] => {
     
           setCosmosWallet({
             id: walletType,
-            walletName: walletInfo.name,
+            walletInfo: {
+              walletName: walletInfo.name,
+              walletPrettyName: walletInfo.name,
+              logo: walletInfo.imgSrc,
+            },
             chainType: ChainType.Cosmos,
-            logo: walletInfo.imgSrc,
           });
         }
 

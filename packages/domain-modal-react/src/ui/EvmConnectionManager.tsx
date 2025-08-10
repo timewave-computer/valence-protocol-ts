@@ -1,31 +1,35 @@
 'use client'
 
 import { evmWalletAtom, useEvmConnectors, } from "@/evm";
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { useAtom } from "jotai";
+import { AccountCard, SelectWalletButton } from "@/ui";
+
+
 
 export const EvmConnectionManager = () => {
     const evmConnectors = useEvmConnectors();
     const [evmWallet] = useAtom(evmWalletAtom);
     const account = useAccount();
-    const currentConnector = account.connector;
+    const { disconnect } = useDisconnect();
 
-    if (account.isConnected) {
-        return <div>
-            <h1>Connected</h1>
-            <p>Wallet: {evmWallet?.walletName}</p>
-            <button onClick={() => currentConnector?.disconnect?.()}>Disconnect</button>
-        </div>
+
+    if (account.status === "connected") {
+        return   <AccountCard
+        wallet={evmWallet?.walletInfo}
+        address={account.address}
+        chainName="Ethereum"
+        onDisconnect={async () => disconnect()}
+        />
     }
-    else return <div>
+    else return <div className="flex flex-col gap-2">
         {evmConnectors.map(connector => (
-            <div key={connector.walletInfo.walletName}>
-                <h2>{connector.walletInfo.walletName}</h2>
-                <p>{connector.walletInfo.walletPrettyName}</p>
-                <button onClick={() =>
-                    connector.connect(1) // TODO: this should not be hardcoded
-                }>Connect</button>
-            </div>
+            <SelectWalletButton
+            key={connector.walletInfo.walletName}
+            wallet={connector}
+            onConnect={() => connector.connect(1)}
+            />
+      
         ))}
     </div>
 
