@@ -1,6 +1,6 @@
 
 
-import { EvmConnectionManager } from "@/ui";
+import { EvmConnectionManager,CosmosConnectionManager } from "@/ui";
 
 export interface ModalContentProps {
   isEvmEnabled?: boolean;
@@ -12,5 +12,9 @@ export const ModalContent = ({isEvmEnabled=true, isCosmosEnabled=true}: ModalCon
     {isEvmEnabled && <div>
       <h2 className="text-lg font-bold">Ethereum</h2>
        <EvmConnectionManager /></div>}
+       {isCosmosEnabled && <div>
+        <h2 className="text-lg font-bold">Cosmos</h2>
+        <CosmosConnectionManager />
+       </div>}
     </div>;
 };
