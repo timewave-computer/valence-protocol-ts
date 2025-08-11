@@ -17,7 +17,7 @@ export const SelectWalletButton = ({
       className='w-full flex items-center justify-between px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200'
     >
       <div className='flex items-center space-x-3'>
-        <WalletLogo wallet={wallet.walletInfo} />
+        <WalletLogo logo={wallet.walletInfo.logo} />
         <span className='font-medium'>
           {wallet.walletInfo.walletPrettyName}
         </span>

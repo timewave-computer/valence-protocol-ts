@@ -16,7 +16,7 @@ export const EvmConnectionManager = () => {
       <AccountCard
         wallet={evmWallet?.walletInfo}
         address={account.address}
-        chainName='Ethereum'
+        chainName={account.chain?.name}
         onDisconnect={async () => disconnect()}
       />
     );
@@ -27,7 +27,7 @@ export const EvmConnectionManager = () => {
           <SelectWalletButton
             key={connector.walletInfo.walletName}
             wallet={connector}
-            onConnect={() => connector.connect(1)}
+            onConnect={() => connector.connect()}
           />
         ))}
       </div>
