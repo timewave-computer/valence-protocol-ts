@@ -1,23 +1,23 @@
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import { ValenceDomainModalProvider, ReactQueryProvider } from '@/context';
-import '@valence-protocol/domain-modal-react/styles.css';
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import { ReactQueryProvider, ValenceDomainModalProvider } from "@/context";
+import "@valence-protocol/domain-modal-react/styles.css";
 
-import './globals.css';
+import "./globals.css";
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: 'Valence Domain Clients Example App',
-  description: 'Example app for Valence Protocol domain clients',
+  title: "Valence Domain Clients Example App",
+  description: "Example app for Valence Protocol domain clients",
 };
 
 export default function RootLayout({
@@ -26,12 +26,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <ReactQueryProvider>
-          <ValenceDomainModalProvider>{children}</ValenceDomainModalProvider>
+          <ValenceDomainModalProvider>
+            {children}
+          </ValenceDomainModalProvider>
         </ReactQueryProvider>
       </body>
     </html>
