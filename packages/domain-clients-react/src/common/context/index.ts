@@ -1,1 +1,1 @@
-export * from './DomainClientsProvider'
+export * from './DomainClientsProvider';

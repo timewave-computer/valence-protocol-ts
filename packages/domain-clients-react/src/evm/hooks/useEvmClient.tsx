@@ -7,20 +7,21 @@ import { useAccount, usePublicClient } from 'wagmi';
 export function useEvmClient() {
   const config = useEvmConfig();
   const account = useAccount();
-  const publicClient  = usePublicClient();
+  const publicClient = usePublicClient();
 
-  const {client, setClient} = useEvmClientStore();
+  const { client, setClient } = useEvmClientStore();
 
   useEffect(() => {
     if (!account || !publicClient) return;
-    const client = new EvmClient({config});
+    const client = new EvmClient({ config });
     setClient(client);
-
   }, [account, publicClient, config, setClient]);
 
-  return useMemo(() => ({
-    client,
-    account,
-  }), [client, account]);
-
-} 
+  return useMemo(
+    () => ({
+      client,
+      account,
+    }),
+    [client, account]
+  );
+}
