@@ -13,18 +13,14 @@ export function useCosmosClient(chainId: string): UseCosmosClientResult {
   const { client, setClient } = useCosmosClientStore();
 
   useEffect(() => {
-    setClient(
-      new CosmosClient({
-        chainId,
-        rpcUrl: config.chainInfo.rpc,
-      })
-    );
+    setClient(new CosmosClient({
+      chainId,
+      rpcUrl: config.chainInfo.rpc,
+    }));
   }, [config, setClient]);
 
-  return useMemo(
-    () => ({
-      client,
-    }),
-    [client]
-  );
-}
+  return useMemo(() => ({
+    client,
+  }), [client]);
+
+} 

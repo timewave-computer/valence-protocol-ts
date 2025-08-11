@@ -1,7 +1,7 @@
 export enum ClientErrorType {
   InvalidClient = 'InvalidClient',
   InvalidAddress = 'InvalidAddress',
-  InvalidSigner = 'InvalidSigner',
+  InvalidSigner = 'InvalidSigner'
 }
 
 export class ClientError extends Error {
