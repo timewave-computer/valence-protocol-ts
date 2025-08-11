@@ -32,7 +32,7 @@ This repository is a [Turborepo](https://turbo.build/) monorepo managed with [pn
    turbo lint
    ```
 
-   Husky will automatically format files on commit. Run manually on staged files with `pnpm run lint-staged`, or `pnpm prettier --write .` to format all.
+   Husky will automatically format files on commit. Run manually on staged files with `pnpm lint-staged`, or `pnpm prettier --write .` to format all.
 
 4. **Run tests:**
    ```sh
