@@ -11,7 +11,7 @@ export interface CosmosClientArgs {
 export class CosmosClient extends ChainClient {
   public readonly rpcUrl: string;
   public readonly chainId: string;
-  
+
   constructor(args: CosmosClientArgs) {
     super();
     this.rpcUrl = args.rpcUrl;
@@ -23,8 +23,10 @@ export class CosmosClient extends ChainClient {
     try {
       return StargateClient.connect(this.rpcUrl);
     } catch (error) {
-
-      throw new ClientError(ClientErrorType.InvalidClient, 'Could not initialize stargate client',);
+      throw new ClientError(
+        ClientErrorType.InvalidClient,
+        'Could not initialize stargate client'
+      );
     }
   }
 
@@ -32,7 +34,10 @@ export class CosmosClient extends ChainClient {
     try {
       return CosmWasmClient.connect(this.rpcUrl);
     } catch (error) {
-      throw new ClientError(ClientErrorType.InvalidClient, 'Could not initialize cosmwasm client');
+      throw new ClientError(
+        ClientErrorType.InvalidClient,
+        'Could not initialize cosmwasm client'
+      );
     }
   }
 
@@ -52,4 +57,4 @@ export class CosmosClient extends ChainClient {
     const result = await client.queryContractSmart(address, queryObject);
     return responseSchema.parse(result);
   }
-} 
+}
