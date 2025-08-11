@@ -14,11 +14,8 @@ import {
   DomainClientsProvider,
   type DomainClientsConfig,
 } from '@valence-protocol/domain-clients-react';
-
-import { ModalContent } from '@/ui/common';
-import { cn } from '@/ui/util';
-
-import './globals.css';
+import { ModalContent, cn } from '@/ui';
+import '@/globals.css';
 
 interface DomainModalContextType {
   showModal: () => void;

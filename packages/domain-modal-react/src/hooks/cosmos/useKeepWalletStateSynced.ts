@@ -26,9 +26,12 @@ export const useKeepCosmosWalletStateSynced = () => {
 
       setCosmosWallet({
         id: currentCosmosAddress,
-        walletName: walletType,
+        walletInfo: {
+          walletName: walletType,
+          walletPrettyName: walletType,
+          logo: walletInfo?.imgSrc,
+        },
         chainType: ChainType.Cosmos,
-        logo: walletInfo?.imgSrc,
       });
     }
   }, [cosmosAccounts, currentCosmosAddress, setCosmosWallet, walletType]);

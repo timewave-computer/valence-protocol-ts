@@ -1,3 +1,2 @@
-export * from './ui/common/DomainModalProvider';
-export * from './hooks/evm';
-export * from './hooks/cosmos';
+export * from './ui/DomainModalProvider';
+export * from './hooks/';
