@@ -55,7 +55,7 @@ export const useEvmConnectors = (): EvmConnector[] => {
         setEvmWallet({
           id: connector.id,
           walletInfo: {
-            walletName: connector.id,
+            walletName: connector.name,
             walletPrettyName: connector.name,
             logo: connector.icon,
           },

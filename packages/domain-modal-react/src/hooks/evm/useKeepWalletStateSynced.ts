@@ -16,16 +16,13 @@ export const useKeepEvmWalletStateSynced = () => {
   const updateEvmWallet = useCallback(async () => {
     const provider = await evmAccount.connector?.getProvider?.();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const walletConnectMetadata = (provider as any)?.session?.peer?.metadata;
-
     if (evmAccount.connector) {
       setEvmWallet({
         id: evmAccount.address,
         walletInfo: {
-          walletName: evmAccount.connector.id,
+          walletName: evmAccount.connector.name,
           walletPrettyName: evmAccount.connector.name,
-          logo: walletConnectMetadata?.icons[0] ?? evmAccount.connector?.icon,
+          logo: evmAccount.connector?.icon,
         },
         chainType: ChainType.Evm,
       });
