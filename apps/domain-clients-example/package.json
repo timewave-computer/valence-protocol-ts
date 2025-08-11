@@ -14,6 +14,7 @@
   "dependencies": {
     "@next/bundle-analyzer": "^15.4.6",
     "@radix-ui/react-collapsible": "^1.1.11",
+    "@tanstack/react-query": "^5.84.1",
     "@valence-protocol/domain-clients-core": "workspace:*",
     "@valence-protocol/domain-clients-react": "workspace:*",
     "@valence-protocol/domain-modal-react": "workspace:*",

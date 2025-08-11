@@ -20,6 +20,7 @@
           buildInputs = [
             nodejs
             pnpm
+            pkgs.git
           ];
 
           shellHook = ''

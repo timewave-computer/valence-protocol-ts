@@ -2,7 +2,7 @@
   "name": "valence-protocol-ts",
   "version": "1.0.0",
   "description": "Monorepo for Valence Protocol TypeScript projects",
-   "main": "index.js",
+  "main": "index.js",
   "keywords": [],
   "author": "Valence",
   "license": "MIT",
@@ -11,9 +11,18 @@
     "packages/*",
     "apps/*"
   ],
-  "packageManager": "pnpm@9.15.0", 
+  "packageManager": "pnpm@9.15.0",
   "devDependencies": {
-    "turbo": "^2.5.5", 
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.5",
     "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }

@@ -6,11 +6,18 @@
       "outputs": ["dist/**"]
     },
     "@valence-protocol/domain-modal-react#build": {
-      "dependsOn": ["@valence-protocol/domain-clients-react#build", "@valence-protocol/domain-clients-core#build"],
+      "dependsOn": [
+        "@valence-protocol/domain-clients-react#build",
+        "@valence-protocol/domain-clients-core#build"
+      ],
       "outputs": ["dist/**"]
     },
     "@valence-protocol/domain-clients-example#build": {
-      "dependsOn": ["@valence-protocol/domain-modal-react#build", "@valence-protocol/domain-clients-react#build", "@valence-protocol/domain-clients-core#build"],
+      "dependsOn": [
+        "@valence-protocol/domain-modal-react#build",
+        "@valence-protocol/domain-clients-react#build",
+        "@valence-protocol/domain-clients-core#build"
+      ],
       "outputs": ["dist/**", ".next/**"]
     },
     "build": {
@@ -21,11 +28,11 @@
       "cache": false,
       "persistent": true
     },
-    "start":{
+    "start": {
       "cache": false,
       "persistent": true
     },
     "lint": {},
     "test": {}
   }
-} 
+}

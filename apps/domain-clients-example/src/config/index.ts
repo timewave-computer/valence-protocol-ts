@@ -1,1 +1,1 @@
-export * from "./domainClientsConfig";
+export * from './domainClientsConfig';
