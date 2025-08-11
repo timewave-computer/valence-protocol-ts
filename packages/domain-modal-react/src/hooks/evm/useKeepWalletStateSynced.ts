@@ -1,9 +1,9 @@
-"use client";
-import { evmWalletAtom } from "@/evm";
-import { useAtom } from "jotai";
-import { useCallback, useEffect } from "react";
-import { useAccount as useEvmAccount } from "wagmi";
-import { ChainType } from "@/common";
+'use client';
+import { evmWalletAtom } from '@/hooks/evm';
+import { useAtom } from 'jotai';
+import { useCallback, useEffect } from 'react';
+import { useAccount as useEvmAccount } from 'wagmi';
+import { ChainType } from '@/hooks/common';
 
 /***
  * Keeps wallet metadata synced
@@ -42,6 +42,5 @@ export const useKeepEvmWalletStateSynced = () => {
     setEvmWallet,
     updateEvmWallet,
     evmAccount.address,
-
   ]);
 };

@@ -1,12 +1,11 @@
 'use client';
-import {  ChainType, } from "@/common";
-import {  useConnectors, useAccount, useConnect, useDisconnect } from "wagmi";
-import { useMemo } from "react";
-import { useKeepEvmWalletStateSynced } from "@/evm/useKeepWalletStateSynced";
-import { evmWalletAtom } from "@/evm/store";
-import { useSetAtom } from "jotai";
-import { type EvmConnector } from "@/evm/types";
-
+import { ChainType } from '@/hooks/common';
+import { useConnectors, useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useMemo } from 'react';
+import { useKeepEvmWalletStateSynced } from '@/hooks/evm/useKeepWalletStateSynced';
+import { evmWalletAtom } from '@/hooks/evm/store';
+import { useSetAtom } from 'jotai';
+import { type EvmConnector } from '@/hooks/evm/types';
 
 export const useEvmConnectors = (): EvmConnector[] => {
   const connectors = useConnectors();
@@ -28,17 +27,19 @@ export const useEvmConnectors = (): EvmConnector[] => {
     connectors.forEach(connector => {
       // same wallet can be injected multiple times
       // TODO: this workaround may cause issues in the future, depending on which wallet user intends to use
-      const isConnectorAdded = connectorList.findIndex(c => c.walletInfo.walletName === connector.id) !== -1;
+      const isConnectorAdded =
+        connectorList.findIndex(
+          c => c.walletInfo.walletName === connector.id
+        ) !== -1;
       if (isConnectorAdded) {
-        return
+        return;
       }
 
-      const connectWallet = async (chainId:number) => {
+      const connectWallet = async (chainId: number) => {
         const walletConnectedButNeedToSwitchChain =
-        isEvmConnected &&
-        chainId !== connectorChainId &&
-        connector.id === evmConnector?.id;
-
+          isEvmConnected &&
+          chainId !== connectorChainId &&
+          connector.id === evmConnector?.id;
 
         try {
           if (isEvmConnected && connector.id !== evmConnector?.id) {
@@ -67,8 +68,8 @@ export const useEvmConnectors = (): EvmConnector[] => {
           alert(error.message);
           throw e;
         }
-      }
-        
+      };
+
       connectorList.push({
         chainType: ChainType.Evm,
         walletInfo: {
@@ -77,12 +78,12 @@ export const useEvmConnectors = (): EvmConnector[] => {
           walletPrettyName: connector.name,
         },
         isAvailable: true, // always true because the connector was found in browser context
-        connect: (chainId:number) => connectWallet(chainId),
-      })
+        connect: (chainId: number) => connectWallet(chainId),
+      });
     });
-  
+
     return connectorList;
-  },[connectors,disconnect])
+  }, [connectors, disconnect]);
 
   return evmConnectors;
 };

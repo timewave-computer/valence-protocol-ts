@@ -1,4 +1,4 @@
-import { ChainType } from "@/common";
+import { ChainType } from '@/hooks/common';
 
 export function detectAddressType(address: string): ChainType | undefined {
   if (!address) return undefined;
@@ -22,16 +22,14 @@ export function detectAddressType(address: string): ChainType | undefined {
  * - Cosmos: cosmos1abcd…wxyz
  */
 export function shortenAddress(address: string): string {
-  if (!address) return "";
+  if (!address) return '';
 
   switch (detectAddressType(address)) {
     case ChainType.Cosmos:
       return `${address.slice(0, 6)}…${address.slice(-4)}`;
     case ChainType.Evm:
-   
-    default:
-        return`${address.slice(0, 6)}…${address.slice(-4)}`;
 
+    default:
+      return `${address.slice(0, 6)}…${address.slice(-4)}`;
   }
 }
-

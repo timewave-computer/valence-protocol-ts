@@ -1,6 +1,19 @@
-import { EncodeObject, OfflineDirectSigner, Registry } from '@cosmjs/proto-signing';
-import { SigningStargateClient, DeliverTxResponse, Coin, StdFee, AminoTypes } from '@cosmjs/stargate';
-import { SigningCosmWasmClient, ExecuteResult } from '@cosmjs/cosmwasm-stargate';
+import {
+  EncodeObject,
+  OfflineDirectSigner,
+  Registry,
+} from '@cosmjs/proto-signing';
+import {
+  SigningStargateClient,
+  DeliverTxResponse,
+  Coin,
+  StdFee,
+  AminoTypes,
+} from '@cosmjs/stargate';
+import {
+  SigningCosmWasmClient,
+  ExecuteResult,
+} from '@cosmjs/cosmwasm-stargate';
 import { OfflineAminoSigner } from '@cosmjs/amino';
 import { TextEncoder } from 'util';
 import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
@@ -9,7 +22,7 @@ export type CosmosSigner = OfflineAminoSigner & OfflineDirectSigner;
 export type CosmosGas = {
   price: string;
   denom: string;
-}
+};
 
 export interface SigningCosmosClientConfig {
   chainId: string;
@@ -30,9 +43,7 @@ export class SigningCosmosClient extends SigningChainClient {
   public readonly chainId: string;
   public readonly rpcUrl: string;
 
-  constructor(
-    args: SigningCosmosClientConfig
-  ) {
+  constructor(args: SigningCosmosClientConfig) {
     super();
     this.chainId = args.chainId;
     this.rpcUrl = args.rpcUrl;
@@ -46,38 +57,45 @@ export class SigningCosmosClient extends SigningChainClient {
   // Cosmos specific
   async getSigningStargateClient(): Promise<SigningStargateClient> {
     if (!this.signer) {
-      throw new ClientError(ClientErrorType.InvalidSigner, 'Cosmos offline signer is not set');
+      throw new ClientError(
+        ClientErrorType.InvalidSigner,
+        'Cosmos offline signer is not set'
+      );
     }
     try {
-    return SigningStargateClient.connectWithSigner(
-      this.rpcUrl,
-      this.signer,
-      {
+      return SigningStargateClient.connectWithSigner(this.rpcUrl, this.signer, {
         registry: this.protobufRegistry,
         aminoTypes: this.aminoTypes,
-        gasPrice: undefined // Optionally set gas price here
-      }
-    );
+        gasPrice: undefined, // Optionally set gas price here
+      });
     } catch (error) {
-      throw new ClientError(ClientErrorType.InvalidClient, 'Could not initialize stargate client');
+      throw new ClientError(
+        ClientErrorType.InvalidClient,
+        'Could not initialize stargate client'
+      );
     }
   }
 
   async getSigningCosmwasmClient(): Promise<SigningCosmWasmClient> {
     if (!this.signer) {
-      throw new ClientError(ClientErrorType.InvalidSigner, 'Cosmos offline signer is not set');
+      throw new ClientError(
+        ClientErrorType.InvalidSigner,
+        'Cosmos offline signer is not set'
+      );
     }
     try {
-    return SigningCosmWasmClient.connectWithSigner(
-      this.rpcUrl,
-      this.signer
-      // Optionally add gas price, registry, aminoTypes
-    );
+      return SigningCosmWasmClient.connectWithSigner(
+        this.rpcUrl,
+        this.signer
+        // Optionally add gas price, registry, aminoTypes
+      );
     } catch (error) {
-      throw new ClientError(ClientErrorType.InvalidClient, 'Could not initialize cosmwasm client');
+      throw new ClientError(
+        ClientErrorType.InvalidClient,
+        'Could not initialize cosmwasm client'
+      );
     }
   }
-
 
   async sendTokens(
     recipient: string,
@@ -86,7 +104,10 @@ export class SigningCosmosClient extends SigningChainClient {
     memo = ''
   ): Promise<DeliverTxResponse> {
     if (!this.senderAddress) {
-      throw new ClientError(ClientErrorType.InvalidAddress, 'Sender address is not set');
+      throw new ClientError(
+        ClientErrorType.InvalidAddress,
+        'Sender address is not set'
+      );
     }
     const client = await this.getSigningStargateClient();
 
@@ -102,7 +123,14 @@ export class SigningCosmosClient extends SigningChainClient {
     funds: Coin[] = []
   ): Promise<ExecuteResult> {
     const client = await this.getSigningCosmwasmClient();
-    return client.execute(sender, contractAddress, messageBody, fee, memo, funds);
+    return client.execute(
+      sender,
+      contractAddress,
+      messageBody,
+      fee,
+      memo,
+      funds
+    );
   }
 
   async executeMessageBatch(
@@ -111,11 +139,13 @@ export class SigningCosmosClient extends SigningChainClient {
     memo = ''
   ): Promise<DeliverTxResponse> {
     if (!this.senderAddress) {
-      throw new ClientError(ClientErrorType.InvalidAddress, 'Sender address is not set');
+      throw new ClientError(
+        ClientErrorType.InvalidAddress,
+        'Sender address is not set'
+      );
     }
-      const client = await this.getSigningStargateClient();
-      return client.signAndBroadcast(this.senderAddress, messages, fee, memo);
-
+    const client = await this.getSigningStargateClient();
+    return client.signAndBroadcast(this.senderAddress, messages, fee, memo);
   }
 
   // Cosmos only
@@ -131,8 +161,8 @@ export class SigningCosmosClient extends SigningChainClient {
         sender: sender || this.senderAddress,
         contract: contractAddress,
         msg: new TextEncoder().encode(JSON.stringify(msg)),
-        funds: funds
-      }
+        funds: funds,
+      },
     };
   }
-} 
+}
