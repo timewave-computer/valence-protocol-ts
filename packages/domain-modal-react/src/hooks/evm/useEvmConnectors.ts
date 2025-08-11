@@ -41,33 +41,26 @@ export const useEvmConnectors = (): EvmConnector[] => {
           chainId !== connectorChainId &&
           connector.id === evmConnector?.id;
 
-        try {
-          if (isEvmConnected && connector.id !== evmConnector?.id) {
-            await disconnect();
-          }
-          if (walletConnectedButNeedToSwitchChain) {
-            await connector?.switchChain?.({
-              chainId: Number(chainId),
-            });
-          }
-
-          await connectAsync({ connector, chainId });
-
-          setEvmWallet({
-            id: connector.id,
-            walletInfo: {
-              walletName: connector.id,
-              walletPrettyName: connector.name,
-              logo: connector.icon,
-            },
-            chainType: ChainType.Evm,
-          });
-        } catch (e) {
-          const error = e as Error;
-          console.error(error);
-          alert(error.message);
-          throw e;
+        if (isEvmConnected && connector.id !== evmConnector?.id) {
+          await disconnect();
         }
+        if (walletConnectedButNeedToSwitchChain) {
+          await connector?.switchChain?.({
+            chainId: Number(chainId),
+          });
+        }
+
+        await connectAsync({ connector, chainId });
+
+        setEvmWallet({
+          id: connector.id,
+          walletInfo: {
+            walletName: connector.id,
+            walletPrettyName: connector.name,
+            logo: connector.icon,
+          },
+          chainType: ChainType.Evm,
+        });
       };
 
       connectorList.push({

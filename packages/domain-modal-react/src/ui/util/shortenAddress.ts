@@ -28,7 +28,6 @@ export function shortenAddress(address: string): string {
     case ChainType.Cosmos:
       return `${address.slice(0, 6)}…${address.slice(-4)}`;
     case ChainType.Evm:
-
     default:
       return `${address.slice(0, 6)}…${address.slice(-4)}`;
   }
