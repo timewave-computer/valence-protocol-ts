@@ -9,7 +9,6 @@ interface EthereumDataProps {
   initialAddress: Address;
   symbol: string;
   erc20Address: Address;
-  tokenAddress: Address;
   initialBalance: bigint;
   decimals: number;
   chainId: number;
@@ -72,7 +71,7 @@ export const EthereumData = ({
         isError={isError}
         decimals={decimals}
         symbol={symbol}
-        amount={balance?.balance.toString()}
+        amount={balance?.balance.toString() ?? '0'}
       />
     </div>
   );
