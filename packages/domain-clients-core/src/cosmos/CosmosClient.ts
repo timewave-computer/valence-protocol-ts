@@ -18,7 +18,6 @@ export class CosmosClient extends ChainClient {
     this.chainId = args.chainId;
   }
 
-  // Cosmos specific
   async getStargateClient(): Promise<StargateClient> {
     try {
       return StargateClient.connect(this.rpcUrl);
@@ -41,13 +40,12 @@ export class CosmosClient extends ChainClient {
     }
   }
 
-  // Inherited required methods
   async getDenomBalance(address: string, denom: string): Promise<Coin> {
     const client = await this.getStargateClient();
     return client.getBalance(address, denom);
   }
 
-  // Without ts-codegen (recommended to use ts-codegen, docs below)
+  // Raw untyped query. It is recommended to use ts-codegen for type safety and pass the appropriate client
   async queryContract<T extends z.ZodTypeAny>(
     address: string,
     queryObject: object | string,

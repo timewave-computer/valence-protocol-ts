@@ -28,9 +28,7 @@ export class EvmClient extends ChainClient {
     this.chainId = args.chainId;
   }
 
-  // EVM specific
   getPublicClient(): PublicClient {
-    // You may need to adjust this to pass config as needed
     const client = getPublicClient(this.config, {
       chainId: this.chainId,
     });

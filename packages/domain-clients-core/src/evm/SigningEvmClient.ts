@@ -47,7 +47,6 @@ export class SigningEvmClient extends SigningChainClient {
     return this.signer.account.address;
   }
 
-  // EVM specific
   async getWalletClient(): Promise<WalletClient> {
     const client = await getWalletClient(this.config, {
       chainId: this.chainId,
