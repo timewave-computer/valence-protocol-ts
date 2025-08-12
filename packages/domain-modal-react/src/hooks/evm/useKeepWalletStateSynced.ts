@@ -14,8 +14,6 @@ export const useKeepEvmWalletStateSynced = () => {
   const evmAccount = useEvmAccount();
 
   const updateEvmWallet = useCallback(async () => {
-    const provider = await evmAccount.connector?.getProvider?.();
-
     if (evmAccount.connector) {
       setEvmWallet({
         id: evmAccount.address,

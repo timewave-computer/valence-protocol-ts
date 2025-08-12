@@ -1,5 +1,7 @@
+'use client';
 import { EvmConnectionManager } from '@/ui/evm';
 import { CosmosConnectionManager } from '@/ui/cosmos';
+import { useDomainConfig } from '@valence-protocol/domain-clients-react';
 
 export interface ModalContentProps {
   isEvmEnabled?: boolean;
@@ -9,19 +11,21 @@ export const ModalContent = ({
   isEvmEnabled = true,
   isCosmosEnabled = true,
 }: ModalContentProps) => {
+  const config = useDomainConfig();
+
   return (
     <div className='flex flex-col gap-4'>
       <h1 className='text-xl font-bold'>Select wallet</h1>
-      {isEvmEnabled && (
+      {config.evm && (
         <div>
-          <h2 className='text-lg font-bold'>Ethereum</h2>
-          <EvmConnectionManager />
+          <h2 className='text-lg font-bold'>EVM Wallet</h2>
+          <EvmConnectionManager config={config.evm} />
         </div>
       )}
-      {isCosmosEnabled && (
+      {config.cosmos && (
         <div>
-          <h2 className='text-lg font-bold'>Cosmos</h2>
-          <CosmosConnectionManager />
+          <h2 className='text-lg font-bold'>Cosmos Wallet</h2>
+          <CosmosConnectionManager config={config.cosmos} />
         </div>
       )}
     </div>

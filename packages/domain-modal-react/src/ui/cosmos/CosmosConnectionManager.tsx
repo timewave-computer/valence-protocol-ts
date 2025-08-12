@@ -1,36 +1,75 @@
 'use client';
 
-import { useAtom } from 'jotai';
-import { AccountCard, SelectWalletButton } from '@/ui/common';
+import { useAtomValue } from 'jotai';
+import { SelectWalletButton, AccountCard } from '@/ui/common';
 import { useCosmosConnectors, cosmosWalletAtom } from '@/hooks';
 import { useAccount, disconnect } from 'graz';
+import { useCosmosConfig } from '@valence-protocol/domain-clients-react';
+import { cn } from '@/ui/util';
 
 export const CosmosConnectionManager = () => {
   const cosmosConnectors = useCosmosConnectors();
-  const [cosmosWallet] = useAtom(cosmosWalletAtom);
-  const { data: account } = useAccount({
-    chainId: 'neutron-1',
+  const cosmosWallet = useAtomValue(cosmosWalletAtom);
+  const config = useCosmosConfig();
+
+  const { data: accounts, isConnected } = useAccount({
+    multiChain: true,
   });
 
-  if (account) {
+  if (!config) {
+    console.warn(
+      'Attempted to use CosmosConnectionManager with undefined cosmosconfig'
+    );
+    return null;
+  }
+
+  if (isConnected) {
     return (
-      <AccountCard
-        wallet={cosmosWallet?.walletInfo}
-        address={account.bech32Address}
-        chainName='Cosmos'
-        onDisconnect={async () => disconnect()}
-      />
+      <>
+        {config.grazOptions.chains.map(chainInfo => {
+          const chainId = chainInfo.chainId;
+          const account = accounts?.[chainId];
+          if (account) {
+            return (
+              <AccountCard
+                walletLogoClassName={cn(
+                  walletLogoScale(cosmosWallet?.walletInfo?.walletName ?? '')
+                )}
+                key={chainId}
+                wallet={cosmosWallet?.walletInfo}
+                address={account.bech32Address}
+                chainName={chainInfo.chainName}
+                onDisconnect={async () => disconnect({ chainId })}
+              />
+            );
+          }
+        })}
+      </>
     );
   } else
     return (
       <div className='flex flex-col gap-2'>
-        {cosmosConnectors.map(connector => (
-          <SelectWalletButton
-            key={connector.walletInfo.walletName}
-            wallet={connector}
-            onConnect={() => connector.connect('neutron-1')}
-          />
-        ))}
+        {cosmosConnectors.map(connector => {
+          return (
+            <SelectWalletButton
+              walletLogoClassName={cn(
+                walletLogoScale(connector.walletInfo.walletName)
+              )}
+              key={connector.walletInfo.walletName}
+              wallet={connector}
+              onConnect={() => connector.connect(config.defaultChainId)}
+            />
+          );
+        })}
       </div>
     );
+};
+
+const walletLogoScale = (walletName: string) => {
+  // some logos have transparent backgrounds, need to scale them up
+  // permanent fix is to change the logo assets in getCosmosWalletInfo
+  return {
+    Keplr: 'scale-[1.3]',
+    Leap: 'scale-[1.3]',
+  }[walletName];
 };
