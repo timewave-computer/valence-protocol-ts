@@ -43,9 +43,6 @@ export const useKeepCosmosWalletStateSynced = () => {
 
   useEffect(() => {
     if (!isConnected) return;
-    console.log('walletType', walletType);
-    console.log('currentCosmosAddress', currentCosmosAddress);
-    console.log('cosmosWallet', cosmosWallet);
     if (walletType && currentCosmosAddress !== cosmosWallet?.id) {
       updateCosmosWallet();
     }
