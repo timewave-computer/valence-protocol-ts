@@ -1,3 +1,4 @@
 export * from './Header';
 export * from './ConfigDisplay';
 export * from './ui';
+export * from './BalanceView';

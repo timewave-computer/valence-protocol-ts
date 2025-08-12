@@ -44,6 +44,7 @@ export class CosmosClient extends ChainClient {
   // Inherited required methods
   async getDenomBalance(address: string, denom: string): Promise<Coin> {
     const client = await this.getStargateClient();
+    console.log('client', client);
     return client.getBalance(address, denom);
   }
 
