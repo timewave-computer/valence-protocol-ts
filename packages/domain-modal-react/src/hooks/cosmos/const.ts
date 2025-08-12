@@ -1,7 +1,35 @@
 import { WalletType } from 'graz';
 
+export const supportedCosmosWallets = [
+  WalletType.OKX,
+  WalletType.KEPLR,
+  WalletType.LEAP,
+] as const;
+
+// Create a type from the supported wallets array
+export type SupportedCosmosWallet = (typeof supportedCosmosWallets)[number];
+
+export const getCosmosWalletInfo = (walletType: WalletType) => {
+  const isSupported = isSupportedCosmosWallet(walletType);
+  if (!isSupported) {
+    throw new Error(`Wallet type ${walletType} is not supported`);
+  }
+  return cosmosWalletInfo[walletType];
+};
+
+/**
+ * Typeguard that checks if a WalletType is a supported Cosmos wallet
+ * @param walletType - The wallet type to check
+ * @returns True if the wallet type is supported, false otherwise
+ */
+export const isSupportedCosmosWallet = (
+  walletType: WalletType
+): walletType is SupportedCosmosWallet => {
+  return supportedCosmosWallets.includes(walletType as SupportedCosmosWallet);
+};
+
 export const cosmosWalletInfo: Record<
-  string,
+  SupportedCosmosWallet,
   {
     name: string;
     imgSrc: string;
@@ -23,71 +51,18 @@ export const cosmosWalletInfo: Record<
     imgSrc:
       'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-leap.png',
   },
-  [WalletType.COSMOSTATION]: {
-    name: 'Cosmostation',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-cosmostation.png',
-  },
-  [WalletType.VECTIS]: {
-    name: 'Vectis',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-vectis.svg',
-  },
-  [WalletType.STATION]: {
-    name: 'Station',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-station.svg',
-  },
-  [WalletType.XDEFI]: {
-    name: 'XDefi',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-xdefi.jpeg',
-  },
-  [WalletType.METAMASK_SNAP_LEAP]: {
-    name: 'Metamask Snap Leap',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-metamask.png',
-  },
-  [WalletType.METAMASK_SNAP_COSMOS]: {
-    name: 'Metamask Snap Cosmos',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-metamask.png',
-  },
-  [WalletType.WALLETCONNECT]: {
-    name: 'WalletConnect',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-walletconnect.png',
-  },
-  [WalletType.WC_KEPLR_MOBILE]: {
-    name: 'Keplr Mobile',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-keplr.png',
-    mobile: true,
-  },
-  [WalletType.WC_LEAP_MOBILE]: {
-    name: 'Leap Mobile',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-leap.png',
-    mobile: true,
-  },
-  [WalletType.WC_COSMOSTATION_MOBILE]: {
-    name: 'Cosmostation Mobile',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-cosmostation.png',
-    mobile: true,
-  },
-  [WalletType.COSMIFRAME]: {
-    name: 'DAO DAO',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-daodao.png',
-  },
-  [WalletType.COMPASS]: {
-    name: 'Compass',
-    imgSrc:
-      'https://raw.githubusercontent.com/graz-sh/graz/dev/example/starter/public/assets/wallet-icon-compass.png',
-  },
-};
-
-export const getCosmosWalletInfo = (walletType: WalletType) => {
-  return cosmosWalletInfo[walletType];
+  // unsupported wallets
+  // assets can be found at https://github.com/graz-sh/graz/blob/0dfcd2ff58043e4d10a9255bdca684258369786f/example/starter/src/utils/graz.ts
+  // [WalletType.COSMOSTATION]: { ... },
+  // [WalletType.VECTIS]: { ... },
+  // [WalletType.STATION]: { ... },
+  // [WalletType.XDEFI]: { ... },
+  // [WalletType.METAMASK_SNAP_LEAP]: { ... },
+  // [WalletType.METAMASK_SNAP_COSMOS]: { ... },
+  // [WalletType.WALLETCONNECT]: { ... },
+  // [WalletType.WC_KEPLR_MOBILE]: { ... },
+  // [WalletType.WC_LEAP_MOBILE]: { ... },
+  // [WalletType.WC_COSMOSTATION_MOBILE]: { ... },
+  // [WalletType.COSMIFRAME]: { ... },
+  // [WalletType.COMPASS]: { ... },
 };

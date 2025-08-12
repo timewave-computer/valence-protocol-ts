@@ -14,6 +14,8 @@ import {
   useKeepCosmosWalletStateSynced,
   type CosmosConnector,
   getCosmosWalletInfo,
+  type SupportedCosmosWallet,
+  supportedCosmosWallets,
 } from '@/hooks/cosmos';
 
 export const useCosmosConnectors = (): CosmosConnector[] => {
@@ -25,9 +27,10 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
   const cosmosConnectors = useMemo(() => {
     const connectorList: CosmosConnector[] = [];
 
-    const supportedWallets = getSupportedCosmosConnectors();
-
-    const connectWallet = async (walletType: WalletType, chainId: string) => {
+    const connectWallet = async (
+      walletType: SupportedCosmosWallet,
+      chainId: string
+    ) => {
       const chainInfo = getChainInfo({ chainId });
       const wallet = getWallet(walletType);
       const walletInfo = getCosmosWalletInfo(walletType);
@@ -66,7 +69,7 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
       });
     };
 
-    supportedWallets.forEach(walletType => {
+    supportedCosmosWallets.forEach(walletType => {
       const walletInfo = getCosmosWalletInfo(walletType);
 
       connectorList.push({
@@ -92,10 +95,4 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
   }, [disconnectAsync]);
 
   return cosmosConnectors;
-};
-
-const getSupportedCosmosConnectors = () => {
-  const browserWallets = [WalletType.KEPLR, WalletType.LEAP, WalletType.OKX];
-
-  return browserWallets;
 };

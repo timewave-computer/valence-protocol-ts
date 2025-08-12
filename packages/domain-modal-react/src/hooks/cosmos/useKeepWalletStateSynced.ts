@@ -1,10 +1,9 @@
 'use client';
 import { useAtom } from 'jotai';
 import { useCallback, useEffect } from 'react';
-import { ChainType } from '@/hooks/common';
-import { cosmosWalletAtom } from '@/hooks/cosmos/store';
 import { useAccount as useCosmosAccount } from 'graz';
-import { getCosmosWalletInfo } from './const';
+import { ChainType } from '@/hooks/common';
+import { cosmosWalletAtom, getCosmosWalletInfo } from '@/hooks/cosmos';
 
 /***
  * Keeps wallet metadata synced
