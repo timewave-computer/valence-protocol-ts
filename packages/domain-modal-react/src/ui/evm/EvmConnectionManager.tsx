@@ -1,7 +1,7 @@
 'use client';
 
 import { useAccount, useDisconnect } from 'wagmi';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { evmWalletAtom, useEvmConnectors } from '@/hooks';
 import { SelectWalletButton, AccountCard } from '@/ui/common';
 import { type useEvmConfig } from '@valence-protocol/domain-clients-react';
@@ -11,11 +11,12 @@ export interface EvmConnectionManagerProps {
 }
 export const EvmConnectionManager = ({}: EvmConnectionManagerProps) => {
   const evmConnectors = useEvmConnectors();
-  const [evmWallet] = useAtom(evmWalletAtom);
+  const evmWallet = useAtomValue(evmWalletAtom);
   const account = useAccount();
   const { disconnect } = useDisconnect();
+  const isConnected = account?.status === 'connected';
 
-  if (account.status === 'connected') {
+  if (isConnected && !!account) {
     return (
       <AccountCard
         wallet={evmWallet?.walletInfo}

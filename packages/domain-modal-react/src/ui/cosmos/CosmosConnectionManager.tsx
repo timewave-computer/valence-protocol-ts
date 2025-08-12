@@ -1,9 +1,9 @@
 'use client';
 
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { SelectWalletButton, AccountCard } from '@/ui/common';
 import { useCosmosConnectors, cosmosWalletAtom } from '@/hooks';
-import { useAccount, disconnect, WalletType } from 'graz';
+import { useAccount, disconnect } from 'graz';
 import { useCosmosConfig } from '@valence-protocol/domain-clients-react';
 import { cn } from '@/ui/util';
 
@@ -14,7 +14,7 @@ export const CosmosConnectionManager = ({
   config,
 }: CosmosConnectionManagerProps) => {
   const cosmosConnectors = useCosmosConnectors();
-  const [cosmosWallet] = useAtom(cosmosWalletAtom);
+  const cosmosWallet = useAtomValue(cosmosWalletAtom);
 
   const { data: accounts, isConnected } = useAccount({
     multiChain: true,
@@ -29,6 +29,9 @@ export const CosmosConnectionManager = ({
           if (account) {
             return (
               <AccountCard
+                walletLogoClassName={cn(
+                  walletLogoScale(cosmosWallet?.walletInfo?.walletName ?? '')
+                )}
                 key={chainId}
                 wallet={cosmosWallet?.walletInfo}
                 address={account.bech32Address}
