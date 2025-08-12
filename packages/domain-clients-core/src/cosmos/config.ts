@@ -6,4 +6,5 @@ export type CosmosConfig = {
   grazOptions: ConfigureGrazArgs;
   protobufRegistry?: Registry;
   aminoTypes?: AminoTypes;
+  defaultChainId: string;
 };

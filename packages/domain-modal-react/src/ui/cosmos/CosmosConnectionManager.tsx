@@ -7,18 +7,21 @@ import { useAccount, disconnect } from 'graz';
 import { useCosmosConfig } from '@valence-protocol/domain-clients-react';
 import { cn } from '@/ui/util';
 
-export interface CosmosConnectionManagerProps {
-  config: ReturnType<typeof useCosmosConfig>;
-}
-export const CosmosConnectionManager = ({
-  config,
-}: CosmosConnectionManagerProps) => {
+export const CosmosConnectionManager = () => {
   const cosmosConnectors = useCosmosConnectors();
   const cosmosWallet = useAtomValue(cosmosWalletAtom);
+  const config = useCosmosConfig();
 
   const { data: accounts, isConnected } = useAccount({
     multiChain: true,
   });
+
+  if (!config) {
+    console.warn(
+      'Attempted to use CosmosConnectionManager with undefined cosmosconfig'
+    );
+    return null;
+  }
 
   if (isConnected) {
     return (
@@ -64,7 +67,7 @@ export const CosmosConnectionManager = ({
 
 const walletLogoScale = (walletName: string) => {
   // some logos have transparent backgrounds, need to scale them up
-  // permanent fix is to change the cosmos
+  // permanent fix is to change the logo assets in getCosmosWalletInfo
   return {
     Keplr: 'scale-[1.3]',
     Leap: 'scale-[1.3]',

@@ -4,17 +4,22 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { useAtomValue } from 'jotai';
 import { evmWalletAtom, useEvmConnectors } from '@/hooks';
 import { SelectWalletButton, AccountCard } from '@/ui/common';
-import { type useEvmConfig } from '@valence-protocol/domain-clients-react';
+import { useEvmConfig } from '@valence-protocol/domain-clients-react';
 
-export interface EvmConnectionManagerProps {
-  config: ReturnType<typeof useEvmConfig>;
-}
-export const EvmConnectionManager = ({}: EvmConnectionManagerProps) => {
+export const EvmConnectionManager = () => {
   const evmConnectors = useEvmConnectors();
   const evmWallet = useAtomValue(evmWalletAtom);
   const account = useAccount();
   const { disconnect } = useDisconnect();
+  const config = useEvmConfig();
   const isConnected = account?.status === 'connected';
+
+  if (!config) {
+    console.warn(
+      'Attempted to use EvmConnectionManager with undefined evmconfig'
+    );
+    return null;
+  }
 
   if (isConnected && !!account) {
     return (
