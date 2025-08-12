@@ -5,5 +5,5 @@ import { WagmiProvider } from 'wagmi';
 
 export const EvmClientProvider = ({ children }: { children: ReactNode }) => {
   const config = useEvmConfig();
-  return <WagmiProvider config={config}>{children}</WagmiProvider>;
+  return <WagmiProvider config={config.wagmiConfig}>{children}</WagmiProvider>;
 };

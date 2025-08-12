@@ -16,10 +16,10 @@ export function useCosmosClient(chainId: string): UseCosmosClientResult {
     setClient(
       new CosmosClient({
         chainId,
-        rpcUrl: config.chainInfo.rpc,
+        rpcUrl: config.rpc,
       })
     );
-  }, [config, setClient]);
+  }, [config.rpc, chainId, setClient]);
 
   return useMemo(
     () => ({

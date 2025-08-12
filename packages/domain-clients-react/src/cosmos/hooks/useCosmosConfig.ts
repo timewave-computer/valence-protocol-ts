@@ -1,23 +1,10 @@
 'use client';
 import { useDomainConfig } from '@/common';
-import { defineChainInfo, Dictionary } from 'graz';
 import {
-  CosmosGas,
   CosmosConfig,
+  type CosmosChainConfig,
+  CosmosChainInfo,
 } from '@valence-protocol/domain-clients-core/cosmos';
-
-// reimplemented from graz because it's not exported
-interface GrazChainConfig {
-  path?: string;
-  rpcHeaders?: Dictionary;
-  gas?: CosmosGas;
-}
-type GrazChainInfo = ReturnType<typeof defineChainInfo>;
-
-type CosmosChainConfig = {
-  chainConfig: GrazChainConfig;
-  chainInfo: GrazChainInfo;
-};
 
 export function useCosmosConfig(): CosmosConfig {
   const config = useDomainConfig();
@@ -28,16 +15,29 @@ export function useCosmosConfig(): CosmosConfig {
   return config.cosmos;
 }
 
-export function useCosmosChainConfig(chainId: string): CosmosChainConfig {
+export function useCosmosChainConfig(chainId: string): CosmosChainInfo {
+  const config = useCosmosConfig();
+  const chainInfo = config.grazOptions.chains.find(
+    chain => chain.chainId === chainId
+  );
+  if (!chainInfo) throw new Error(`Chain ${chainId} not found in config`);
+
+  return chainInfo;
+}
+
+export function useCosmosSigningChainConfig(chainId: string): {
+  chainInfo: CosmosChainInfo;
+  chainConfig: CosmosChainConfig;
+} {
   const config = useCosmosConfig();
   const chainInfo = config.grazOptions.chains.find(
     chain => chain.chainId === chainId
   );
   if (!chainInfo) throw new Error(`Chain ${chainId} not found in config`);
   const chainConfig = config.grazOptions.chainsConfig?.[chainInfo.chainId];
-  if (!chainConfig) throw new Error(`Chain ${chainId} not found in config`);
+  if (!chainConfig) throw new Error(`Chain config not found for ${chainId}`);
   return {
-    chainConfig: chainConfig as GrazChainConfig,
+    chainConfig,
     chainInfo,
   };
 }

@@ -4,6 +4,14 @@ import { neutron, cosmoshub } from 'graz/chains'; // need to run `graz generate 
 export const cosmosConfig: CosmosConfig = {
   grazOptions: {
     chains: [neutron, cosmoshub],
+    chainsConfig: {
+      'neutron-1': {
+        gas: {
+          price: '0.005',
+          denom: 'untrn',
+        },
+      },
+    },
   },
   defaultChainId: 'neutron-1',
 };

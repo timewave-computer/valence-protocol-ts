@@ -8,3 +8,8 @@ export type CosmosConfig = {
   aminoTypes?: AminoTypes;
   defaultChainId: string;
 };
+
+export type CosmosChainInfo = CosmosConfig['grazOptions']['chains'][number];
+export type CosmosChainConfig = NonNullable<
+  CosmosConfig['grazOptions']['chainsConfig']
+>[string];

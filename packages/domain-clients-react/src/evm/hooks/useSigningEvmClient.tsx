@@ -4,7 +4,7 @@ import { useEvmConfig, useSigningEvmClientStore } from '@/evm';
 import { SigningEvmClient } from '@valence-protocol/domain-clients-core/evm';
 import { useAccount, useDisconnect, useWalletClient } from 'wagmi';
 
-export function useSigningEvmClient() {
+export function useSigningEvmClient(chainId: number) {
   const config = useEvmConfig();
   const account = useAccount();
   const { disconnect } = useDisconnect();
@@ -15,7 +15,8 @@ export function useSigningEvmClient() {
   useEffect(() => {
     if (!account || !walletClient) return;
     const client = new SigningEvmClient({
-      config,
+      config: config.wagmiConfig,
+      chainId: chainId,
       signer: walletClient,
     });
     setClient(client);

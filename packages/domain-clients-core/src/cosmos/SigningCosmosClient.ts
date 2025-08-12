@@ -54,7 +54,6 @@ export class SigningCosmosClient extends SigningChainClient {
     this.aminoTypes = args.aminoTypes;
   }
 
-  // Cosmos specific
   async getSigningStargateClient(): Promise<SigningStargateClient> {
     if (!this.signer) {
       throw new ClientError(
@@ -148,7 +147,7 @@ export class SigningCosmosClient extends SigningChainClient {
     return client.signAndBroadcast(this.senderAddress, messages, fee, memo);
   }
 
-  // Cosmos only
+  // It is recommended to use ts-codegen for type safety and pass the appropriate client
   buildExecuteContractMsg(
     contractAddress: string,
     msg: object,

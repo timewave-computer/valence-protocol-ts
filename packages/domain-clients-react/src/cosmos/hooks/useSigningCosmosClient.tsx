@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useMemo } from 'react';
 import {
-  useCosmosChainConfig,
+  useCosmosSigningChainConfig,
   useCosmosSigningTypes,
   useSigningCosmosClientStore,
 } from '@/cosmos';
@@ -20,7 +20,7 @@ export function useSigningCosmosClient(
   chainId: string
 ): UseSigningCosmosClientResult {
   const signingTypes = useCosmosSigningTypes();
-  const config = useCosmosChainConfig(chainId);
+  const { chainInfo, chainConfig } = useCosmosSigningChainConfig(chainId);
 
   const { data: account } = useAccount({ chainId });
   const { data: signers } = useOfflineSigners({ chainId });
@@ -41,8 +41,8 @@ export function useSigningCosmosClient(
     setClient(
       new SigningCosmosClient({
         chainId,
-        rpcUrl: config.chainInfo.rpc,
-        gas: config.chainConfig.gas,
+        rpcUrl: chainInfo.rpc,
+        gas: chainConfig.gas,
         signer: offlineSigner,
         senderAddress: accountAddress,
         protobufRegistry: signingTypes.protobufRegistry,
@@ -51,7 +51,8 @@ export function useSigningCosmosClient(
     );
   }, [
     signers,
-    config,
+    chainInfo,
+    chainConfig,
     account,
     offlineSigner,
     accountAddress,

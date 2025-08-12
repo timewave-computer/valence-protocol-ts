@@ -4,7 +4,7 @@ import { useEvmClientStore, useEvmConfig } from '@/evm';
 import { EvmClient } from '@valence-protocol/domain-clients-core/evm';
 import { useAccount, usePublicClient } from 'wagmi';
 
-export function useEvmClient() {
+export function useEvmClient(chainId: number) {
   const config = useEvmConfig();
   const account = useAccount();
   const publicClient = usePublicClient();
@@ -13,7 +13,10 @@ export function useEvmClient() {
 
   useEffect(() => {
     if (!account || !publicClient) return;
-    const client = new EvmClient({ config });
+    const client = new EvmClient({
+      config: config.wagmiConfig,
+      chainId: chainId,
+    });
     setClient(client);
   }, [account, publicClient, config, setClient]);
 
