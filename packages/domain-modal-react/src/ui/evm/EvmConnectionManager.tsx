@@ -3,9 +3,13 @@
 import { useAccount, useDisconnect } from 'wagmi';
 import { useAtom } from 'jotai';
 import { evmWalletAtom, useEvmConnectors } from '@/hooks';
-import { AccountCard, SelectWalletButton } from '@/ui/common';
+import { SelectWalletButton, AccountCard } from '@/ui/common';
+import { type useEvmConfig } from '@valence-protocol/domain-clients-react';
 
-export const EvmConnectionManager = () => {
+export interface EvmConnectionManagerProps {
+  config: ReturnType<typeof useEvmConfig>;
+}
+export const EvmConnectionManager = ({}: EvmConnectionManagerProps) => {
   const evmConnectors = useEvmConnectors();
   const [evmWallet] = useAtom(evmWalletAtom);
   const account = useAccount();

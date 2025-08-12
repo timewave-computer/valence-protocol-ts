@@ -3,12 +3,14 @@ import { EvmConnector, CosmosConnector } from '@/hooks';
 
 interface SelectWalletButtonProps {
   wallet: CosmosConnector | EvmConnector;
+  walletLogoClassName?: string;
   onConnect: (chainId: number | string) => Promise<void>;
 }
 
 export const SelectWalletButton = ({
   wallet,
   onConnect,
+  walletLogoClassName,
 }: SelectWalletButtonProps) => {
   return (
     <button
@@ -17,7 +19,10 @@ export const SelectWalletButton = ({
       className='w-full flex items-center justify-between px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200'
     >
       <div className='flex items-center space-x-3'>
-        <WalletLogo logo={wallet.walletInfo.logo} />
+        <WalletLogo
+          className={walletLogoClassName}
+          logo={wallet.walletInfo.logo}
+        />
         <span className='font-medium'>
           {wallet.walletInfo.walletPrettyName}
         </span>
