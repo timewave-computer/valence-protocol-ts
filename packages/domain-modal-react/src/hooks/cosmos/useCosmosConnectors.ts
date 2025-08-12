@@ -1,6 +1,4 @@
 'use client';
-import { useMemo } from 'react';
-import { useSetAtom } from 'jotai';
 import {
   WalletType,
   getWallet,
@@ -9,16 +7,14 @@ import {
   getChainInfo,
 } from 'graz';
 import { ChainType } from '@/hooks/common';
-import {
-  cosmosWalletAtom,
-  useKeepCosmosWalletStateSynced,
-  type CosmosConnector,
-  getCosmosWalletInfo,
-} from '@/hooks/cosmos';
+import { useMemo } from 'react';
+import { getCosmosWalletInfo } from '@/hooks/cosmos/const';
+import { type CosmosConnector } from '@/hooks/cosmos/types';
+import { cosmosWalletAtom } from '@/hooks/cosmos/store';
+import { useSetAtom } from 'jotai';
 
 export const useCosmosConnectors = (): CosmosConnector[] => {
   const { disconnectAsync } = useDisconnect();
-  useKeepCosmosWalletStateSynced();
 
   const setCosmosWallet = useSetAtom(cosmosWalletAtom);
 

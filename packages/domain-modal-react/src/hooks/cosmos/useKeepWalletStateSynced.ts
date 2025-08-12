@@ -12,13 +12,8 @@ import { getCosmosWalletInfo } from './const';
 export const useKeepCosmosWalletStateSynced = () => {
   const [cosmosWallet, setCosmosWallet] = useAtom(cosmosWalletAtom);
 
-  const {
-    data: cosmosAccounts,
-    walletType,
-    isConnected,
-  } = useCosmosAccount({
+  const { data: cosmosAccounts, walletType } = useCosmosAccount({
     multiChain: true,
-    isConnected: true,
   });
 
   const currentCosmosAddress = cosmosAccounts
@@ -42,15 +37,8 @@ export const useKeepCosmosWalletStateSynced = () => {
   }, [cosmosAccounts, currentCosmosAddress, setCosmosWallet, walletType]);
 
   useEffect(() => {
-    if (!isConnected) return;
     if (walletType && currentCosmosAddress !== cosmosWallet?.id) {
       updateCosmosWallet();
     }
-  }, [
-    isConnected,
-    walletType,
-    currentCosmosAddress,
-    cosmosWallet,
-    updateCosmosWallet,
-  ]);
+  }, [walletType, currentCosmosAddress, cosmosWallet, updateCosmosWallet]);
 };

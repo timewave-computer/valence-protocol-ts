@@ -1,13 +1,11 @@
 'use client';
+import { ChainType } from '@/hooks/common';
 import { useConnectors, useAccount, useConnect, useDisconnect } from 'wagmi';
 import { useMemo } from 'react';
-import {
-  evmWalletAtom,
-  type EvmConnector,
-  useKeepEvmWalletStateSynced,
-  ChainType,
-} from '@/hooks';
+import { useKeepEvmWalletStateSynced } from '@/hooks/evm/useKeepWalletStateSynced';
+import { evmWalletAtom } from '@/hooks/evm/store';
 import { useSetAtom } from 'jotai';
+import { type EvmConnector } from '@/hooks/evm/types';
 
 export const useEvmConnectors = (): EvmConnector[] => {
   const connectors = useConnectors();
@@ -37,7 +35,7 @@ export const useEvmConnectors = (): EvmConnector[] => {
         return;
       }
 
-      const connectWallet = async (chainId?: number) => {
+      const connectWallet = async (chainId: number) => {
         const walletConnectedButNeedToSwitchChain =
           isEvmConnected &&
           chainId !== connectorChainId &&
@@ -73,7 +71,7 @@ export const useEvmConnectors = (): EvmConnector[] => {
           walletPrettyName: connector.name,
         },
         isAvailable: true, // always true because the connector was found in browser context
-        connect: (chainId?: number) => connectWallet(chainId),
+        connect: (chainId: number) => connectWallet(chainId),
       });
     });
 

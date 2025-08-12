@@ -1,32 +1,22 @@
 'use client';
 
 import { useAccount, useDisconnect } from 'wagmi';
-import { useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { evmWalletAtom, useEvmConnectors } from '@/hooks';
-import { SelectWalletButton, AccountCard } from '@/ui/common';
-import { useEvmConfig } from '@valence-protocol/domain-clients-react';
+import { AccountCard, SelectWalletButton } from '@/ui/common';
 
 export const EvmConnectionManager = () => {
   const evmConnectors = useEvmConnectors();
-  const evmWallet = useAtomValue(evmWalletAtom);
+  const [evmWallet] = useAtom(evmWalletAtom);
   const account = useAccount();
   const { disconnect } = useDisconnect();
-  const config = useEvmConfig();
-  const isConnected = account?.status === 'connected';
 
-  if (!config) {
-    console.warn(
-      'Attempted to use EvmConnectionManager with undefined evmconfig'
-    );
-    return null;
-  }
-
-  if (isConnected && !!account) {
+  if (account.status === 'connected') {
     return (
       <AccountCard
         wallet={evmWallet?.walletInfo}
         address={account.address}
-        chainName={account.chain?.name}
+        chainName='Ethereum'
         onDisconnect={async () => disconnect()}
       />
     );
@@ -37,7 +27,7 @@ export const EvmConnectionManager = () => {
           <SelectWalletButton
             key={connector.walletInfo.walletName}
             wallet={connector}
-            onConnect={() => connector.connect()}
+            onConnect={() => connector.connect(1)}
           />
         ))}
       </div>
