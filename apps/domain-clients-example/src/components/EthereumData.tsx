@@ -1,9 +1,9 @@
 'use client';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { BalanceView } from '@/components';
-import { getEthErc20Balance } from '@/server';
 import { Address } from 'viem';
+import { useEvmClient } from '@valence-protocol/domain-clients-react';
 
 interface EthereumDataProps {
   initialAddress: Address;
@@ -22,23 +22,28 @@ export const EthereumData = ({
   erc20Address,
 }: EthereumDataProps) => {
   const [inputAddress, setInputAddress] = useState<Address>(initialAddress);
+  const { client: evmClient } = useEvmClient();
 
   const queryBalance = useCallback(async () => {
-    const balance = await getEthErc20Balance({
-      address: inputAddress,
-      erc20Address: erc20Address,
-    });
-    return balance;
-  }, [inputAddress, erc20Address]);
+    if (!evmClient) {
+      throw new Error('EVM client not found');
+    }
+    const balance = await evmClient.getErc20Balance(erc20Address, inputAddress);
+    return {
+      balance,
+      decimals,
+    };
+  }, [inputAddress, erc20Address, evmClient]);
 
   const {
     data: balance,
     isLoading,
     isError,
+    error,
   } = useQuery({
     queryKey: ['eth-balance', inputAddress, erc20Address],
     queryFn: () => queryBalance(),
-    enabled: !!inputAddress,
+    enabled: !!inputAddress && !!evmClient,
     retry: false,
     staleTime: 0,
     initialData: {
@@ -46,6 +51,12 @@ export const EthereumData = ({
       decimals: decimals,
     },
   });
+
+  useEffect(() => {
+    if (error) {
+      console.error('Error fetching Ethereum balance', error);
+    }
+  }, [error]);
 
   return (
     <div className='flex flex-col gap-2 w-1/2'>

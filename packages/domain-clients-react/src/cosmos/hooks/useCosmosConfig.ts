@@ -35,7 +35,7 @@ export function useCosmosChainConfig(chainId: string): CosmosChainConfig {
   );
   if (!chainInfo) throw new Error(`Chain ${chainId} not found in config`);
   const chainConfig = config.grazOptions.chainsConfig?.[chainInfo.chainId];
-  if (!chainConfig) throw new Error(`Chain ${chainId} not found in config`);
+  if (!chainConfig) throw new Error(`Chain config not found for ${chainId}`);
   return {
     chainConfig: chainConfig as GrazChainConfig,
     chainInfo,

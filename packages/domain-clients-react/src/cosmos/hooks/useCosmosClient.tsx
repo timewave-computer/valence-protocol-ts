@@ -19,7 +19,7 @@ export function useCosmosClient(chainId: string): UseCosmosClientResult {
         rpcUrl: config.chainInfo.rpc,
       })
     );
-  }, [config, setClient]);
+  }, [config.chainInfo.rpc, chainId, setClient]);
 
   return useMemo(
     () => ({

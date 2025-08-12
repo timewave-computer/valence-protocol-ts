@@ -1,8 +1,8 @@
 'use client';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { BalanceView } from '@/components';
-import { getCosmosBalance } from '@/server';
+import { useCosmosClient } from '@valence-protocol/domain-clients-react';
 
 interface NeutronDataProps {
   initialBalance: string;
@@ -23,23 +23,29 @@ export const NeutronData = ({
 }: NeutronDataProps) => {
   const [inputAddress, setInputAddress] = useState(initialAddress);
 
+  const { client: cosmosClient } = useCosmosClient(chainId);
+
   const queryBalance = useCallback(async () => {
-    const balance = await getCosmosBalance({
-      address: inputAddress,
-      denom,
-      chainId,
-    });
-    return balance;
-  }, [inputAddress, denom, chainId]);
+    if (!cosmosClient) {
+      throw new Error('Cosmos client not found');
+    }
+    const balance = await cosmosClient.getDenomBalance(inputAddress, denom);
+    return {
+      amount: balance.amount,
+      denom: balance.denom,
+      decimals: decimals,
+    };
+  }, [inputAddress, denom, chainId, cosmosClient]);
 
   const {
     data: balance,
     isLoading,
     isError,
+    error,
   } = useQuery({
     queryKey: ['neutron-balance', inputAddress, denom, chainId],
     queryFn: () => queryBalance(),
-    enabled: !!inputAddress,
+    enabled: !!inputAddress && !!cosmosClient,
     retry: false,
     staleTime: 0,
     initialData: {
@@ -48,6 +54,12 @@ export const NeutronData = ({
       decimals: decimals,
     },
   });
+
+  useEffect(() => {
+    if (error) {
+      console.error('Error fetching Neutron balance', error);
+    }
+  }, [error]);
 
   return (
     <div className='flex flex-col gap-2 w-1/2'>
