@@ -2,13 +2,18 @@ import { Suspense } from 'react';
 import { Header, ConfigDisplay, BalanceView } from '@/components';
 import { getCosmosBalance } from '@/server';
 
-const initialNeutronAddress = 'neutron1fl48vsnmsdzcv85q5d2q4z5ajdha8yu33yqdrs';
+const neutronAsset = {
+  denom: 'untrn',
+  chainId: 'neutron-1',
+  symbol: 'NTRN',
+  address: 'neutron1fl48vsnmsdzcv85q5d2q4z5ajdha8yu33yqdrs',
+};
 
 export default async function Home() {
   const cosmosBalance = await getCosmosBalance({
-    address: initialNeutronAddress,
-    denom: 'untrn',
-    chainId: 'neutron-1',
+    address: neutronAsset.address,
+    denom: neutronAsset.denom,
+    chainId: neutronAsset.chainId,
   });
 
   return (
@@ -24,10 +29,12 @@ export default async function Home() {
 
         <Suspense fallback={<div>Loading...</div>}>
           <BalanceView
-            balance={cosmosBalance.amount}
+            denom={neutronAsset.denom}
+            chainId={neutronAsset.chainId}
+            initialBalance={cosmosBalance.amount}
             decimals={cosmosBalance.decimals}
-            address={initialNeutronAddress}
-            symbol={'NTRN'}
+            initialAddress={neutronAsset.address}
+            symbol={neutronAsset.symbol}
           />
         </Suspense>
       </main>
