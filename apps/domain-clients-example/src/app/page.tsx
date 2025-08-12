@@ -55,7 +55,6 @@ export default async function Home() {
             <EthereumData
               chainId={1}
               erc20Address={usdcAsset.tokenAddress}
-              tokenAddress={usdcAsset.tokenAddress}
               initialBalance={usdcBalance.balance}
               decimals={usdcBalance.decimals}
               initialAddress={usdcAsset.userAddress}

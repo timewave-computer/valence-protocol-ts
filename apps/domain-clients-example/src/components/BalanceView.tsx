@@ -8,7 +8,7 @@ interface BalanceViewProps {
   isError: boolean;
   decimals: number;
   symbol: string;
-  amount: string;
+  amount?: string;
 }
 
 export const BalanceView = ({
@@ -36,7 +36,7 @@ export const BalanceView = ({
       <div className='flex flex-col'>
         <Label htmlFor='balance'>Balance</Label>
         <p className='text-sm  font-mono'>
-          {microToBase(amount, decimals)} {symbol}
+          {microToBase(amount ?? '0', decimals)} {symbol}
         </p>
         {isLoading && <p className='text-xs'>Loading...</p>}
         {isError && <p className='text-xs text-red-500'>Error</p>}

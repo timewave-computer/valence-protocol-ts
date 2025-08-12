@@ -34,7 +34,7 @@ export const EthereumData = ({
       balance,
       decimals,
     };
-  }, [inputAddress, erc20Address, evmClient]);
+  }, [inputAddress, erc20Address, evmClient, decimals]);
 
   const {
     data: balance,
@@ -42,7 +42,7 @@ export const EthereumData = ({
     isError,
     error,
   } = useQuery({
-    queryKey: ['eth-balance', inputAddress, erc20Address],
+    queryKey: ['eth-balance', inputAddress, erc20Address, chainId],
     queryFn: () => queryBalance(),
     enabled: !!inputAddress && !!evmClient,
     retry: false,
@@ -71,7 +71,7 @@ export const EthereumData = ({
         isError={isError}
         decimals={decimals}
         symbol={symbol}
-        amount={balance?.balance.toString() ?? '0'}
+        amount={balance?.balance.toString()}
       />
     </div>
   );
