@@ -53,7 +53,7 @@ export default async function Home() {
               symbol={neutronAsset.symbol}
             />
             <EthereumData
-              chainId={1}
+              chainId={usdcAsset.chainId}
               erc20Address={usdcAsset.tokenAddress}
               initialBalance={usdcBalance.balance}
               decimals={usdcBalance.decimals}
