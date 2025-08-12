@@ -15,7 +15,7 @@ const usdcAsset = {
   userAddress: '0x70801f4fd5daf2a5dc64167386ad7b1e91e993c0' as Address,
   tokenAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48' as Address,
   symbol: 'USDC',
-  chainId: '1',
+  chainId: 1,
 };
 
 export default async function Home() {
@@ -28,6 +28,7 @@ export default async function Home() {
   const usdcBalance = await getEthErc20Balance({
     address: usdcAsset.userAddress,
     erc20Address: usdcAsset.tokenAddress,
+    chainId: usdcAsset.chainId,
   });
 
   return (
@@ -52,6 +53,7 @@ export default async function Home() {
               symbol={neutronAsset.symbol}
             />
             <EthereumData
+              chainId={1}
               erc20Address={usdcAsset.tokenAddress}
               tokenAddress={usdcAsset.tokenAddress}
               initialBalance={usdcBalance.balance}

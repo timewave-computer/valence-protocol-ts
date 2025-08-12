@@ -12,6 +12,7 @@ interface EthereumDataProps {
   tokenAddress: Address;
   initialBalance: bigint;
   decimals: number;
+  chainId: number;
 }
 
 export const EthereumData = ({
@@ -20,9 +21,10 @@ export const EthereumData = ({
   initialAddress,
   symbol,
   erc20Address,
+  chainId,
 }: EthereumDataProps) => {
   const [inputAddress, setInputAddress] = useState<Address>(initialAddress);
-  const { client: evmClient } = useEvmClient();
+  const { client: evmClient } = useEvmClient(chainId);
 
   const queryBalance = useCallback(async () => {
     if (!evmClient) {
@@ -60,7 +62,7 @@ export const EthereumData = ({
 
   return (
     <div className='flex flex-col gap-2 w-1/2'>
-      <h2 className='font-semibold'>Neutron</h2>
+      <h2 className='font-semibold'>Ethereum</h2>
       <BalanceView
         inputAddress={inputAddress}
         setInputAddress={(address: string) =>

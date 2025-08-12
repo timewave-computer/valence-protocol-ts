@@ -1,4 +1,4 @@
-import { getWalletClient } from '@wagmi/core';
+import { getWalletClient, Config } from '@wagmi/core';
 import {
   Abi,
   Address,
@@ -11,21 +11,23 @@ import {
   isAddress,
 } from 'viem';
 import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
-import { EvmConfig } from '@/evm';
 
 export interface SigningEvmClientArgs {
-  config: EvmConfig;
+  config: Config;
   signer?: WalletClient;
+  chainId?: number;
 }
 
 export class SigningEvmClient extends SigningChainClient {
-  public readonly config: EvmConfig;
+  public readonly config: Config;
   public readonly signer?: WalletClient;
+  public readonly chainId?: number;
 
   constructor(args: SigningEvmClientArgs) {
     super();
     this.config = args.config;
     this.signer = args.signer;
+    this.chainId = args.chainId;
   }
 
   async getSenderAddress(): Promise<Address> {
@@ -47,7 +49,9 @@ export class SigningEvmClient extends SigningChainClient {
 
   // EVM specific
   async getWalletClient(): Promise<WalletClient> {
-    const client = await getWalletClient(this.config);
+    const client = await getWalletClient(this.config, {
+      chainId: this.chainId,
+    });
     if (!client) {
       throw new ClientError(
         ClientErrorType.InvalidClient,

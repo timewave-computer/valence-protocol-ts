@@ -1,10 +1,9 @@
 import { mainnet } from 'wagmi/chains';
 import { http } from 'wagmi';
 import { createClient } from 'viem';
-
 import { createEvmConfig } from '@valence-protocol/domain-clients-core';
 
-export const evmConfig = createEvmConfig({
+const wagmiConfig = createEvmConfig({
   chains: [mainnet],
   ssr: true, // required for Next.js, prevents hydration errors
   client: ({ chain }) => {
@@ -14,3 +13,8 @@ export const evmConfig = createEvmConfig({
     });
   },
 });
+
+export const evmConfig = {
+  wagmiConfig,
+  defaultChainId: mainnet.id,
+};
