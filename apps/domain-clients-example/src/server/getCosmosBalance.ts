@@ -1,7 +1,7 @@
 'use server';
 import {
   CosmosClient,
-  CosmosConfig,
+  type CosmosChainInfo,
 } from '@valence-protocol/domain-clients-core';
 import { domainClientsConfig } from '@/config/domainClientsConfig';
 
@@ -14,9 +14,9 @@ export const getCosmosBalance = async ({
   denom: string;
   chainId: string;
 }) => {
-  const chainConfig = getChainConfig(chainId);
-  const rpcUrl = chainConfig.rpc;
-  const assetInfo = getAssetInfo(chainConfig, denom);
+  const chainInfo = getChainInfo(chainId);
+  const rpcUrl = chainInfo.rpc;
+  const assetInfo = getAssetInfo(chainInfo, denom);
   const denomDecimals = assetInfo.coinDecimals;
 
   const cosmosClient = new CosmosClient({
@@ -32,7 +32,7 @@ export const getCosmosBalance = async ({
   };
 };
 
-const getChainConfig = (chainId: string) => {
+const getChainInfo = (chainId: string): CosmosChainInfo => {
   const config = domainClientsConfig.cosmos?.grazOptions.chains.find(
     chain => chain.chainId === chainId
   );
@@ -42,9 +42,8 @@ const getChainConfig = (chainId: string) => {
   return config;
 };
 
-type ChainConfig = CosmosConfig['grazOptions']['chains'][number];
-const getAssetInfo = (chainConfig: ChainConfig, denom: string) => {
-  const denomInfo = chainConfig.currencies.find(
+const getAssetInfo = (chainInfo: CosmosChainInfo, denom: string) => {
+  const denomInfo = chainInfo.currencies.find(
     currency => currency.coinMinimalDenom === denom
   );
   if (!denomInfo) {

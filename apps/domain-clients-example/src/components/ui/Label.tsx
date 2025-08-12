@@ -1,12 +1,10 @@
-export const Label = ({
-  children,
-  htmlFor,
-}: {
-  children: React.ReactNode;
-  htmlFor: string;
-}) => {
+import { cn } from '@/components/ui/';
+
+type LabelProps = React.LabelHTMLAttributes<HTMLLabelElement>;
+
+export const Label = ({ children, className, ...rest }: LabelProps) => {
   return (
-    <label className='text-xs font-medium' htmlFor={htmlFor}>
+    <label className={cn('text-xs font-medium', className)} {...rest}>
       {children}
     </label>
   );

@@ -35,7 +35,7 @@ export const NeutronData = ({
       denom: balance.denom,
       decimals: decimals,
     };
-  }, [inputAddress, denom, chainId, cosmosClient, decimals]);
+  }, [inputAddress, denom, cosmosClient, decimals]);
 
   const {
     data: balance,
