@@ -8,9 +8,10 @@ export function useSigningEvmClient(chainId: number) {
   const config = useEvmConfig();
   const account = useAccount();
   const { disconnect } = useDisconnect();
-  const { data: walletClient } = useWalletClient();
+  const { data: walletClient } = useWalletClient({ chainId });
 
-  const { client, setClient } = useSigningEvmClientStore();
+  const client = useSigningEvmClientStore(s => s.clients[chainId]);
+  const setClient = useSigningEvmClientStore(s => s.setClient);
 
   useEffect(() => {
     if (!account || !walletClient) return;
@@ -19,8 +20,8 @@ export function useSigningEvmClient(chainId: number) {
       chainId: chainId,
       signer: walletClient,
     });
-    setClient(client);
-  }, [account, walletClient, config]);
+    setClient(chainId, client);
+  }, [account, walletClient, config.wagmiConfig, chainId, setClient]);
 
   return useMemo(
     () => ({

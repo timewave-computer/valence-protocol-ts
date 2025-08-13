@@ -1,17 +1,65 @@
 'use client';
 
 import { Button, Input, Label } from '@/components/ui';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { parseEther } from 'viem';
+import {
+  useSigningEvmClient,
+  useEvmClient,
+} from '@valence-protocol/domain-clients-react';
+import { useMutation } from '@tanstack/react-query';
+import { useSwitchChain } from 'wagmi';
 
-export const EthereumWrite = () => {
+type EthereumWriteProps = {
+  chainId: number;
+};
+export const EthereumWrite = ({ chainId }: EthereumWriteProps) => {
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
+  const { switchChain } = useSwitchChain();
+
+  const { client: signingEvmClient } = useSigningEvmClient(chainId);
+  const { client: publicEvmClient } = useEvmClient(chainId);
+
+  const {
+    mutate: sendTokens,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: () => onSubmit(),
+    onError: error => {
+      console.error('Transaction failed', error);
+    },
+  });
+
+  const onSubmit = useCallback(async () => {
+    await switchChain({ chainId: chainId });
+    if (!signingEvmClient || !publicEvmClient) {
+      throw new Error('EVM client not found');
+    }
+    const amountInWei = parseEther(amount);
+
+    const tx = await signingEvmClient.sendTokens({
+      to: toAddress as `0x${string}`,
+      value: amountInWei,
+    });
+    const txHash = await publicEvmClient
+      .getPublicClient()
+      .waitForTransactionReceipt({
+        hash: tx,
+      });
+    if (txHash.status === 'success') {
+      return txHash;
+    }
+    throw new Error('Transaction failed');
+  }, [amount, toAddress, signingEvmClient, publicEvmClient]);
 
   return (
-    <div className='flex flex-col gap-2 w-1/2'>
+    <div className='flex flex-col gap-2 w-1/2 max-w-md'>
       <h2 className='font-semibold'>Sepolia Write</h2>
       <div className='flex flex-col'>
-        <Label htmlFor='amount'>Amount ETH</Label>
+        <Label htmlFor='amount'>Amount SepoliaETH</Label>
         <Input
           className='border border-gray-300 rounded-sm p-1 font-mono text-xs'
           placeholder='Enter amount'
@@ -31,10 +79,19 @@ export const EthereumWrite = () => {
         />
       </div>
       <div className='flex flex-row gap-4'>
-        <Button>
+        <Button onClick={() => sendTokens()}>
           <span>Transfer</span>
         </Button>
       </div>
+      {isError && (
+        <div className='text-xs text-red-500'>Transaction failed</div>
+      )}
+      {isPending && (
+        <div className='text-xs text-gray-500'>Transaction pending</div>
+      )}
+      {isSuccess && (
+        <div className='text-xs text-green-500'>Transaction successful</div>
+      )}
     </div>
   );
 };

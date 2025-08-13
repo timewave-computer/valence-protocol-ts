@@ -60,7 +60,7 @@ export const EthereumRead = ({
   }, [error]);
 
   return (
-    <div className='flex flex-col gap-2 w-1/2'>
+    <div className='flex flex-col gap-2 w-1/2 max-w-md'>
       <h2 className='font-semibold'>Ethereum Read</h2>
       <BalanceView
         inputAddress={inputAddress}

@@ -13,12 +13,12 @@ const neutronAsset = {
   denom: 'untrn',
   chainId: 'neutron-1',
   symbol: 'NTRN',
-  userAddress: 'neutron1fl48vsnmsdzcv85q5d2q4z5ajdha8yu33yqdrs',
+  userAddress: 'neutron1fl48vsnmsdzcv85q5d2q4z5ajdha8yu33yqdrs', // Top holder
 };
 
 const usdcAsset = {
-  userAddress: '0x70801f4fd5daf2a5dc64167386ad7b1e91e993c0' as Address,
-  tokenAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48' as Address,
+  userAddress: '0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c' as Address, // AAVE USDC
+  tokenAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48' as Address, // USDC
   symbol: 'USDC',
   chainId: 1,
 };
@@ -48,7 +48,7 @@ export default async function Home() {
         <ConfigView />
 
         <Suspense fallback={<div>Loading...</div>}>
-          <div className='flex flex-row gap-4'>
+          <div className='flex flex-row gap-8'>
             <NeutronRead
               denom={neutronAsset.denom}
               chainId={neutronAsset.chainId}
@@ -68,7 +68,7 @@ export default async function Home() {
           </div>
         </Suspense>
         <div className='flex flex-row gap-4'>
-          <EthereumWrite />
+          <EthereumWrite chainId={11155111} />
         </div>
       </main>
     </>
