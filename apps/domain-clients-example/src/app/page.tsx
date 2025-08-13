@@ -1,8 +1,13 @@
 import { Suspense } from 'react';
-import { Header, ConfigDisplay, NeutronData } from '@/components';
+import {
+  Header,
+  ConfigView,
+  NeutronRead,
+  EthereumRead,
+  EthereumWrite,
+} from '@/components';
 import { getCosmosBalance, getEthErc20Balance } from '@/server';
 import { type Address } from 'viem';
-import { EthereumData } from '@/components/EthereumData';
 
 const neutronAsset = {
   denom: 'untrn',
@@ -40,11 +45,11 @@ export default async function Home() {
           and Domain Clients API.
         </p>
 
-        <ConfigDisplay />
+        <ConfigView />
 
         <Suspense fallback={<div>Loading...</div>}>
           <div className='flex flex-row gap-4'>
-            <NeutronData
+            <NeutronRead
               denom={neutronAsset.denom}
               chainId={neutronAsset.chainId}
               initialBalance={cosmosBalance.amount}
@@ -52,7 +57,7 @@ export default async function Home() {
               initialAddress={neutronAsset.userAddress}
               symbol={neutronAsset.symbol}
             />
-            <EthereumData
+            <EthereumRead
               chainId={usdcAsset.chainId}
               erc20Address={usdcAsset.tokenAddress}
               initialBalance={usdcBalance.balance}
@@ -62,6 +67,9 @@ export default async function Home() {
             />
           </div>
         </Suspense>
+        <div className='flex flex-row gap-4'>
+          <EthereumWrite />
+        </div>
       </main>
     </>
   );

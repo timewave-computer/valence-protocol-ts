@@ -5,7 +5,7 @@ import { BalanceView } from '@/components';
 import { Address } from 'viem';
 import { useEvmClient } from '@valence-protocol/domain-clients-react';
 
-interface EthereumDataProps {
+interface EthereumReadProps {
   initialAddress: Address;
   symbol: string;
   erc20Address: Address;
@@ -14,14 +14,14 @@ interface EthereumDataProps {
   chainId: number;
 }
 
-export const EthereumData = ({
+export const EthereumRead = ({
   initialBalance,
   decimals,
   initialAddress,
   symbol,
   erc20Address,
   chainId,
-}: EthereumDataProps) => {
+}: EthereumReadProps) => {
   const [inputAddress, setInputAddress] = useState<Address>(initialAddress);
   const { client: evmClient } = useEvmClient(chainId);
 
@@ -61,7 +61,7 @@ export const EthereumData = ({
 
   return (
     <div className='flex flex-col gap-2 w-1/2'>
-      <h2 className='font-semibold'>Ethereum</h2>
+      <h2 className='font-semibold'>Ethereum Read</h2>
       <BalanceView
         inputAddress={inputAddress}
         setInputAddress={(address: string) =>
