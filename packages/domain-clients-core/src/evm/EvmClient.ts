@@ -51,13 +51,13 @@ export class EvmClient extends ChainClient {
   }
 
   async getErc20Balance({
-    erc20Address,
+    contractAddress,
     address,
   }: {
-    erc20Address: Address;
+    contractAddress: Address;
     address: Address;
   }): Promise<bigint> {
-    if (!isAddress(erc20Address)) {
+    if (!isAddress(contractAddress)) {
       throw new ClientError(
         ClientErrorType.InvalidAddress,
         'Invalid erc20 address'
@@ -72,7 +72,7 @@ export class EvmClient extends ChainClient {
     return this.queryContract({
       abi: erc20Abi,
       functionName: 'balanceOf',
-      address: erc20Address,
+      address: contractAddress,
       args: [address],
     });
   }

@@ -30,7 +30,7 @@ export const EthereumRead = ({
       throw new Error('EVM client not found');
     }
     const balance = await evmClient.getErc20Balance({
-      erc20Address,
+      contractAddress: erc20Address,
       address: inputAddress,
     });
     return {

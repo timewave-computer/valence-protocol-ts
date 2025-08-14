@@ -21,7 +21,7 @@ export const getEthErc20Balance = async ({
     chainId,
   });
   const balance = await evmClient.getErc20Balance({
-    erc20Address,
+    contractAddress: erc20Address,
     address,
   });
   const decimals = await evmClient.queryContract({
