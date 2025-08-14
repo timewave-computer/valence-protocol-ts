@@ -67,7 +67,7 @@ export const NeutronTestnetWrite = ({
 
   return (
     <div className='flex flex-col gap-2 w-1/2 max-w-md'>
-      <h2 className='font-semibold'>Neutron Testnet Write</h2>
+      <h2 className='font-semibold text-sm'>Neutron Testnet</h2>
       <div className='flex flex-col'>
         <Label htmlFor='amount'>Amount NTRN</Label>
         <Input
@@ -90,8 +90,8 @@ export const NeutronTestnetWrite = ({
       </div>
       <div className='flex flex-row gap-4'>
         {!isConnected ? (
-          <Button onClick={handleSuggestAndConnect}>
-            <span>Connect testnet</span>
+          <Button variant='secondary' onClick={handleSuggestAndConnect}>
+            <span>Connect Wallet</span>
           </Button>
         ) : (
           <Button disabled={!isConnected} onClick={() => sendTokens()}>

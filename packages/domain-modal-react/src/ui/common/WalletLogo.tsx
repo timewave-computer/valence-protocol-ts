@@ -7,7 +7,7 @@ export const WalletLogo = ({ logo, className = '' }: WalletLogoProps) => {
   if (!logo) {
     return (
       <div
-        className={`w-5 h-5 rounded-sm bg-gray-400 flex items-center justify-center text-white text-sm font-medium`}
+        className={`md:w-5 md:h-5 w-4 h-4 rounded-sm bg-gray-400 flex items-center justify-center text-white text-sm font-medium`}
       >
         w
       </div>
@@ -17,7 +17,7 @@ export const WalletLogo = ({ logo, className = '' }: WalletLogoProps) => {
     <img
       src={logo}
       alt='Wallet Logo'
-      className={`rounded-sm h-5 w-5  ${className}`}
+      className={`rounded-sm md:h-5 md:w-5 h-4 w-4  ${className}`}
     />
   );
 };
