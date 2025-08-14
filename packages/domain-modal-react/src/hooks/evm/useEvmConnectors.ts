@@ -6,9 +6,14 @@ import {
   useDisconnect,
   Connector,
 } from 'wagmi';
-import { useCallback, useMemo, useEffect } from 'react';
-import { evmWalletAtom, type EvmConnector, ChainType } from '@/hooks';
-import { useAtom } from 'jotai';
+import { useMemo } from 'react';
+import {
+  evmWalletAtom,
+  type EvmConnector,
+  ChainType,
+  useKeepEvmWalletStateSynced,
+} from '@/hooks';
+import { useSetAtom } from 'jotai';
 
 export const useEvmConnectors = (): EvmConnector[] => {
   const connectors = useConnectors();
@@ -16,13 +21,12 @@ export const useEvmConnectors = (): EvmConnector[] => {
     connector: evmConnector,
     isConnected: isEvmConnected,
     chainId: connectorChainId,
-    address: evmAccountAddress,
   } = useAccount();
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
+  useKeepEvmWalletStateSynced();
 
-  const [evmWallet, setEvmWallet] = useAtom(evmWalletAtom);
-
+  const setEvmWallet = useSetAtom(evmWalletAtom);
   const connectWallet = async (chainId: number, connector: Connector) => {
     const walletConnectedButNeedToSwitchChain =
       isEvmConnected &&
@@ -47,46 +51,9 @@ export const useEvmConnectors = (): EvmConnector[] => {
         walletPrettyName: connector.name,
         logo: connector.icon,
       },
-      connect: (chainId: number) => connectWallet(chainId, connector),
-      disconnect: async () => {
-        await disconnect({ connector });
-      },
       chainType: ChainType.Evm,
     });
   };
-
-  const updateEvmWallet = useCallback(
-    async (connector: Connector) => {
-      if (evmConnector) {
-        setEvmWallet({
-          id: evmAccountAddress,
-          walletInfo: {
-            walletName: connector.name,
-            walletPrettyName: connector.name,
-            logo: connector?.icon,
-          },
-          chainType: ChainType.Evm,
-          connect: (chainId: number) => connectWallet(chainId, connector),
-          disconnect: async () => {
-            await disconnect({ connector });
-          },
-        });
-      }
-    },
-    [evmAccountAddress, evmAccountAddress, setEvmWallet]
-  );
-
-  useEffect(() => {
-    if (evmConnector && evmWallet?.id !== evmAccountAddress) {
-      updateEvmWallet(evmConnector);
-    }
-  }, [
-    evmConnector,
-    evmWallet,
-    setEvmWallet,
-    updateEvmWallet,
-    evmAccountAddress,
-  ]);
 
   const evmConnectors = useMemo(() => {
     const connectorList: EvmConnector[] = [];

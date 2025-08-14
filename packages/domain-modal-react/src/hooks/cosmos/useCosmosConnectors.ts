@@ -1,13 +1,12 @@
 'use client';
-import { useMemo, useCallback, useEffect } from 'react';
-import { useAtom } from 'jotai';
+import { useMemo, useCallback } from 'react';
+import { useSetAtom } from 'jotai';
 import {
   WalletType,
   getWallet,
   connect,
   useDisconnect,
   getChainInfo,
-  useAccount,
 } from 'graz';
 import { ChainType } from '@/hooks/common';
 import {
@@ -16,12 +15,12 @@ import {
   getCosmosWalletInfo,
   supportedCosmosWallets,
 } from '@/hooks/cosmos';
+import { useKeepCosmosWalletStateSynced } from '@/hooks/cosmos';
 
 export const useCosmosConnectors = (): CosmosConnector[] => {
   const { disconnectAsync } = useDisconnect();
-  const { isConnected, walletType } = useAccount({ multiChain: true });
-
-  const [cosmosWallet, setCosmosWallet] = useAtom(cosmosWalletAtom);
+  useKeepCosmosWalletStateSynced();
+  const setCosmosWallet = useSetAtom(cosmosWalletAtom);
 
   const connectWallet = useCallback(
     async (walletType: WalletType, chainId: string) => {
@@ -77,8 +76,6 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
     }) => {
       setCosmosWallet({
         id: walletType,
-        connect: (chainId: string) => connectWallet(walletType, chainId),
-        disconnect: disconnectAsync,
         walletInfo: {
           walletName: walletInfo.walletName,
           walletPrettyName: walletInfo.walletPrettyName,
@@ -117,28 +114,6 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
 
     return connectorList;
   }, [disconnectAsync]);
-
-  useEffect(() => {
-    if (!isConnected || !walletType) {
-      setCosmosWallet(undefined);
-      return;
-    }
-    const walletInfo = getCosmosWalletInfo(walletType);
-    if (!walletInfo) {
-      throw new Error('Wallet info not found');
-    }
-
-    if (walletType && cosmosWallet?.id !== cosmosWallet?.id) {
-      updateCosmosWallet({
-        walletType,
-        walletInfo: {
-          walletName: walletInfo.name,
-          walletPrettyName: walletInfo.name,
-          logo: walletInfo.imgSrc,
-        },
-      });
-    }
-  }, [isConnected, walletType, cosmosWallet, updateCosmosWallet]);
 
   return cosmosConnectors;
 };

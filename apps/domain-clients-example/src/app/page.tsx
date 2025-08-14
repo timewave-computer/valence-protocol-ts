@@ -16,6 +16,7 @@ const neutronNtrn = {
   chainId: neutron.chainId,
   symbol: 'NTRN',
   denom: 'untrn',
+  decimals: 6, // hardcoded for brevity
 };
 const neutronUser = 'neutron1fl48vsnmsdzcv85q5d2q4z5ajdha8yu33yqdrs'; // Top holder
 
@@ -72,7 +73,11 @@ export default async function Home() {
           </div>
         </Suspense>
         <div className='flex flex-row gap-8'>
-          <NeutronTestnetWrite chainId={neutrontestnet.chainId} />
+          <NeutronTestnetWrite
+            denom={neutronNtrn.denom}
+            decimals={neutronNtrn.decimals}
+            chainId={neutrontestnet.chainId}
+          />
           <EthereumTestnetWrite chainId={sepolia.id} />
         </div>
       </main>

@@ -11,10 +11,15 @@ import { useIsCosmosChainConnected } from '@valence-protocol/domain-modal-react'
 
 type NeutronTestnetWriteProps = {
   chainId: string;
+  decimals: number;
+  denom: string;
 };
-const ntrnDecimals = 6; // hardcoded for brevity
 
-export const NeutronTestnetWrite = ({ chainId }: NeutronTestnetWriteProps) => {
+export const NeutronTestnetWrite = ({
+  chainId,
+  decimals,
+  denom,
+}: NeutronTestnetWriteProps) => {
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
   const isConnected = useIsCosmosChainConnected({ chainId });
@@ -34,19 +39,19 @@ export const NeutronTestnetWrite = ({ chainId }: NeutronTestnetWriteProps) => {
       throw new Error('Cosmos signing client not found');
     }
 
-    const amountInBase = baseToMicro(amount, ntrnDecimals);
+    const amountInBase = baseToMicro(amount, decimals);
 
     const tx = await signingCosmosClient.sendTokens({
       recipient: toAddress,
       amount: [
         {
           amount: amountInBase.toString(),
-          denom: 'untrn',
+          denom,
         },
       ],
     });
     return tx;
-  }, [amount, toAddress, signingCosmosClient]);
+  }, [decimals, denom, amount, toAddress, signingCosmosClient]);
 
   const {
     mutate: sendTokens,

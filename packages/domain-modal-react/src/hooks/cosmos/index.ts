@@ -3,3 +3,4 @@ export * from './const';
 export * from './state';
 export * from './types';
 export * from './useIsCosmosChainConnected';
+export * from './useKeepCosmosWalletStateSynced';
