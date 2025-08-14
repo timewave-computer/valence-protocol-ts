@@ -16,7 +16,7 @@ export const SelectWalletButton = ({
     <button
       onClick={() => onConnect(wallet.chainType)}
       disabled={!wallet.isAvailable}
-      className='w-full flex items-center justify-between px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200'
+      className='w-full flex flex-wrap gap-1items-center justify-between px-4 py-3 border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200'
     >
       <div className='flex items-center space-x-3'>
         <WalletLogo
@@ -28,7 +28,7 @@ export const SelectWalletButton = ({
         </span>
       </div>
       <span
-        className={`text-xs px-2 py-1 rounded ${
+        className={`text-xs px-2 py-1 rounded md:min-w-24 ${
           wallet.isAvailable
             ? 'bg-green-100 text-green-800'
             : 'bg-gray-100 text-gray-800'

@@ -3,7 +3,7 @@ import { neutron, neutrontestnet } from 'graz/chains'; // need to run `graz gene
 
 export const cosmosConfig: CosmosConfig = {
   grazOptions: {
-    chains: [neutron, neutrontestnet],
+    chains: [neutrontestnet, neutron],
     chainsConfig: {
       [neutron.chainId]: {
         gas: {
@@ -19,5 +19,5 @@ export const cosmosConfig: CosmosConfig = {
       },
     },
   },
-  defaultChainId: neutron.chainId,
+  defaultChainId: neutrontestnet.chainId,
 };

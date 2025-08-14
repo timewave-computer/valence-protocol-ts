@@ -8,8 +8,11 @@ import {
   useEvmClient,
 } from '@valence-protocol/domain-clients-react';
 import { useMutation } from '@tanstack/react-query';
-import { useAccount, useSwitchChain } from 'wagmi';
-import { useEvmWallet } from '@valence-protocol/domain-modal-react';
+import { useAccount, useSwitchChain, useConnect } from 'wagmi';
+import {
+  useEvmWallet,
+  useDomainModal,
+} from '@valence-protocol/domain-modal-react';
 
 type EthereumTestnetWriteProps = {
   chainId: number;
@@ -25,6 +28,7 @@ export const EthereumTestnetWrite = ({
   const { switchChain } = useSwitchChain();
   const { isConnected } = useAccount();
   const evmWallet = useEvmWallet();
+  const { showModal } = useDomainModal();
 
   const { client: signingEvmClient } = useSigningEvmClient(chainId);
   const { client: publicEvmClient } = useEvmClient(chainId);
@@ -71,7 +75,7 @@ export const EthereumTestnetWrite = ({
 
   return (
     <div className='flex flex-col gap-2 w-1/2 max-w-md'>
-      <h2 className='font-semibold'>Sepolia Write</h2>
+      <h2 className='font-semibold text-sm'>Sepolia (Ethereum Testnet)</h2>
       <div className='flex flex-col'>
         <Label htmlFor='amount'>Amount SepoliaETH</Label>
         <Input
@@ -93,9 +97,15 @@ export const EthereumTestnetWrite = ({
         />
       </div>
       <div className='flex flex-row gap-4'>
-        <Button disabled={!isConnected} onClick={() => sendTokens()}>
-          <span>Transfer</span>
-        </Button>
+        {!isConnected ? (
+          <Button variant='secondary' onClick={() => showModal()}>
+            <span>Connect Wallet</span>
+          </Button>
+        ) : (
+          <Button disabled={!isConnected} onClick={() => sendTokens()}>
+            <span>Transfer</span>
+          </Button>
+        )}
       </div>
       {isError && (
         <div className='text-xs text-red-500'>Transaction failed</div>

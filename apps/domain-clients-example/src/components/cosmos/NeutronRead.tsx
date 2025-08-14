@@ -66,7 +66,7 @@ export const NeutronRead = ({
 
   return (
     <div className='flex flex-col gap-2 w-1/2 max-w-md'>
-      <h2 className='font-semibold'>Neutron Read</h2>
+      <h2 className='font-semibold text-sm'>Neutron</h2>
       <BalanceView
         inputAddress={inputAddress}
         setInputAddress={setInputAddress}

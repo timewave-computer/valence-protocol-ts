@@ -13,9 +13,11 @@ export const useKeepEvmWalletStateSynced = () => {
   const [evmWallet, setEvmWallet] = useAtom(evmWalletAtom);
 
   const evmAccount = useEvmAccount();
+  console.log('evmAccount', evmAccount);
 
   const updateEvmWallet = useCallback(async () => {
     if (evmAccount.connector) {
+      console.log('updating evm wallet', evmAccount.connector);
       setEvmWallet({
         id: evmAccount.address,
         walletInfo: {

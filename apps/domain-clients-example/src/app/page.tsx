@@ -44,41 +44,72 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className='grow p-4 flex flex-col gap-4'>
-        <p>
+      <main className='grow p-4 flex flex-col gap-10 pb-10'>
+        <p className='text-sm'>
           This app is a simple example of how to use the Valence Domain Modal
           and Domain Clients API.
         </p>
 
-        <ConfigView />
+        <div className='flex flex-col gap-1'>
+          <h2 className='font-semibold text-lg w-full border-b border-gray-400'>
+            Domain Client Configuration
+          </h2>
+          <p className='text-sm pt-2'>
+            This is the configuration for the domain clients. It is used to
+            determine which chains and wallets are available to the user.
+          </p>
+
+          <ConfigView />
+        </div>
 
         <Suspense fallback={<div>Loading...</div>}>
-          <div className='flex flex-row gap-8'>
-            <NeutronRead
-              denom={neutronNtrn.denom}
-              chainId={neutronNtrn.chainId}
-              initialBalance={cosmosBalance.amount}
-              decimals={cosmosBalance.decimals}
-              initialAddress={neutronUser}
-              symbol={neutronNtrn.symbol}
-            />
-            <EthereumRead
-              chainId={evmUsdc.chainId}
-              erc20Address={evmUsdc.tokenAddress}
-              initialBalance={usdcBalance.balance}
-              decimals={usdcBalance.decimals}
-              initialAddress={evmUser}
-              symbol={evmUsdc.symbol}
-            />
+          <div>
+            <h2 className='font-semibold text-lg w-full border-b border-gray-400'>
+              Read operations
+            </h2>
+            <p className='pt-2 text-sm'>
+              Code example using domain clients to query an asset balance, both
+              server and client side.
+            </p>
+
+            <div className='flex flex-row gap-8 pt-4'>
+              <NeutronRead
+                denom={neutronNtrn.denom}
+                chainId={neutronNtrn.chainId}
+                initialBalance={cosmosBalance.amount}
+                decimals={cosmosBalance.decimals}
+                initialAddress={neutronUser}
+                symbol={neutronNtrn.symbol}
+              />
+              <EthereumRead
+                chainId={evmUsdc.chainId}
+                erc20Address={evmUsdc.tokenAddress}
+                initialBalance={usdcBalance.balance}
+                decimals={usdcBalance.decimals}
+                initialAddress={evmUser}
+                symbol={evmUsdc.symbol}
+              />
+            </div>
           </div>
         </Suspense>
-        <div className='flex flex-row gap-8'>
-          <NeutronTestnetWrite
-            denom={neutronNtrn.denom}
-            decimals={neutronNtrn.decimals}
-            chainId={neutrontestnet.chainId}
-          />
-          <EthereumTestnetWrite chainId={sepolia.id} />
+        <div>
+          <h2 className='font-semibold text-lg w-full border-b border-gray-400'>
+            Write operations
+          </h2>
+          <p className='pt-2 text-sm'>
+            Code example using domain clients to sign and submit transactions.
+            Uses testnet. You can deny in the wallet to avoid completing the
+            transaction.
+          </p>
+
+          <div className='flex flex-row gap-8 pt-4'>
+            <NeutronTestnetWrite
+              denom={neutronNtrn.denom}
+              decimals={neutronNtrn.decimals}
+              chainId={neutrontestnet.chainId}
+            />
+            <EthereumTestnetWrite chainId={sepolia.id} />
+          </div>
         </div>
       </main>
     </>

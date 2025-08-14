@@ -1,13 +1,12 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const buttonVariants = cva(
-  'px-2 py-1 rounded-sm font-semibold  transition-colors duration-200 border-2',
+  'px-2 py-1 rounded-sm font-semibold transition-colors duration-200 border outline-none rounded-xs border cursor-pointer text-sm ',
   {
     variants: {
       variant: {
-        default: 'bg-blue-500 text-white hover:bg-blue-600',
-        secondary:
-          'bg-transparent text-blue-500 border-blue-500 hover:bg-blue-500/10 ',
+        default: 'bg-gray-900 text-white hover:bg-gray-700',
+        secondary: 'border-gray-700 hover:bg-gray-100',
       },
       isDisabled: {
         true: 'cursor-not-allowed bg-gray-300 hover:bg-gray-300',
