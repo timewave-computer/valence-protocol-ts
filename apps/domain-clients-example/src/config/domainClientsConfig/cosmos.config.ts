@@ -5,14 +5,13 @@ export const cosmosConfig: CosmosConfig = {
   grazOptions: {
     chains: [neutron, neutrontestnet],
     chainsConfig: {
-      'neutron-1': {
+      [neutron.chainId]: {
         gas: {
           price: '0.005',
           denom: 'untrn',
         },
       },
-      'pion-1': {
-        // neutron testnet
+      [neutrontestnet.chainId]: {
         gas: {
           price: '0.005',
           denom: 'untrn',
@@ -20,5 +19,5 @@ export const cosmosConfig: CosmosConfig = {
       },
     },
   },
-  defaultChainId: 'neutron-1',
+  defaultChainId: neutron.chainId,
 };

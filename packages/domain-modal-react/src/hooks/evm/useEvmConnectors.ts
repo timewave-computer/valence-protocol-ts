@@ -6,7 +6,7 @@ import {
   useDisconnect,
   Connector,
 } from 'wagmi';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import {
   evmWalletAtom,
   type EvmConnector,
@@ -27,33 +27,43 @@ export const useEvmConnectors = (): EvmConnector[] => {
   useKeepEvmWalletStateSynced();
 
   const setEvmWallet = useSetAtom(evmWalletAtom);
-  const connectWallet = async (chainId: number, connector: Connector) => {
-    const walletConnectedButNeedToSwitchChain =
-      isEvmConnected &&
-      chainId !== connectorChainId &&
-      connector.id === evmConnector?.id;
+  const connectWallet = useCallback(
+    async (chainId: number, connector: Connector) => {
+      const walletConnectedButNeedToSwitchChain =
+        isEvmConnected &&
+        chainId !== connectorChainId &&
+        connector.id === evmConnector?.id;
 
-    if (isEvmConnected && connector.id !== evmConnector?.id) {
-      await disconnect();
-    }
-    if (walletConnectedButNeedToSwitchChain) {
-      await connector?.switchChain?.({
-        chainId: Number(chainId),
+      if (isEvmConnected && connector.id !== evmConnector?.id) {
+        await disconnect();
+      }
+      if (walletConnectedButNeedToSwitchChain) {
+        await connector?.switchChain?.({
+          chainId: Number(chainId),
+        });
+      }
+
+      await connectAsync({ connector, chainId });
+
+      setEvmWallet({
+        id: connector.id,
+        walletInfo: {
+          walletName: connector.name,
+          walletPrettyName: connector.name,
+          logo: connector.icon,
+        },
+        chainType: ChainType.Evm,
       });
-    }
-
-    await connectAsync({ connector, chainId });
-
-    setEvmWallet({
-      id: connector.id,
-      walletInfo: {
-        walletName: connector.name,
-        walletPrettyName: connector.name,
-        logo: connector.icon,
-      },
-      chainType: ChainType.Evm,
-    });
-  };
+    },
+    [
+      disconnect,
+      connectAsync,
+      isEvmConnected,
+      connectorChainId,
+      evmConnector,
+      setEvmWallet,
+    ]
+  );
 
   const evmConnectors = useMemo(() => {
     const connectorList: EvmConnector[] = [];
@@ -82,7 +92,7 @@ export const useEvmConnectors = (): EvmConnector[] => {
     });
 
     return connectorList;
-  }, [connectors, disconnect]);
+  }, [connectors, connectWallet]);
 
   return evmConnectors;
 };

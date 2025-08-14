@@ -29,7 +29,10 @@ export const NeutronRead = ({
     if (!cosmosClient) {
       throw new Error('Cosmos client not found');
     }
-    const balance = await cosmosClient.getDenomBalance(inputAddress, denom);
+    const balance = await cosmosClient.getDenomBalance({
+      address: inputAddress,
+      denom,
+    });
     return {
       amount: balance.amount,
       denom: balance.denom,

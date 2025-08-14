@@ -40,11 +40,9 @@ export const EthereumTestnetWrite = ({
       to: toAddress as `0x${string}`,
       value: amountInWei,
     });
-    const txHash = await publicEvmClient
-      .getPublicClient()
-      .waitForTransactionReceipt({
-        hash: tx,
-      });
+    const txHash = await publicEvmClient.waitForTransactionReceipt({
+      txHash: tx,
+    });
     if (txHash.status === 'success') {
       return txHash;
     }

@@ -101,6 +101,7 @@ export class SigningEvmClient extends SigningChainClient {
   }
 
   async executeMessageBatch(): Promise<unknown> {
+    // TODO: this should be done with flashbots
     throw new Error('Not implemented');
   }
 }

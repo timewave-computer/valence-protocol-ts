@@ -18,7 +18,6 @@ import {
 import { useKeepCosmosWalletStateSynced } from '@/hooks/cosmos';
 
 export const useCosmosConnectors = (): CosmosConnector[] => {
-  const { disconnectAsync } = useDisconnect();
   useKeepCosmosWalletStateSynced();
   const setCosmosWallet = useSetAtom(cosmosWalletAtom);
 
@@ -50,41 +49,17 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
       if (!address) {
         throw new Error('failed to get address from wallet');
       }
-      updateCosmosWallet({
-        walletType,
+      setCosmosWallet({
+        id: walletType,
         walletInfo: {
           walletName: walletInfo.name,
           walletPrettyName: walletInfo.name,
           logo: walletInfo.imgSrc,
         },
-      });
-    },
-    [disconnectAsync, setCosmosWallet]
-  );
-
-  const updateCosmosWallet = useCallback(
-    async ({
-      walletType,
-      walletInfo,
-    }: {
-      walletType: WalletType;
-      walletInfo: {
-        walletName: string;
-        walletPrettyName: string;
-        logo: string;
-      };
-    }) => {
-      setCosmosWallet({
-        id: walletType,
-        walletInfo: {
-          walletName: walletInfo.walletName,
-          walletPrettyName: walletInfo.walletPrettyName,
-          logo: walletInfo.logo,
-        },
         chainType: ChainType.Cosmos,
       });
     },
-    [disconnectAsync, setCosmosWallet]
+    [setCosmosWallet]
   );
 
   const cosmosConnectors = useMemo(() => {
@@ -113,7 +88,7 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
     });
 
     return connectorList;
-  }, [disconnectAsync]);
+  }, [connectWallet]);
 
   return cosmosConnectors;
 };

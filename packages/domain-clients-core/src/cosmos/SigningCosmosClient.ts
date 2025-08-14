@@ -118,14 +118,21 @@ export class SigningCosmosClient extends SigningChainClient {
     return client.sendTokens(this.senderAddress, recipient, amount, fee, memo);
   }
 
-  async executeMessage(
-    sender: string,
-    contractAddress: string,
-    messageBody: object,
-    fee: StdFee | 'auto',
+  async executeMessage({
+    sender,
+    contractAddress,
+    messageBody,
+    fee,
     memo = '',
-    funds: Coin[] = []
-  ): Promise<ExecuteResult> {
+    funds = [],
+  }: {
+    sender: string;
+    contractAddress: string;
+    messageBody: object;
+    fee: StdFee | 'auto';
+    memo: string;
+    funds: Coin[];
+  }): Promise<ExecuteResult> {
     const client = await this.getSigningCosmwasmClient();
     return client.execute(
       sender,
@@ -137,11 +144,15 @@ export class SigningCosmosClient extends SigningChainClient {
     );
   }
 
-  async executeMessageBatch(
-    messages: EncodeObject[],
-    fee: StdFee | 'auto',
-    memo = ''
-  ): Promise<DeliverTxResponse> {
+  async executeMessageBatch({
+    messages,
+    fee,
+    memo = '',
+  }: {
+    messages: EncodeObject[];
+    fee: StdFee | 'auto';
+    memo: string;
+  }): Promise<DeliverTxResponse> {
     if (!this.senderAddress) {
       throw new ClientError(
         ClientErrorType.InvalidAddress,
@@ -153,12 +164,17 @@ export class SigningCosmosClient extends SigningChainClient {
   }
 
   // It is recommended to use ts-codegen for type safety and pass the appropriate client
-  buildExecuteContractMsg(
-    contractAddress: string,
-    msg: object,
-    funds: Coin[] = [],
-    sender?: string
-  ): EncodeObject {
+  buildExecuteContractMsg({
+    contractAddress,
+    msg,
+    funds = [],
+    sender = this.senderAddress,
+  }: {
+    contractAddress: string;
+    msg: object;
+    funds?: Coin[];
+    sender?: string;
+  }): EncodeObject {
     return {
       typeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
       value: {
