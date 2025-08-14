@@ -1,7 +1,4 @@
-export enum ChainType {
-  Evm = 'evm',
-  Cosmos = 'cosmos',
-}
+import { ChainType } from '@/hooks/common/const';
 
 export type MinimalWalletInfo = {
   logo?: string;

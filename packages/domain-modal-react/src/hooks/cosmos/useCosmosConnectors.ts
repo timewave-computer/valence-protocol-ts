@@ -1,36 +1,30 @@
 'use client';
-import { useMemo } from 'react';
-import { useSetAtom } from 'jotai';
+import { useMemo, useCallback, useEffect } from 'react';
+import { useAtom } from 'jotai';
 import {
   WalletType,
   getWallet,
   connect,
   useDisconnect,
   getChainInfo,
+  useAccount,
 } from 'graz';
 import { ChainType } from '@/hooks/common';
 import {
   cosmosWalletAtom,
-  useKeepCosmosWalletStateSynced,
   type CosmosConnector,
   getCosmosWalletInfo,
-  type SupportedCosmosWallet,
   supportedCosmosWallets,
 } from '@/hooks/cosmos';
 
 export const useCosmosConnectors = (): CosmosConnector[] => {
   const { disconnectAsync } = useDisconnect();
-  useKeepCosmosWalletStateSynced();
+  const { isConnected, walletType } = useAccount({ multiChain: true });
 
-  const setCosmosWallet = useSetAtom(cosmosWalletAtom);
+  const [cosmosWallet, setCosmosWallet] = useAtom(cosmosWalletAtom);
 
-  const cosmosConnectors = useMemo(() => {
-    const connectorList: CosmosConnector[] = [];
-
-    const connectWallet = async (
-      walletType: SupportedCosmosWallet,
-      chainId: string
-    ) => {
+  const connectWallet = useCallback(
+    async (walletType: WalletType, chainId: string) => {
       const chainInfo = getChainInfo({ chainId });
       const wallet = getWallet(walletType);
       const walletInfo = getCosmosWalletInfo(walletType);
@@ -57,17 +51,47 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
       if (!address) {
         throw new Error('failed to get address from wallet');
       }
-
-      setCosmosWallet({
-        id: walletType,
+      updateCosmosWallet({
+        walletType,
         walletInfo: {
           walletName: walletInfo.name,
           walletPrettyName: walletInfo.name,
           logo: walletInfo.imgSrc,
         },
+      });
+    },
+    [disconnectAsync, setCosmosWallet]
+  );
+
+  const updateCosmosWallet = useCallback(
+    async ({
+      walletType,
+      walletInfo,
+    }: {
+      walletType: WalletType;
+      walletInfo: {
+        walletName: string;
+        walletPrettyName: string;
+        logo: string;
+      };
+    }) => {
+      setCosmosWallet({
+        id: walletType,
+        connect: (chainId: string) => connectWallet(walletType, chainId),
+        disconnect: disconnectAsync,
+        walletInfo: {
+          walletName: walletInfo.walletName,
+          walletPrettyName: walletInfo.walletPrettyName,
+          logo: walletInfo.logo,
+        },
         chainType: ChainType.Cosmos,
       });
-    };
+    },
+    [disconnectAsync, setCosmosWallet]
+  );
+
+  const cosmosConnectors = useMemo(() => {
+    const connectorList: CosmosConnector[] = [];
 
     supportedCosmosWallets.forEach(walletType => {
       const walletInfo = getCosmosWalletInfo(walletType);
@@ -93,6 +117,28 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
 
     return connectorList;
   }, [disconnectAsync]);
+
+  useEffect(() => {
+    if (!isConnected || !walletType) {
+      setCosmosWallet(undefined);
+      return;
+    }
+    const walletInfo = getCosmosWalletInfo(walletType);
+    if (!walletInfo) {
+      throw new Error('Wallet info not found');
+    }
+
+    if (walletType && cosmosWallet?.id !== cosmosWallet?.id) {
+      updateCosmosWallet({
+        walletType,
+        walletInfo: {
+          walletName: walletInfo.name,
+          walletPrettyName: walletInfo.name,
+          logo: walletInfo.imgSrc,
+        },
+      });
+    }
+  }, [isConnected, walletType, cosmosWallet, updateCosmosWallet]);
 
   return cosmosConnectors;
 };

@@ -1,4 +1,3 @@
 export * from './useEvmConnectors';
-export * from './store';
+export * from './state';
 export * from './types';
-export * from './useKeepWalletStateSynced';

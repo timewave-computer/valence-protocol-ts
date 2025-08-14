@@ -96,12 +96,17 @@ export class SigningCosmosClient extends SigningChainClient {
     }
   }
 
-  async sendTokens(
-    recipient: string,
-    amount: Coin[],
-    fee: StdFee | 'auto',
-    memo = ''
-  ): Promise<DeliverTxResponse> {
+  async sendTokens({
+    recipient,
+    amount,
+    fee = 'auto',
+    memo = '',
+  }: {
+    recipient: string;
+    amount: Coin[];
+    fee?: StdFee | 'auto';
+    memo?: string;
+  }): Promise<DeliverTxResponse> {
     if (!this.senderAddress) {
       throw new ClientError(
         ClientErrorType.InvalidAddress,

@@ -64,7 +64,7 @@ export const DomainModalProvider = ({
               )}
             >
               <VisuallyHidden asChild>
-                <Dialog.Title>Connect to a domain</Dialog.Title>
+                <Dialog.Title>Select a wallet</Dialog.Title>
               </VisuallyHidden>
               <VisuallyHidden asChild>
                 <Dialog.Description>

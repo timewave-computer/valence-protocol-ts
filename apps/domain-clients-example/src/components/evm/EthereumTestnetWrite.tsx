@@ -2,43 +2,39 @@
 
 import { Button, Input, Label } from '@/components/ui';
 import { useCallback, useState } from 'react';
-import { parseEther } from 'viem';
+import { parseUnits } from 'viem';
 import {
   useSigningEvmClient,
   useEvmClient,
 } from '@valence-protocol/domain-clients-react';
 import { useMutation } from '@tanstack/react-query';
-import { useSwitchChain } from 'wagmi';
+import { useAccount, useSwitchChain } from 'wagmi';
+import { useEvmWallet } from '@valence-protocol/domain-modal-react';
 
-type EthereumWriteProps = {
+type EthereumTestnetWriteProps = {
   chainId: number;
 };
-export const EthereumWrite = ({ chainId }: EthereumWriteProps) => {
+
+const sepoliaEthDecimals = 18;
+
+export const EthereumTestnetWrite = ({
+  chainId,
+}: EthereumTestnetWriteProps) => {
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
   const { switchChain } = useSwitchChain();
+  const { isConnected } = useAccount();
+  const evmWallet = useEvmWallet();
 
   const { client: signingEvmClient } = useSigningEvmClient(chainId);
   const { client: publicEvmClient } = useEvmClient(chainId);
 
-  const {
-    mutate: sendTokens,
-    isPending,
-    isError,
-    isSuccess,
-  } = useMutation({
-    mutationFn: () => onSubmit(),
-    onError: error => {
-      console.error('Transaction failed', error);
-    },
-  });
-
   const onSubmit = useCallback(async () => {
-    await switchChain({ chainId: chainId });
+    switchChain({ chainId: chainId });
     if (!signingEvmClient || !publicEvmClient) {
       throw new Error('EVM client not found');
     }
-    const amountInWei = parseEther(amount);
+    const amountInWei = parseUnits(amount, sepoliaEthDecimals);
 
     const tx = await signingEvmClient.sendTokens({
       to: toAddress as `0x${string}`,
@@ -53,7 +49,27 @@ export const EthereumWrite = ({ chainId }: EthereumWriteProps) => {
       return txHash;
     }
     throw new Error('Transaction failed');
-  }, [amount, toAddress, signingEvmClient, publicEvmClient]);
+  }, [
+    evmWallet,
+    amount,
+    toAddress,
+    signingEvmClient,
+    publicEvmClient,
+    chainId,
+    switchChain,
+  ]);
+
+  const {
+    mutate: sendTokens,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: onSubmit,
+    onError: error => {
+      console.error('Transaction failed', error);
+    },
+  });
 
   return (
     <div className='flex flex-col gap-2 w-1/2 max-w-md'>
@@ -79,7 +95,7 @@ export const EthereumWrite = ({ chainId }: EthereumWriteProps) => {
         />
       </div>
       <div className='flex flex-row gap-4'>
-        <Button onClick={() => sendTokens()}>
+        <Button disabled={!isConnected} onClick={() => sendTokens()}>
           <span>Transfer</span>
         </Button>
       </div>

@@ -1,13 +1,14 @@
 'use client';
-import { useConnectors, useAccount, useConnect, useDisconnect } from 'wagmi';
-import { useMemo } from 'react';
 import {
-  evmWalletAtom,
-  type EvmConnector,
-  useKeepEvmWalletStateSynced,
-  ChainType,
-} from '@/hooks';
-import { useSetAtom } from 'jotai';
+  useConnectors,
+  useAccount,
+  useConnect,
+  useDisconnect,
+  Connector,
+} from 'wagmi';
+import { useCallback, useMemo, useEffect } from 'react';
+import { evmWalletAtom, type EvmConnector, ChainType } from '@/hooks';
+import { useAtom } from 'jotai';
 
 export const useEvmConnectors = (): EvmConnector[] => {
   const connectors = useConnectors();
@@ -15,13 +16,77 @@ export const useEvmConnectors = (): EvmConnector[] => {
     connector: evmConnector,
     isConnected: isEvmConnected,
     chainId: connectorChainId,
+    address: evmAccountAddress,
   } = useAccount();
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
 
-  const setEvmWallet = useSetAtom(evmWalletAtom);
+  const [evmWallet, setEvmWallet] = useAtom(evmWalletAtom);
 
-  useKeepEvmWalletStateSynced();
+  const connectWallet = async (chainId: number, connector: Connector) => {
+    const walletConnectedButNeedToSwitchChain =
+      isEvmConnected &&
+      chainId !== connectorChainId &&
+      connector.id === evmConnector?.id;
+
+    if (isEvmConnected && connector.id !== evmConnector?.id) {
+      await disconnect();
+    }
+    if (walletConnectedButNeedToSwitchChain) {
+      await connector?.switchChain?.({
+        chainId: Number(chainId),
+      });
+    }
+
+    await connectAsync({ connector, chainId });
+
+    setEvmWallet({
+      id: connector.id,
+      walletInfo: {
+        walletName: connector.name,
+        walletPrettyName: connector.name,
+        logo: connector.icon,
+      },
+      connect: (chainId: number) => connectWallet(chainId, connector),
+      disconnect: async () => {
+        await disconnect({ connector });
+      },
+      chainType: ChainType.Evm,
+    });
+  };
+
+  const updateEvmWallet = useCallback(
+    async (connector: Connector) => {
+      if (evmConnector) {
+        setEvmWallet({
+          id: evmAccountAddress,
+          walletInfo: {
+            walletName: connector.name,
+            walletPrettyName: connector.name,
+            logo: connector?.icon,
+          },
+          chainType: ChainType.Evm,
+          connect: (chainId: number) => connectWallet(chainId, connector),
+          disconnect: async () => {
+            await disconnect({ connector });
+          },
+        });
+      }
+    },
+    [evmAccountAddress, evmAccountAddress, setEvmWallet]
+  );
+
+  useEffect(() => {
+    if (evmConnector && evmWallet?.id !== evmAccountAddress) {
+      updateEvmWallet(evmConnector);
+    }
+  }, [
+    evmConnector,
+    evmWallet,
+    setEvmWallet,
+    updateEvmWallet,
+    evmAccountAddress,
+  ]);
 
   const evmConnectors = useMemo(() => {
     const connectorList: EvmConnector[] = [];
@@ -37,34 +102,6 @@ export const useEvmConnectors = (): EvmConnector[] => {
         return;
       }
 
-      const connectWallet = async (chainId?: number) => {
-        const walletConnectedButNeedToSwitchChain =
-          isEvmConnected &&
-          chainId !== connectorChainId &&
-          connector.id === evmConnector?.id;
-
-        if (isEvmConnected && connector.id !== evmConnector?.id) {
-          await disconnect();
-        }
-        if (walletConnectedButNeedToSwitchChain) {
-          await connector?.switchChain?.({
-            chainId: Number(chainId),
-          });
-        }
-
-        await connectAsync({ connector, chainId });
-
-        setEvmWallet({
-          id: connector.id,
-          walletInfo: {
-            walletName: connector.name,
-            walletPrettyName: connector.name,
-            logo: connector.icon,
-          },
-          chainType: ChainType.Evm,
-        });
-      };
-
       connectorList.push({
         chainType: ChainType.Evm,
         walletInfo: {
@@ -73,7 +110,7 @@ export const useEvmConnectors = (): EvmConnector[] => {
           walletPrettyName: connector.name,
         },
         isAvailable: true, // always true because the connector was found in browser context
-        connect: (chainId?: number) => connectWallet(chainId),
+        connect: (chainId: number) => connectWallet(chainId, connector),
       });
     });
 
