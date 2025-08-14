@@ -6,7 +6,8 @@ import { useAccount as useEvmAccount } from 'wagmi';
 import { ChainType } from '@/hooks/common';
 
 /***
- * Keeps wallet metadata synced
+ * !! Important: Keeps wallet metadata synced !!
+ * Required for handling external wallet state changes, and page reloads
  */
 export const useKeepEvmWalletStateSynced = () => {
   const [evmWallet, setEvmWallet] = useAtom(evmWalletAtom);

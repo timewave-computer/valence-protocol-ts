@@ -6,7 +6,8 @@ import { ChainType } from '@/hooks/common';
 import { cosmosWalletAtom, getCosmosWalletInfo } from '@/hooks/cosmos';
 
 /***
- * Keeps wallet metadata synced
+ * !! Important: Keeps wallet metadata synced !!
+ * Required for handling external wallet state changes, and page reloads
  */
 export const useKeepCosmosWalletStateSynced = () => {
   const [cosmosWallet, setCosmosWallet] = useAtom(cosmosWalletAtom);
@@ -41,7 +42,10 @@ export const useKeepCosmosWalletStateSynced = () => {
   }, [cosmosAccounts, currentCosmosAddress, setCosmosWallet, walletType]);
 
   useEffect(() => {
-    if (!isConnected) return;
+    if (!isConnected) {
+      setCosmosWallet(undefined);
+      return;
+    }
     if (walletType && currentCosmosAddress !== cosmosWallet?.id) {
       updateCosmosWallet();
     }

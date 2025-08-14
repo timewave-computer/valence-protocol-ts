@@ -24,7 +24,10 @@ export const getCosmosBalance = async ({
     rpcUrl: rpcUrl,
   });
 
-  const balance = await cosmosClient.getDenomBalance(address, denom);
+  const balance = await cosmosClient.getDenomBalance({
+    address,
+    denom,
+  });
   return {
     amount: balance.amount,
     denom: balance.denom,

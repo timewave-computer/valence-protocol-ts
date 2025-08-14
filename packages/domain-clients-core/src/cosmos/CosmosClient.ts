@@ -40,17 +40,27 @@ export class CosmosClient extends ChainClient {
     }
   }
 
-  async getDenomBalance(address: string, denom: string): Promise<Coin> {
+  async getDenomBalance({
+    address,
+    denom,
+  }: {
+    address: string;
+    denom: string;
+  }): Promise<Coin> {
     const client = await this.getStargateClient();
     return client.getBalance(address, denom);
   }
 
   // Raw untyped query. It is recommended to use ts-codegen for type safety and pass the appropriate client
-  async queryContract<T extends z.ZodTypeAny>(
-    address: string,
-    queryObject: object | string,
-    responseSchema: T
-  ): Promise<z.infer<T>> {
+  async queryContract<T extends z.ZodTypeAny>({
+    address,
+    queryObject,
+    responseSchema,
+  }: {
+    address: string;
+    queryObject: object | string;
+    responseSchema: T;
+  }): Promise<z.infer<T>> {
     const client = await this.getCosmwasmClient();
     const result = await client.queryContractSmart(address, queryObject);
     return responseSchema.parse(result);

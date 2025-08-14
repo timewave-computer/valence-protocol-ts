@@ -1,5 +1,5 @@
 'use client';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useSetAtom } from 'jotai';
 import {
   WalletType,
@@ -11,26 +11,18 @@ import {
 import { ChainType } from '@/hooks/common';
 import {
   cosmosWalletAtom,
-  useKeepCosmosWalletStateSynced,
   type CosmosConnector,
   getCosmosWalletInfo,
-  type SupportedCosmosWallet,
   supportedCosmosWallets,
 } from '@/hooks/cosmos';
+import { useKeepCosmosWalletStateSynced } from '@/hooks/cosmos';
 
 export const useCosmosConnectors = (): CosmosConnector[] => {
-  const { disconnectAsync } = useDisconnect();
   useKeepCosmosWalletStateSynced();
-
   const setCosmosWallet = useSetAtom(cosmosWalletAtom);
 
-  const cosmosConnectors = useMemo(() => {
-    const connectorList: CosmosConnector[] = [];
-
-    const connectWallet = async (
-      walletType: SupportedCosmosWallet,
-      chainId: string
-    ) => {
+  const connectWallet = useCallback(
+    async (walletType: WalletType, chainId: string) => {
       const chainInfo = getChainInfo({ chainId });
       const wallet = getWallet(walletType);
       const walletInfo = getCosmosWalletInfo(walletType);
@@ -57,7 +49,6 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
       if (!address) {
         throw new Error('failed to get address from wallet');
       }
-
       setCosmosWallet({
         id: walletType,
         walletInfo: {
@@ -67,7 +58,12 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
         },
         chainType: ChainType.Cosmos,
       });
-    };
+    },
+    [setCosmosWallet]
+  );
+
+  const cosmosConnectors = useMemo(() => {
+    const connectorList: CosmosConnector[] = [];
 
     supportedCosmosWallets.forEach(walletType => {
       const walletInfo = getCosmosWalletInfo(walletType);
@@ -92,7 +88,7 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
     });
 
     return connectorList;
-  }, [disconnectAsync]);
+  }, [connectWallet]);
 
   return cosmosConnectors;
 };

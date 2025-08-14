@@ -1,30 +1,25 @@
 'use client';
-import { useEffect, useMemo } from 'react';
-import { useEvmClientStore, useEvmConfig } from '@/evm';
+import { useEffect, useMemo, useState } from 'react';
+import { useEvmConfig } from '@/evm';
 import { EvmClient } from '@valence-protocol/domain-clients-core/evm';
-import { useAccount, usePublicClient } from 'wagmi';
 
 export function useEvmClient(chainId: number) {
   const config = useEvmConfig();
-  const account = useAccount();
-  const publicClient = usePublicClient();
 
-  const { client, setClient } = useEvmClientStore();
+  const [client, setClient] = useState<EvmClient | undefined>(undefined);
 
   useEffect(() => {
-    if (!account || !publicClient) return;
     const client = new EvmClient({
       config: config.wagmiConfig,
       chainId: chainId,
     });
     setClient(client);
-  }, [account, publicClient, config, setClient]);
+  }, [chainId, config.wagmiConfig, setClient]);
 
   return useMemo(
     () => ({
       client,
-      account,
     }),
-    [client, account]
+    [client]
   );
 }

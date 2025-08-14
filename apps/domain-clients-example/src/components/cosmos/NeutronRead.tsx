@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BalanceView } from '@/components';
 import { useCosmosClient } from '@valence-protocol/domain-clients-react';
 
-interface NeutronDataProps {
+interface NeutronReadProps {
   initialBalance: string;
   decimals: number;
   initialAddress: string;
@@ -13,14 +13,14 @@ interface NeutronDataProps {
   chainId: string;
 }
 
-export const NeutronData = ({
+export const NeutronRead = ({
   initialBalance,
   decimals,
   initialAddress,
   symbol,
   denom,
   chainId,
-}: NeutronDataProps) => {
+}: NeutronReadProps) => {
   const [inputAddress, setInputAddress] = useState(initialAddress);
 
   const { client: cosmosClient } = useCosmosClient(chainId);
@@ -29,7 +29,10 @@ export const NeutronData = ({
     if (!cosmosClient) {
       throw new Error('Cosmos client not found');
     }
-    const balance = await cosmosClient.getDenomBalance(inputAddress, denom);
+    const balance = await cosmosClient.getDenomBalance({
+      address: inputAddress,
+      denom,
+    });
     return {
       amount: balance.amount,
       denom: balance.denom,
@@ -62,8 +65,8 @@ export const NeutronData = ({
   }, [error]);
 
   return (
-    <div className='flex flex-col gap-2 w-1/2'>
-      <h2 className='font-semibold'>Neutron</h2>
+    <div className='flex flex-col gap-2 w-1/2 max-w-md'>
+      <h2 className='font-semibold'>Neutron Read</h2>
       <BalanceView
         inputAddress={inputAddress}
         setInputAddress={setInputAddress}

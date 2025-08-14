@@ -1,5 +1,5 @@
 import { microToBase } from '@valence-protocol/domain-clients-core';
-import { Label } from '@/components';
+import { Label, Input } from '@/components';
 
 interface BalanceViewProps {
   inputAddress: string;
@@ -24,7 +24,7 @@ export const BalanceView = ({
     <>
       <div className='flex flex-col'>
         <Label htmlFor='address'>Address</Label>
-        <input
+        <Input
           className='border border-gray-300 rounded-sm p-1 font-mono text-xs'
           placeholder='Enter address'
           type='text'

@@ -1,34 +1,44 @@
 import { Suspense } from 'react';
-import { Header, ConfigDisplay, NeutronData } from '@/components';
+import {
+  Header,
+  ConfigView,
+  NeutronRead,
+  EthereumRead,
+  EthereumTestnetWrite,
+  NeutronTestnetWrite,
+} from '@/components';
 import { getCosmosBalance, getEthErc20Balance } from '@/server';
 import { type Address } from 'viem';
-import { EthereumData } from '@/components/EthereumData';
+import { neutrontestnet, neutron } from 'graz/chains';
+import { mainnet, sepolia } from 'viem/chains';
 
-const neutronAsset = {
-  denom: 'untrn',
-  chainId: 'neutron-1',
+const neutronNtrn = {
+  chainId: neutron.chainId,
   symbol: 'NTRN',
-  userAddress: 'neutron1fl48vsnmsdzcv85q5d2q4z5ajdha8yu33yqdrs',
+  denom: 'untrn',
+  decimals: 6, // hardcoded for brevity
+};
+const neutronUser = 'neutron1fl48vsnmsdzcv85q5d2q4z5ajdha8yu33yqdrs'; // Top holder
+
+const evmUsdc = {
+  chainId: mainnet.id,
+  symbol: 'USDC',
+  tokenAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48' as Address,
 };
 
-const usdcAsset = {
-  userAddress: '0x70801f4fd5daf2a5dc64167386ad7b1e91e993c0' as Address,
-  tokenAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48' as Address,
-  symbol: 'USDC',
-  chainId: 1,
-};
+const evmUser: Address = '0x98C23E9d8f34FEFb1B7BD6a91B7FF122F4e16F5c'; // AAVE protocol
 
 export default async function Home() {
   const cosmosBalance = await getCosmosBalance({
-    address: neutronAsset.userAddress,
-    denom: neutronAsset.denom,
-    chainId: neutronAsset.chainId,
+    address: neutronUser,
+    denom: neutronNtrn.denom,
+    chainId: neutronNtrn.chainId,
   });
 
   const usdcBalance = await getEthErc20Balance({
-    address: usdcAsset.userAddress,
-    erc20Address: usdcAsset.tokenAddress,
-    chainId: usdcAsset.chainId,
+    address: evmUser,
+    erc20Address: evmUsdc.tokenAddress,
+    chainId: evmUsdc.chainId,
   });
 
   return (
@@ -40,28 +50,36 @@ export default async function Home() {
           and Domain Clients API.
         </p>
 
-        <ConfigDisplay />
+        <ConfigView />
 
         <Suspense fallback={<div>Loading...</div>}>
-          <div className='flex flex-row gap-4'>
-            <NeutronData
-              denom={neutronAsset.denom}
-              chainId={neutronAsset.chainId}
+          <div className='flex flex-row gap-8'>
+            <NeutronRead
+              denom={neutronNtrn.denom}
+              chainId={neutronNtrn.chainId}
               initialBalance={cosmosBalance.amount}
               decimals={cosmosBalance.decimals}
-              initialAddress={neutronAsset.userAddress}
-              symbol={neutronAsset.symbol}
+              initialAddress={neutronUser}
+              symbol={neutronNtrn.symbol}
             />
-            <EthereumData
-              chainId={usdcAsset.chainId}
-              erc20Address={usdcAsset.tokenAddress}
+            <EthereumRead
+              chainId={evmUsdc.chainId}
+              erc20Address={evmUsdc.tokenAddress}
               initialBalance={usdcBalance.balance}
               decimals={usdcBalance.decimals}
-              initialAddress={usdcAsset.userAddress}
-              symbol={usdcAsset.symbol}
+              initialAddress={evmUser}
+              symbol={evmUsdc.symbol}
             />
           </div>
         </Suspense>
+        <div className='flex flex-row gap-8'>
+          <NeutronTestnetWrite
+            denom={neutronNtrn.denom}
+            decimals={neutronNtrn.decimals}
+            chainId={neutrontestnet.chainId}
+          />
+          <EthereumTestnetWrite chainId={sepolia.id} />
+        </div>
       </main>
     </>
   );

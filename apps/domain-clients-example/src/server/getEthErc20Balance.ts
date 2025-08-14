@@ -20,7 +20,10 @@ export const getEthErc20Balance = async ({
     config: config.wagmiConfig,
     chainId,
   });
-  const balance = await evmClient.getErc20Balance(erc20Address, address);
+  const balance = await evmClient.getErc20Balance({
+    contractAddress: erc20Address,
+    address,
+  });
   const decimals = await evmClient.queryContract({
     abi: erc20Abi,
     functionName: 'decimals',

@@ -8,6 +8,7 @@ import {
   ReadContractReturnType,
   Address,
   PublicClient,
+  TransactionReceipt,
 } from 'viem';
 
 import { ChainClient, ClientError, ClientErrorType } from '@/common';
@@ -41,7 +42,7 @@ export class EvmClient extends ChainClient {
     return client;
   }
 
-  async getEthBalance(address: string): Promise<bigint> {
+  async getEthBalance({ address }: { address: string }): Promise<bigint> {
     if (!isAddress(address)) {
       throw new ClientError(ClientErrorType.InvalidAddress, 'Invalid address');
     }
@@ -49,11 +50,14 @@ export class EvmClient extends ChainClient {
     return client.getBalance({ address });
   }
 
-  async getErc20Balance(
-    erc20Address: Address,
-    address: Address
-  ): Promise<bigint> {
-    if (!isAddress(erc20Address)) {
+  async getErc20Balance({
+    contractAddress,
+    address,
+  }: {
+    contractAddress: Address;
+    address: Address;
+  }): Promise<bigint> {
+    if (!isAddress(contractAddress)) {
       throw new ClientError(
         ClientErrorType.InvalidAddress,
         'Invalid erc20 address'
@@ -68,7 +72,7 @@ export class EvmClient extends ChainClient {
     return this.queryContract({
       abi: erc20Abi,
       functionName: 'balanceOf',
-      address: erc20Address,
+      address: contractAddress,
       args: [address],
     });
   }
@@ -95,5 +99,14 @@ export class EvmClient extends ChainClient {
       );
     }
     return client.readContract(args);
+  }
+
+  async waitForTransactionReceipt({
+    txHash,
+  }: {
+    txHash: Address;
+  }): Promise<TransactionReceipt> {
+    const client = this.getPublicClient();
+    return client.waitForTransactionReceipt({ hash: txHash });
   }
 }
