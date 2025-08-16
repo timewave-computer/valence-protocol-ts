@@ -16,7 +16,7 @@ export const SelectWalletButton = ({
     <button
       onClick={() => onConnect(wallet.chainType)}
       disabled={!wallet.isAvailable}
-      className='w-full flex flex-wrap gap-1items-center justify-between px-4 py-3 border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200'
+      className='w-full flex flex-wrap gap-1 items-center justify-between px-4 py-3 border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200'
     >
       <div className='flex items-center space-x-3'>
         <WalletLogo

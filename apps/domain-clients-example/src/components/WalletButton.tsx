@@ -43,7 +43,6 @@ export const WalletButton = () => {
         {isEvmConnected && evmAddress && (
           <ConnectionIndicator
             address={evmAddress}
-            chainType={ChainType.Evm}
             logo={evmWallet?.walletInfo.logo}
           />
         )}
@@ -51,7 +50,6 @@ export const WalletButton = () => {
         {isCosmosConnected && cosmosAddress && (
           <ConnectionIndicator
             address={cosmosAddress}
-            chainType={ChainType.Cosmos}
             logo={cosmosWallet?.walletInfo.logo}
           />
         )}
@@ -65,7 +63,6 @@ const ConnectionIndicator = ({
   logo,
   address,
 }: {
-  chainType: ChainType;
   logo?: string;
   address: string;
 }) => {

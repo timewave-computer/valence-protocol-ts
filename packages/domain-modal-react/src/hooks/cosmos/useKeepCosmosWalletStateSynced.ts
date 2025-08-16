@@ -27,7 +27,6 @@ export const useKeepCosmosWalletStateSynced = () => {
   const updateCosmosWallet = useCallback(async () => {
     if (cosmosAccounts && walletType && currentCosmosAddress) {
       const walletInfo = getCosmosWalletInfo(walletType);
-      console.log('updating cosmos wallet', walletInfo);
 
       setCosmosWallet({
         id: currentCosmosAddress,
