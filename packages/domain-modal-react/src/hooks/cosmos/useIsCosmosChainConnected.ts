@@ -1,12 +1,15 @@
 import { useAccount } from 'graz';
 
-// this wrapper is added because useAccount returns true for isConnected, even if chainId is given
-export const useIsCosmosChainConnected = ({
-  chainId,
-}: {
+export interface UseIsCosmosChainConnectedProps {
   chainId?: string;
-}): boolean => {
+}
+
+// this wrapper is added because useAccount returns true for isConnected, even if chainId is given
+export const useIsCosmosChainConnected = (
+  args?: UseIsCosmosChainConnectedProps
+): boolean => {
   const { isConnected, data: accounts } = useAccount({ multiChain: true });
+  const chainId = args?.chainId;
   if (!chainId) {
     return isConnected;
   }

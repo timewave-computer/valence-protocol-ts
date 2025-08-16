@@ -18,7 +18,6 @@ export const useKeepCosmosWalletStateSynced = () => {
     isConnected,
   } = useCosmosAccount({
     multiChain: true,
-    isConnected: true,
   });
 
   const currentCosmosAddress = cosmosAccounts
