@@ -72,7 +72,7 @@ export default async function Home() {
               server and client side.
             </p>
 
-            <div className='flex flex-row gap-8 pt-4'>
+            <div className='flex flex-row gap-8 pt-4 flex-wrap'>
               <NeutronRead
                 denom={neutronNtrn.denom}
                 chainId={neutronNtrn.chainId}
@@ -102,7 +102,7 @@ export default async function Home() {
             transaction.
           </p>
 
-          <div className='flex flex-row gap-8 pt-4'>
+          <div className='flex flex-row gap-8 pt-4 flex-wrap'>
             <NeutronTestnetWrite
               denom={neutronNtrn.denom}
               decimals={neutronNtrn.decimals}

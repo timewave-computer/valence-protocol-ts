@@ -7,7 +7,10 @@ import { useMutation } from '@tanstack/react-query';
 import { baseToMicro } from '@valence-protocol/domain-clients-core';
 import { useSuggestChainAndConnect, WalletType } from 'graz';
 import { neutrontestnet } from 'graz/chains';
-import { useIsCosmosChainConnected } from '@valence-protocol/domain-modal-react';
+import {
+  useDomainModal,
+  useIsCosmosChainConnected,
+} from '@valence-protocol/domain-modal-react';
 
 type NeutronTestnetWriteProps = {
   chainId: string;
@@ -23,14 +26,7 @@ export const NeutronTestnetWrite = ({
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
   const isConnected = useIsCosmosChainConnected({ chainId });
-  const { suggestAndConnect } = useSuggestChainAndConnect();
-
-  const handleSuggestAndConnect = useCallback(() => {
-    suggestAndConnect({
-      chainInfo: neutrontestnet,
-      walletType: WalletType.KEPLR,
-    });
-  }, [suggestAndConnect]);
+  const { showModal } = useDomainModal();
 
   const { client: signingCosmosClient } = useSigningCosmosClient({ chainId });
 
@@ -90,8 +86,8 @@ export const NeutronTestnetWrite = ({
       </div>
       <div className='flex flex-row gap-4'>
         {!isConnected ? (
-          <Button variant='secondary' onClick={handleSuggestAndConnect}>
-            <span>Connect Wallet</span>
+          <Button variant='secondary' onClick={() => showModal()}>
+            <span>Connect Cosmos Wallet</span>
           </Button>
         ) : (
           <Button disabled={!isConnected} onClick={() => sendTokens()}>

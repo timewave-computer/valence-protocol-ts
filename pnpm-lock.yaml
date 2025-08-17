@@ -114,6 +114,9 @@ importers:
       '@cosmjs/encoding':
         specifier: ^0.34.0
         version: 0.34.0
+      '@cosmjs/math':
+        specifier: ^0.34.0
+        version: 0.34.0
       '@cosmjs/proto-signing':
         specifier: ^0.34.0
         version: 0.34.0

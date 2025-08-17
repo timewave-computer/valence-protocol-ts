@@ -31,10 +31,14 @@ export function useSigningCosmosClient({
   }, [account]);
 
   useEffect(() => {
+    if (!chainConfig.gas) {
+      throw new Error(`Default gas not set for ${chainId}`);
+    }
     if (!account || !offlineSigner) {
       setClient(undefined);
       return;
     }
+
     setClient(
       new SigningCosmosClient({
         chainId,
