@@ -66,7 +66,6 @@ export class SigningCosmosClient extends SigningChainClient {
       );
     }
     try {
-      SigningStargateClient.connect(this.rpcUrl);
       return SigningStargateClient.connectWithSigner(this.rpcUrl, this.signer, {
         registry: this.protobufRegistry,
         aminoTypes: this.aminoTypes,
