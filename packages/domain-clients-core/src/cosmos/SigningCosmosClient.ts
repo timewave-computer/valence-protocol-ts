@@ -5,6 +5,7 @@ import {
 } from '@cosmjs/proto-signing';
 import {
   SigningStargateClient,
+  GasPrice,
   DeliverTxResponse,
   Coin,
   StdFee,
@@ -15,8 +16,11 @@ import {
   ExecuteResult,
 } from '@cosmjs/cosmwasm-stargate';
 import { OfflineAminoSigner } from '@cosmjs/amino';
+import { Decimal } from '@cosmjs/math';
 import { TextEncoder } from 'util';
 import { SigningChainClient, ClientErrorType, ClientError } from '@/common';
+
+const DEFAULT_GAS_DECIMAL_PRECISION = 18;
 
 export type CosmosSigner = OfflineAminoSigner & OfflineDirectSigner;
 export type CosmosGas = {
@@ -27,7 +31,7 @@ export type CosmosGas = {
 export interface SigningCosmosClientConfig {
   chainId: string;
   rpcUrl: string;
-  gas?: CosmosGas;
+  gas: CosmosGas;
   signer?: CosmosSigner;
   senderAddress?: string;
   protobufRegistry?: Registry;
@@ -38,7 +42,7 @@ export class SigningCosmosClient extends SigningChainClient {
   public readonly protobufRegistry?: Registry;
   public readonly aminoTypes?: AminoTypes;
   public readonly signer?: CosmosSigner;
-  public readonly gas?: CosmosGas;
+  public readonly gas: CosmosGas;
   public readonly senderAddress?: string;
   public readonly chainId: string;
   public readonly rpcUrl: string;
@@ -65,7 +69,10 @@ export class SigningCosmosClient extends SigningChainClient {
       return SigningStargateClient.connectWithSigner(this.rpcUrl, this.signer, {
         registry: this.protobufRegistry,
         aminoTypes: this.aminoTypes,
-        gasPrice: undefined, // Optionally set gas price here
+        gasPrice: new GasPrice(
+          Decimal.fromUserInput(this.gas.price, DEFAULT_GAS_DECIMAL_PRECISION),
+          this.gas.denom
+        ),
       });
     } catch (error) {
       throw new ClientError(
@@ -114,7 +121,6 @@ export class SigningCosmosClient extends SigningChainClient {
       );
     }
     const client = await this.getSigningStargateClient();
-
     return client.sendTokens(this.senderAddress, recipient, amount, fee, memo);
   }
 
@@ -122,14 +128,14 @@ export class SigningCosmosClient extends SigningChainClient {
     sender,
     contractAddress,
     messageBody,
-    fee,
+    fee = 'auto',
     memo = '',
     funds = [],
   }: {
     sender: string;
     contractAddress: string;
     messageBody: object;
-    fee: StdFee | 'auto';
+    fee?: StdFee | 'auto';
     memo: string;
     funds: Coin[];
   }): Promise<ExecuteResult> {
@@ -146,11 +152,11 @@ export class SigningCosmosClient extends SigningChainClient {
 
   async executeMessageBatch({
     messages,
-    fee,
+    fee = 'auto',
     memo = '',
   }: {
     messages: EncodeObject[];
-    fee: StdFee | 'auto';
+    fee?: StdFee | 'auto';
     memo: string;
   }): Promise<DeliverTxResponse> {
     if (!this.senderAddress) {

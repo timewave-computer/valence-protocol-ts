@@ -99,7 +99,7 @@ export const EthereumTestnetWrite = ({
       <div className='flex flex-row gap-4'>
         {!isConnected ? (
           <Button variant='secondary' onClick={() => showModal()}>
-            <span>Connect Wallet</span>
+            <span>Connect Ethereum Wallet</span>
           </Button>
         ) : (
           <Button disabled={!isConnected} onClick={() => sendTokens()}>

@@ -3,17 +3,18 @@ import { neutron, neutrontestnet } from 'graz/chains'; // need to run `graz gene
 
 export const cosmosConfig: CosmosConfig = {
   grazOptions: {
-    chains: [neutrontestnet, neutron],
+    autoReconnect: false, // default behavior is to prompt user to reconnect when page loads
+    chains: [neutron, neutrontestnet],
     chainsConfig: {
       [neutron.chainId]: {
         gas: {
-          price: '0.005',
+          price: '0.1',
           denom: 'untrn',
         },
       },
       [neutrontestnet.chainId]: {
         gas: {
-          price: '0.005',
+          price: '0.1',
           denom: 'untrn',
         },
       },
