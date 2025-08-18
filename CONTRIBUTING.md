@@ -1,4 +1,6 @@
-# Contributing to packages
+# Contributing
+
+## Contributing to packages
 
 Each package change must be accompanied with an `Unreleased` changelog line.
 
@@ -11,11 +13,35 @@ Types of changes
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-# Releasing packages
+## Releasing a package
 
-Release 'Unreleased` changes and update the changelog.
+1. `cd` into package root
 
-- Same types of changes should be grouped
-- Versions and sections should be linkable.
-- The latest version comes first.
-- The release date of each version is displayed
+2. Generate new version
+
+```bash
+# Patch release (0.0.1 → 0.0.2)
+# backward-compatible bug fixes
+
+# Minor release (0.0.1 → 0.1.0)
+# backward-compatible new features
+npm version minor
+
+# Major release (0.1.0 → 1.0.0)
+# backward-incompatible changes
+npm version major
+
+# Or set an exact version
+npm version 0.2.0
+```
+
+3. Update `CHANGELOG.md` with new version.
+
+4. Publish to npm
+
+**Note:** You must have write access to the npm scope `@valence-protocol`. Run the publish command and follow the prompts to authenticate yourself via CLI.
+
+```bash
+cd <package root>
+npm publish --access public`
+```
