@@ -44,17 +44,17 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className='grow p-4 flex flex-col gap-10 pb-10'>
+      <main className='grow p-4 flex flex-col gap-8 pb-10'>
         <p className='text-sm'>
           This app is a simple example of how to use the Valence Domain Modal
           and Domain Clients API.
         </p>
 
-        <div className='flex flex-col gap-1'>
-          <h2 className='font-semibold text-lg w-full border-b border-gray-400'>
+        <div className='flex flex-col '>
+          <h2 className='font-semibold text-xl '>
             Domain Client Configuration
           </h2>
-          <p className='text-sm pt-2'>
+          <p className='text-sm pt-2 pb-4'>
             This is the configuration for the domain clients. It is used to
             determine which chains and wallets are available to the user.
           </p>
@@ -64,9 +64,7 @@ export default async function Home() {
 
         <Suspense fallback={<div>Loading...</div>}>
           <div>
-            <h2 className='font-semibold text-lg w-full border-b border-gray-400'>
-              Read operations
-            </h2>
+            <h2 className='font-semibold text-xl '>Read operations</h2>
             <p className='pt-2 text-sm'>
               Code example using domain clients to query an asset balance, both
               server and client side.
@@ -93,9 +91,7 @@ export default async function Home() {
           </div>
         </Suspense>
         <div>
-          <h2 className='font-semibold text-lg w-full border-b border-gray-400'>
-            Write operations
-          </h2>
+          <h2 className='font-semibold text-xl '>Write operations</h2>
           <p className='pt-2 text-sm'>
             Code example using domain clients to sign and submit transactions.
             Uses testnet. You can deny in the wallet to avoid completing the
