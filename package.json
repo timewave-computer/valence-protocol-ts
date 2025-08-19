@@ -24,18 +24,5 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
-  },
-  "pnpm": {
-    "overrides": {
-      "@valence-protocol/domain-clients-core": {
-        "version": "workspace:*"
-      },
-      "@valence-protocol/domain-clients-react": {
-        "version": "workspace:*"
-      },
-      "@valence-protocol/domain-modal-react": {
-        "version": "workspace:*"
-      }
-    }
   }
 }
