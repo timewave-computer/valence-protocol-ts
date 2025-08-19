@@ -24,5 +24,10 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "overrides": {
+    "@valence-protocol/domain-clients-core": "workspace:*",
+    "@valence-protocol/domain-clients-react": "workspace:*",
+    "@valence-protocol/domain-modal-react": "workspace:*"
   }
 }
