@@ -36,14 +36,14 @@ importers:
         specifier: 2.0.0-alpha.34
         version: 2.0.0-alpha.34(@babel/runtime@7.28.2)(react-dom@18.3.0(react@18.3.1))(react@18.3.1)
       '@valence-protocol/domain-clients-core':
-        specifier: workspace:*
-        version: link:../../packages/domain-clients-core
+        specifier: ^0.1.0
+        version: 0.1.0(@cosmjs/amino@0.34.0)(@cosmjs/cosmwasm-stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@cosmjs/encoding@0.34.0)(@cosmjs/math@0.34.0)(@cosmjs/proto-signing@0.34.0)(@cosmjs/stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@wagmi/core@2.18.1(@tanstack/query-core@5.83.1)(@types/react@18.3.1)(react@18.3.1)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@18.3.1))(viem@2.33.2(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)))(graz@0.3.3(@cosmjs/amino@0.34.0)(@cosmjs/cosmwasm-stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@cosmjs/encoding@0.34.0)(@cosmjs/proto-signing@0.34.0)(@cosmjs/stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@tanstack/react-query@5.84.1(react@18.3.1))(@types/react@18.3.1)(bufferutil@4.0.9)(react@18.3.1)(starknet@6.24.1)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(zod@3.25.76))(viem@2.33.2(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76))
       '@valence-protocol/domain-clients-react':
-        specifier: workspace:*
-        version: link:../../packages/domain-clients-react
+        specifier: ^0.1.0
+        version: 0.1.0(@cosmjs/amino@0.34.0)(@cosmjs/cosmwasm-stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@cosmjs/encoding@0.34.0)(@cosmjs/proto-signing@0.34.0)(@cosmjs/stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@tanstack/react-query@5.84.1(react@18.3.1))(@types/react@18.3.1)(bufferutil@4.0.9)(react-dom@18.3.0(react@18.3.1))(react@18.3.1)(starknet@6.24.1)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(wagmi@2.16.1(@tanstack/query-core@5.83.1)(@tanstack/react-query@5.84.1(react@18.3.1))(@types/react@18.3.1)(bufferutil@4.0.9)(react@18.3.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(viem@2.33.2(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76))(zod@3.25.76))(zod@3.25.76)
       '@valence-protocol/domain-modal-react':
-        specifier: workspace:*
-        version: link:../../packages/domain-modal-react
+        specifier: ^0.1.0
+        version: 0.1.0(fltzia6nlvejarzk4ofuuy36hu)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1738,6 +1738,16 @@ packages:
       '@cosmjs/encoding': ^0.34.0
       '@cosmjs/proto-signing': ^0.34.0
       '@cosmjs/stargate': ^0.34.0
+      react: 18.3.1
+      react-dom: 18.3.0
+      wagmi: ^2.16.0
+
+  '@valence-protocol/domain-modal-react@0.1.0':
+    resolution: {integrity: sha512-hxmK7eZKUFesljSt0c8tDXx21iCUD40KFyg4eyjM8yNQr9frozHR+UQFdJd/n3L8+Is/q8Kj2GYLeof0BbcEng==}
+    peerDependencies:
+      '@valence-protocol/domain-clients-core': workspace:*
+      '@valence-protocol/domain-clients-react': workspace:*
+      graz: ^0.3.3
       react: 18.3.1
       react-dom: 18.3.0
       wagmi: ^2.16.0
@@ -6604,6 +6614,27 @@ snapshots:
       - use-sync-external-store
       - utf-8-validate
       - zod
+
+  '@valence-protocol/domain-modal-react@0.1.0(fltzia6nlvejarzk4ofuuy36hu)':
+    dependencies:
+      '@radix-ui/react-dialog': 1.1.14(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.0(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-visually-hidden': 1.2.3(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.0(react@18.3.1))(react@18.3.1)
+      '@tailwindcss/postcss': 4.1.11
+      '@valence-protocol/domain-clients-core': 0.1.0(@cosmjs/amino@0.34.0)(@cosmjs/cosmwasm-stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@cosmjs/encoding@0.34.0)(@cosmjs/math@0.34.0)(@cosmjs/proto-signing@0.34.0)(@cosmjs/stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@wagmi/core@2.18.1(@tanstack/query-core@5.83.1)(@types/react@18.3.1)(react@18.3.1)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@18.3.1))(viem@2.33.2(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76)))(graz@0.3.3(@cosmjs/amino@0.34.0)(@cosmjs/cosmwasm-stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@cosmjs/encoding@0.34.0)(@cosmjs/proto-signing@0.34.0)(@cosmjs/stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@tanstack/react-query@5.84.1(react@18.3.1))(@types/react@18.3.1)(bufferutil@4.0.9)(react@18.3.1)(starknet@6.24.1)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(zod@3.25.76))(viem@2.33.2(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76))
+      '@valence-protocol/domain-clients-react': 0.1.0(@cosmjs/amino@0.34.0)(@cosmjs/cosmwasm-stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@cosmjs/encoding@0.34.0)(@cosmjs/proto-signing@0.34.0)(@cosmjs/stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@tanstack/react-query@5.84.1(react@18.3.1))(@types/react@18.3.1)(bufferutil@4.0.9)(react-dom@18.3.0(react@18.3.1))(react@18.3.1)(starknet@6.24.1)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(wagmi@2.16.1(@tanstack/query-core@5.83.1)(@tanstack/react-query@5.84.1(react@18.3.1))(@types/react@18.3.1)(bufferutil@4.0.9)(react@18.3.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(viem@2.33.2(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76))(zod@3.25.76))(zod@3.25.76)
+      clsx: 2.1.1
+      graz: 0.3.3(@cosmjs/amino@0.34.0)(@cosmjs/cosmwasm-stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@cosmjs/encoding@0.34.0)(@cosmjs/proto-signing@0.34.0)(@cosmjs/stargate@0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10))(@tanstack/react-query@5.84.1(react@18.3.1))(@types/react@18.3.1)(bufferutil@4.0.9)(react@18.3.1)(starknet@6.24.1)(typescript@5.9.2)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(zod@3.25.76)
+      jotai: 2.13.0(@types/react@18.3.1)(react@18.3.1)
+      postcss: 8.5.6
+      react: 18.3.1
+      react-dom: 18.3.0(react@18.3.1)
+      tailwindcss: 4.1.11
+      wagmi: 2.16.1(@tanstack/query-core@5.83.1)(@tanstack/react-query@5.84.1(react@18.3.1))(@types/react@18.3.1)(bufferutil@4.0.9)(react@18.3.1)(typescript@5.9.2)(utf-8-validate@5.0.10)(viem@2.33.2(bufferutil@4.0.9)(typescript@5.9.2)(utf-8-validate@5.0.10)(zod@3.25.76))(zod@3.25.76)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@babel/template'
+      - '@types/react'
+      - '@types/react-dom'
 
   '@vectis/extension-client@0.7.2': {}
 
