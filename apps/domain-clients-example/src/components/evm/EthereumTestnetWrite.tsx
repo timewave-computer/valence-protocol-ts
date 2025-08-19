@@ -9,10 +9,7 @@ import {
 } from '@valence-protocol/domain-clients-react';
 import { useMutation } from '@tanstack/react-query';
 import { useSwitchChain } from 'wagmi';
-import {
-  useEvmWallet,
-  useIsEvmChainConnected,
-} from '@valence-protocol/domain-modal-react';
+import { useIsEvmChainConnected } from '@valence-protocol/domain-modal-react';
 
 type EthereumTestnetWriteProps = {
   chainId: number;
@@ -27,7 +24,6 @@ export const EthereumTestnetWrite = ({
   const [amount, setAmount] = useState('');
   const { switchChain } = useSwitchChain();
   const isChainConnected = useIsEvmChainConnected(chainId);
-  const evmWallet = useEvmWallet();
 
   const { client: signingEvmClient } = useSigningEvmClient(chainId);
   const { client: publicEvmClient } = useEvmClient(chainId);
@@ -51,7 +47,6 @@ export const EthereumTestnetWrite = ({
     }
     throw new Error('Transaction failed');
   }, [
-    evmWallet,
     amount,
     toAddress,
     signingEvmClient,
