@@ -5,6 +5,7 @@ import { useAtomValue } from 'jotai';
 import { evmWalletAtom, useEvmConnectors } from '@/hooks';
 import { SelectWalletButton, AccountCard } from '@/ui/common';
 import { useEvmConfig } from '@valence-protocol/domain-clients-react';
+import { getEvmTargetChain, useDomainModal } from '@/ui/context';
 
 export const EvmConnectionManager = () => {
   const evmConnectors = useEvmConnectors();
@@ -13,6 +14,9 @@ export const EvmConnectionManager = () => {
   const { disconnect } = useDisconnect();
   const config = useEvmConfig();
   const isConnected = account?.status === 'connected';
+  const { targetChains } = useDomainModal();
+  const chainIdToConnect =
+    getEvmTargetChain(targetChains) ?? config.defaultChainId;
 
   if (!config) {
     console.warn(
@@ -48,7 +52,7 @@ export const EvmConnectionManager = () => {
           <SelectWalletButton
             key={connector.walletInfo.walletName}
             wallet={connector}
-            onConnect={() => connector.connect()}
+            onConnect={() => connector.connect(chainIdToConnect)}
           />
         ))}
       </div>

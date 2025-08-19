@@ -7,9 +7,7 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-gray-900 text-white hover:bg-gray-700',
         secondary: 'border-gray-700 hover:bg-gray-100',
-      },
-      isDisabled: {
-        true: 'cursor-not-allowed bg-gray-300 hover:bg-gray-300',
+        disabled: 'border-gray-500 cursor-not-allowed text-white bg-gray-500',
       },
     },
   }
@@ -25,10 +23,13 @@ export const Button = ({
   variant = 'default',
   ...rest
 }: ButtonProps) => {
+  if (disabled) {
+    variant = 'disabled';
+  }
   return (
     <button
-      className={buttonVariants({ variant, isDisabled: disabled, className })}
-      disabled={disabled}
+      className={buttonVariants({ variant, className })}
+      disabled={disabled ?? false}
       {...rest}
     >
       {children}

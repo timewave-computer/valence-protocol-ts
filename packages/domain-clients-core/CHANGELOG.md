@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] YYYY-MM-DD
 
+- _Breaking_ require default chain ID for evm config
+
 ## [0.1.0] 2025-08-18
 
 ### Added

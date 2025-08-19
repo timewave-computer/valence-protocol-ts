@@ -1,13 +1,7 @@
 'use client';
 import { useMemo, useCallback } from 'react';
 import { useSetAtom } from 'jotai';
-import {
-  WalletType,
-  getWallet,
-  connect,
-  useDisconnect,
-  getChainInfo,
-} from 'graz';
+import { WalletType, getWallet, connect, getChainInfo } from 'graz';
 import { ChainType } from '@/hooks/common';
 import {
   cosmosWalletAtom,

@@ -4,7 +4,7 @@ import { createClient } from 'viem';
 import { createEvmConfig } from '@valence-protocol/domain-clients-core';
 
 const wagmiConfig = createEvmConfig({
-  chains: [sepolia, mainnet], // default chain is first
+  chains: [mainnet, sepolia],
   ssr: true, // required for Next.js, prevents hydration errors
   client: ({ chain }) => {
     return createClient({
@@ -16,4 +16,5 @@ const wagmiConfig = createEvmConfig({
 
 export const evmConfig = {
   wagmiConfig,
+  defaultChainId: sepolia.id,
 };

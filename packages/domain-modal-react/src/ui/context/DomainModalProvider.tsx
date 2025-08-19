@@ -14,14 +14,13 @@ import {
   DomainClientsProvider,
   type DomainClientsConfig,
 } from '@valence-protocol/domain-clients-react';
-import { ModalContent, cn } from '@/ui';
+import {
+  ModalContent,
+  cn,
+  DomainModalContextType,
+  type TargetChains,
+} from '@/ui';
 import '@/globals.css';
-
-interface DomainModalContextType {
-  showModal: () => void;
-  closeModal: () => void;
-  isModalOpen: boolean;
-}
 
 const DomainModalContext = createContext<DomainModalContextType | undefined>(
   undefined
@@ -35,18 +34,25 @@ export const DomainModalProvider = ({
   config: DomainClientsConfig;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [targetChains, setTargetChains] = useState<TargetChains | undefined>(
+    undefined
+  );
 
-  const showModal = useCallback(() => {
-    setIsModalOpen(true);
-  }, []);
+  const showModal = useCallback(
+    (targetChains?: TargetChains) => {
+      setIsModalOpen(true);
+      setTargetChains(targetChains);
+    },
+    [setIsModalOpen, setTargetChains]
+  );
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
-  }, []);
+  }, [setIsModalOpen]);
 
   const value = useMemo(
-    () => ({ showModal, closeModal, isModalOpen }),
-    [showModal, closeModal, isModalOpen]
+    () => ({ showModal, closeModal, isModalOpen, targetChains }),
+    [showModal, closeModal, isModalOpen, targetChains]
   );
 
   return (
