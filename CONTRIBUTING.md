@@ -15,7 +15,7 @@ Types of changes
 
 ## Releasing a package
 
-1. `turbo build` to build all packages
+1. `pnpm install` && `turbo build` to build all packages
 
 2. `cd` into package root
 

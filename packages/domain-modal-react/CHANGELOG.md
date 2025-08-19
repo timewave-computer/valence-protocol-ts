@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] YYYY-MM-DD
 
+## [0.2.0] 2025-08-19
+
+### Changed
+
+- updated `@valence-protocol/domain-clients-core` and `@valence-protocol/domain-clients-react` dependencies
+
 ### Added
 
 - optional chainId arg to showModal to connect to non-default chain
