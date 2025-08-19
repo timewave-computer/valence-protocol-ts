@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] YYYY-MM-DD
 
+## [0.2.0] 2025-8-19
+
+### Changed
+
+- Updated `@valence-protocol/domain-clients-core` dependency to 0.2.0
+
 ## [0.1.0] 2025-08-18
 
 ### Added
