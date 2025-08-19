@@ -15,6 +15,8 @@ Types of changes
 
 ## Releasing a package
 
+### Steps
+
 1. `pnpm install` && `turbo build` to build all packages
 
 2. `cd` into package root
@@ -48,3 +50,11 @@ npm version 0.2.0
 cd <package root>
 npm publish --access public`
 ```
+
+6. Add new versions `pnpm.overrides` in root package.json
+
+7. Open a PR with
+
+- migrated changelog
+- package `version` updated in package.json
+- new version added to root package.json `pnpm.overrides` (for app deployment with correct dependencies)
