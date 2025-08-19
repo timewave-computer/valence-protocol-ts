@@ -30,7 +30,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@valence-protocol/domain-clients-core": "workspace:*",
+    "@valence-protocol/domain-clients-core": "^0.1.0",
     "graz": "^0.3.3",
     "zustand": "^5.0.7"
   },
