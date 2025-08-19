@@ -20,7 +20,8 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "vercel-build": "pnpm install --frozen-lockfile --link-workspace-packages=false && turbo build "
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

@@ -30,7 +30,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@valence-protocol/domain-clients-core": "^0.2.0",
+    "@valence-protocol/domain-clients-core": "workspace:*",
     "graz": "^0.3.3",
     "zustand": "^5.0.7"
   },
@@ -47,5 +47,10 @@
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
     "tsup": "^8.5.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@valence-protocol/domain-clients-core": "^0.2.0"
+    }
   }
 }
