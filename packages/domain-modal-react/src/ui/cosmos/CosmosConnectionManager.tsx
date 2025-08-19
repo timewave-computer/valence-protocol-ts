@@ -6,11 +6,15 @@ import { useCosmosConnectors, cosmosWalletAtom } from '@/hooks';
 import { useAccount, disconnect } from 'graz';
 import { useCosmosConfig } from '@valence-protocol/domain-clients-react';
 import { cn } from '@/ui/util';
+import { useDomainModal, getCosmosTargetChain } from '@/ui/context';
 
 export const CosmosConnectionManager = () => {
   const cosmosConnectors = useCosmosConnectors();
   const cosmosWallet = useAtomValue(cosmosWalletAtom);
   const config = useCosmosConfig();
+  const { targetChains } = useDomainModal();
+  const chainIdToConnect =
+    getCosmosTargetChain(targetChains) ?? config.defaultChainId;
 
   const { data: accounts, isConnected } = useAccount({
     multiChain: true,
@@ -25,7 +29,7 @@ export const CosmosConnectionManager = () => {
 
   if (isConnected) {
     return (
-      <>
+      <div className='flex flex-col gap-2'>
         {config.grazOptions.chains.map(chainInfo => {
           const chainId = chainInfo.chainId;
           const account = accounts?.[chainId];
@@ -44,7 +48,7 @@ export const CosmosConnectionManager = () => {
             );
           }
         })}
-      </>
+      </div>
     );
   } else
     return (
@@ -57,7 +61,7 @@ export const CosmosConnectionManager = () => {
               )}
               key={connector.walletInfo.walletName}
               wallet={connector}
-              onConnect={() => connector.connect(config.defaultChainId)}
+              onConnect={() => connector.connect(chainIdToConnect)}
             />
           );
         })}

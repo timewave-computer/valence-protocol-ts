@@ -6,6 +6,8 @@ import {
   EthereumRead,
   EthereumTestnetWrite,
   NeutronTestnetWrite,
+  ConnectCosmosChain,
+  ConnectEthereumChain,
 } from '@/components';
 import { getCosmosBalance, getEthErc20Balance } from '@/server';
 import { type Address } from 'viem';
@@ -60,6 +62,30 @@ export default async function Home() {
           </p>
 
           <ConfigView />
+        </div>
+        <div>
+          <h2 className='font-semibold text-xl '>Connecting chains</h2>
+          <p className='pt-2 text-sm'>
+            Code example using domain clients to connect to multiple chains
+            (outside of default chain)
+          </p>
+
+          <div className='flex flex-row gap-8 pt-4 flex-wrap'>
+            <div className='flex flex-col gap-4'>
+              <ConnectCosmosChain chainInfo={neutrontestnet} />
+              <ConnectCosmosChain chainInfo={neutron} />
+            </div>
+            <div className='flex flex-col gap-4'>
+              <ConnectEthereumChain
+                chainName={sepolia.name}
+                chainId={sepolia.id}
+              />
+              <ConnectEthereumChain
+                chainName={mainnet.name}
+                chainId={mainnet.id}
+              />
+            </div>
+          </div>
         </div>
 
         <Suspense fallback={<div>Loading...</div>}>

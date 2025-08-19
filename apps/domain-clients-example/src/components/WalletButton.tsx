@@ -1,7 +1,6 @@
 'use client';
 import { Button } from '@/components';
 import {
-  ChainType,
   useCosmosWallet,
   useDomainModal,
   useEvmWallet,
@@ -19,11 +18,12 @@ export const WalletButton = () => {
   const { showModal } = useDomainModal();
   const isCosmosConnected = useIsCosmosChainConnected();
   const isEvmConnected = useIsEvmChainConnected();
-  const isConnected = isCosmosConnected || isEvmConnected;
 
   const evmWallet = useEvmWallet();
   const cosmosWallet = useCosmosWallet();
   const { address: evmAddress } = useEvmAccount();
+  const isConnected = isCosmosConnected || isEvmConnected;
+
   const { data: cosmosAccount } = useCosmosAccount({
     chainId: neutrontestnet.chainId,
   });
@@ -38,7 +38,7 @@ export const WalletButton = () => {
       <Button
         variant='secondary'
         className='flex flex-row items-center gap-4'
-        onClick={showModal}
+        onClick={() => showModal()}
       >
         {isEvmConnected && evmAddress && (
           <ConnectionIndicator
@@ -56,7 +56,7 @@ export const WalletButton = () => {
       </Button>
     );
   }
-  return <Button onClick={showModal}>Connect Wallet</Button>;
+  return <Button onClick={() => showModal()}>Connect Wallet</Button>;
 };
 
 const ConnectionIndicator = ({
