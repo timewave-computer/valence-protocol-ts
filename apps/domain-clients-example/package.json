@@ -39,12 +39,5 @@
     "eslint-config-next": "15.4.5",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "pnpm": {
-    "overrides": {
-      "@valence-protocol/domain-clients-core": "^0.2.0",
-      "@valence-protocol/domain-clients-react": "^0.2.0",
-      "@valence-protocol/domain-modal-react": "^0.2.0"
-    }
   }
 }

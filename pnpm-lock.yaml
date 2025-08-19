@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@valence-protocol/domain-clients-core': ^0.2.0
+  '@valence-protocol/domain-clients-react': ^0.2.0
+  '@valence-protocol/domain-modal-react': ^0.2.0
+
 importers:
 
   .:
@@ -36,13 +41,13 @@ importers:
         specifier: 2.0.0-alpha.34
         version: 2.0.0-alpha.34(@babel/runtime@7.28.2)(react-dom@18.3.0(react@18.3.1))(react@18.3.1)
       '@valence-protocol/domain-clients-core':
-        specifier: workspace:*
+        specifier: ^0.2.0
         version: link:../../packages/domain-clients-core
       '@valence-protocol/domain-clients-react':
-        specifier: workspace:*
+        specifier: ^0.2.0
         version: link:../../packages/domain-clients-react
       '@valence-protocol/domain-modal-react':
-        specifier: workspace:*
+        specifier: ^0.2.0
         version: link:../../packages/domain-modal-react
       class-variance-authority:
         specifier: ^0.7.1
@@ -161,7 +166,7 @@ importers:
         specifier: ^0.34.0
         version: 0.34.0(bufferutil@4.0.9)(utf-8-validate@5.0.10)
       '@valence-protocol/domain-clients-core':
-        specifier: workspace:*
+        specifier: ^0.2.0
         version: link:../domain-clients-core
       graz:
         specifier: ^0.3.3
@@ -201,10 +206,10 @@ importers:
         specifier: ^4
         version: 4.1.11
       '@valence-protocol/domain-clients-core':
-        specifier: workspace:*
+        specifier: ^0.2.0
         version: link:../domain-clients-core
       '@valence-protocol/domain-clients-react':
-        specifier: workspace:*
+        specifier: ^0.2.0
         version: link:../domain-clients-react
       clsx:
         specifier: ^2.1.1
