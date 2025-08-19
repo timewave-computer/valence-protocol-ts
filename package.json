@@ -20,9 +20,17 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "vercel-build": "pnpm install --frozen-lockfile --link-workspace-packages=false && turbo build "
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "pnpm": {
+    "overrides": {
+      "@valence-protocol/domain-clients-core": "^0.2.0",
+      "@valence-protocol/domain-clients-react": "^0.2.0",
+      "@valence-protocol/domain-modal-react": "^0.2.0"
+    }
   }
 }
