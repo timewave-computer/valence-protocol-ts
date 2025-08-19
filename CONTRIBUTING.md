@@ -15,13 +15,16 @@ Types of changes
 
 ## Releasing a package
 
-1. `cd` into package root
+1. `pnpm install` && `turbo build` to build all packages
 
-2. Generate new version
+2. `cd` into package root
+
+3. Generate new version
 
 ```bash
 # Patch release (0.0.1 → 0.0.2)
 # backward-compatible bug fixes
+npm version patch
 
 # Minor release (0.0.1 → 0.1.0)
 # backward-compatible new features
@@ -35,9 +38,9 @@ npm version major
 npm version 0.2.0
 ```
 
-3. Update `CHANGELOG.md` with new version.
+4. Update `CHANGELOG.md` with new version.
 
-4. Publish to npm
+5. Publish to npm
 
 **Note:** You must have write access to the npm scope `@valence-protocol`. Run the publish command and follow the prompts to authenticate yourself via CLI.
 
