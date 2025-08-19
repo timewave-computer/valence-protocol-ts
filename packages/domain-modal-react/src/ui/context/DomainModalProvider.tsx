@@ -41,7 +41,6 @@ export const DomainModalProvider = ({
   const showModal = useCallback(
     (targetChains?: TargetChains) => {
       setIsModalOpen(true);
-      console.log('targetChains in showModal', targetChains);
       setTargetChains(targetChains);
     },
     [setIsModalOpen, setTargetChains]
