@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@next/bundle-analyzer": "^15.4.6",
-    "@solana/web3.js": "1",
     "@tanstack/react-query": "^5.84.1",
     "@uiw/react-json-view": "2.0.0-alpha.34",
     "@valence-protocol/domain-clients-core": "workspace:*",

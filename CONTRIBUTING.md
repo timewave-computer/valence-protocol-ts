@@ -1,5 +1,11 @@
 # Contributing
 
+## Branches
+
+- `main` for stable, published code
+- `next` for new, unreleased features
+- `feature/<name>` for per-feature branches off `next`
+
 ## Contributing to packages
 
 Each package change must be accompanied with an `Unreleased` changelog line.
@@ -13,15 +19,17 @@ Types of changes
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## Releasing a package
+## Releasing packages.
 
 ### Steps
 
-1. `pnpm install` && `turbo build` to build all packages
+1. Open a PR to merge `next` into `main`. Can do regular merge, do not squash the commits. Review and merge.
 
-2. `cd` into package root
+2. Locally from main branch, `pnpm install` && `turbo build` to build all packages
 
-3. Generate new version
+3. `cd` into package root
+
+4. Generate new version
 
 ```bash
 # Patch release (0.0.1 → 0.0.2)
@@ -40,9 +48,9 @@ npm version major
 npm version 0.2.0
 ```
 
-4. Update `CHANGELOG.md` with new version.
+5. Update `CHANGELOG.md` with new version.
 
-5. Publish to npm
+6. Publish to npm
 
 **Note:** You must have write access to the npm scope `@valence-protocol`. Run the publish command and follow the prompts to authenticate yourself via CLI.
 
@@ -51,10 +59,18 @@ cd <package root>
 npm publish --access public`
 ```
 
-6. Add new versions `pnpm.overrides` in root package.json
+7. Add new versions to `pnpm.overrides` in root package.json
 
-7. Open a PR with
+8. Open a PR with
 
 - migrated changelog
 - package `version` updated in package.json
 - new version added to root package.json `pnpm.overrides` (for app deployment with correct dependencies)
+
+9. Reset `next` branch`
+
+```bash
+git checkout next
+git merge origin/main
+git push origin next
+```
