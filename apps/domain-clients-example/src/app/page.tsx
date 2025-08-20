@@ -8,6 +8,7 @@ import {
   NeutronTestnetWrite,
   ConnectCosmosChain,
   ConnectEthereumChain,
+  SolanaRead,
 } from '@/components';
 import { getCosmosBalance, getEthErc20Balance } from '@/server';
 import { type Address } from 'viem';
@@ -113,6 +114,7 @@ export default async function Home() {
                 initialAddress={evmUser}
                 symbol={evmUsdc.symbol}
               />
+              <SolanaRead />
             </div>
           </div>
         </Suspense>
