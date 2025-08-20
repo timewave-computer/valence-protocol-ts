@@ -5,6 +5,7 @@
 - `main` for stable, published code
 - `next` for new, unreleased features
 - `feature/<name>` for per-feature branches off `next`
+- `release/<name>` for releases, or direct updates to main
 
 ## Contributing to packages
 
@@ -25,7 +26,15 @@ Types of changes
 
 1. Open a PR to merge `next` into `main`. Can do regular merge, do not squash the commits. Review and merge.
 
-2. Locally from main branch, `pnpm install` && `turbo build` to build all packages
+2. Set up release environment
+
+```bash
+git checkout main
+git pull origin
+git checkout -b release/<name>
+pnpm install
+turbo build
+```
 
 3. `cd` into package root
 
@@ -56,18 +65,18 @@ npm version 0.2.0
 
 ```bash
 cd <package root>
-npm publish --access public`
+npm publish --access public
 ```
 
 7. Add new versions to `pnpm.overrides` in root package.json
 
-8. Open a PR with
+8. Open a PR from your `release/name` branch -> `main` with:
 
 - migrated changelog
 - package `version` updated in package.json
 - new version added to root package.json `pnpm.overrides` (for app deployment with correct dependencies)
 
-9. Reset `next` branch`
+9. Reset `next` branch
 
 ```bash
 git checkout next
