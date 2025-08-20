@@ -5,7 +5,7 @@
 - `main` for stable, published code
 - `next` for new, unreleased features
 - `feature/<name>` for per-feature branches off `next`
-- `release/<name>` for releases, or direct updates to main
+- `release/<name>` for releases, or `patch/name` for direct updates to main
 
 ## Contributing to packages
 
