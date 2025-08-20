@@ -36,12 +36,13 @@
   },
   "peerDependencies": {
     "@cosmjs/amino": "^0.34.0",
-    "@cosmjs/math": "^0.34.0",
     "@cosmjs/cosmwasm-stargate": "^0.34.0",
     "@cosmjs/encoding": "^0.34.0",
+    "@cosmjs/math": "^0.34.0",
     "@cosmjs/proto-signing": "^0.34.0",
     "@cosmjs/stargate": "^0.34.0",
     "@wagmi/core": "^2.16.0",
+    "gill": "^0.10.3",
     "graz": "^0.3.3",
     "viem": "^2.33.0"
   },
