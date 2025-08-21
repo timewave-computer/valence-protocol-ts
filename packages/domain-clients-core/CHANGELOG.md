@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] YYYY-MM-DD
 
+### Changed
+
+- [breaking] changed naming conventions in clients to use `query` if fetching data
+
+### Added
+
+- Solana public client, and signing client skeleton
+
 ## [0.2.0] 2025-08-19
 
 ### Changed
