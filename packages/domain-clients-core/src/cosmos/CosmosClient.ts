@@ -40,7 +40,7 @@ export class CosmosClient extends ChainClient {
     }
   }
 
-  async getDenomBalance({
+  async queryDenomBalance({
     address,
     denom,
   }: {

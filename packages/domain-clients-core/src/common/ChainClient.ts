@@ -1,4 +1,3 @@
 export abstract class ChainClient {
-  // Raw operations
-  abstract queryContract(...args: unknown[]): Promise<unknown>;
+  // for non-signing, it looks like there is no overlap. Class hierarchy probably needs to be re-architected.
 }
