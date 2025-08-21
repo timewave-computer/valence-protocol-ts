@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@valence-protocol/domain-clients-core': ^0.2.0
-  '@valence-protocol/domain-clients-react': ^0.2.0
-  '@valence-protocol/domain-modal-react': ^0.2.0
-
 importers:
 
   .:
@@ -41,13 +36,13 @@ importers:
         specifier: 2.0.0-alpha.34
         version: 2.0.0-alpha.34(@babel/runtime@7.28.2)(react-dom@18.3.0(react@18.3.1))(react@18.3.1)
       '@valence-protocol/domain-clients-core':
-        specifier: ^0.2.0
+        specifier: 0.2.0
         version: link:../../packages/domain-clients-core
       '@valence-protocol/domain-clients-react':
-        specifier: ^0.2.0
+        specifier: 0.2.0
         version: link:../../packages/domain-clients-react
       '@valence-protocol/domain-modal-react':
-        specifier: ^0.2.0
+        specifier: 0.2.0
         version: link:../../packages/domain-modal-react
       class-variance-authority:
         specifier: ^0.7.1
