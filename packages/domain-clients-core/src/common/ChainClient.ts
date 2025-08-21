@@ -1,3 +1,3 @@
 export abstract class ChainClient {
-  // there is actually nothing that overlaps lol.
+  // for non-signing, it looks like there is no overlap. Class hierarchy probably needs to be re-architected.
 }

@@ -1,57 +1,66 @@
-import { ChainClient } from '@/common';
-import { createSolanaClient, type Address, address } from 'gill';
-import { Buffer } from 'buffer';
-import { AccountDecoder } from '@/solana';
+import {
+  createSolanaClient,
+  type Address,
+  address,
+  type SolanaClusterMoniker,
+} from 'gill';
+import {
+  getAssociatedTokenAccountAddress,
+  TOKEN_PROGRAM_ADDRESS,
+} from 'gill/programs/token';
+import { SolanaBaseClient } from '@/solana';
 
 export interface SolanaClientArgs {
-  rpcUrl?: string;
+  rpcUrlOrMoniker: SolanaClusterMoniker | string;
 }
 
-export class SolanaClient extends ChainClient {
-  public readonly rpcUrl: string | undefined;
+export class SolanaClient implements SolanaBaseClient {
+  public readonly rpcUrl: SolanaClusterMoniker | string;
 
   constructor(args: SolanaClientArgs) {
-    super();
-    this.rpcUrl = args.rpcUrl;
+    this.rpcUrl = args.rpcUrlOrMoniker;
   }
 
   getClient() {
     return createSolanaClient({
-      urlOrMoniker: this.rpcUrl ?? 'mainnet',
+      urlOrMoniker: this.rpcUrl,
     });
   }
 
-  async getSolBalance({ address }: { address: Address }) {
+  async querySolBalance({ address }: { address: Address }) {
     const client = this.getClient();
     const balance = await client.rpc.getBalance(address).send();
     return balance;
   }
 
-  async getTokenBalance({ tokenAddress }: { tokenAddress: Address }) {
-    const tokenAccountPubkey = address(tokenAddress);
+  async queryLatestBlockHash(): Promise<string> {
     const client = this.getClient();
-    const balance = await client.rpc
-      .getTokenAccountBalance(tokenAccountPubkey)
-      .send();
-    return balance;
+    const blockhash = await client.rpc.getLatestBlockhash().send();
+    return blockhash.value.blockhash.toString();
   }
 
-  // reading from a program account
-  async queryAccount<T>({
-    accountAddress,
-    decoder,
+  async queryTokenBalance({
+    tokenMintAddress,
+    userAddress,
+    tokenProgram,
   }: {
-    accountAddress: Address;
-    decoder: AccountDecoder<T>;
-  }): Promise<T> {
-    const accountPubkey = address(accountAddress);
+    tokenMintAddress: Address;
+    userAddress: Address;
+    tokenProgram?: Address;
+  }) {
+    const tokenAccountPubkey = address(tokenMintAddress);
+    const userAccountPubkey = address(userAddress);
+
+    const ata = await getAssociatedTokenAccountAddress(
+      tokenAccountPubkey,
+      userAccountPubkey,
+      tokenProgram ?? TOKEN_PROGRAM_ADDRESS
+    );
     const client = this.getClient();
-    const response = await client.rpc.getAccountInfo(accountPubkey).send();
-    if (!response.value || !response.value.data) {
-      throw new Error('Account not found or has no data');
+    const balance = await client.rpc.getTokenAccountBalance(ata).send();
+    if (!balance.value) {
+      throw new Error('Token account not found');
     }
-    const data = response.value.data;
-    const raw = Buffer.from(data.toString(), 'base64');
-    return decoder(raw);
+    return balance.value.amount;
   }
 }

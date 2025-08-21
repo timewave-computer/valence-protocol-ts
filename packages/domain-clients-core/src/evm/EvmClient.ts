@@ -42,7 +42,7 @@ export class EvmClient extends ChainClient {
     return client;
   }
 
-  async getEthBalance({ address }: { address: string }): Promise<bigint> {
+  async queryEthBalance({ address }: { address: string }): Promise<bigint> {
     if (!isAddress(address)) {
       throw new ClientError(ClientErrorType.InvalidAddress, 'Invalid address');
     }
@@ -50,7 +50,7 @@ export class EvmClient extends ChainClient {
     return client.getBalance({ address });
   }
 
-  async getErc20Balance({
+  async queryErc20Balance({
     contractAddress,
     address,
   }: {

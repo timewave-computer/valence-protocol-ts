@@ -1,2 +1,3 @@
 export * from './SolanaClient';
-export * from './types';
+export * from './BaseClient';
+export * from './SigningSolanaClient';
