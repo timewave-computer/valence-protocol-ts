@@ -1,6 +1,6 @@
 {
   "name": "@valence-protocol/domain-clients-core",
-  "version": "0.3.0",
+  "version": "0.2.0",
   "description": "Core classes for blockchain clients on different domains.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
