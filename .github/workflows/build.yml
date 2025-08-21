@@ -37,7 +37,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile --link-workspace-packages=false
 
       - name: Build with Turbo
         run: pnpm turbo build
