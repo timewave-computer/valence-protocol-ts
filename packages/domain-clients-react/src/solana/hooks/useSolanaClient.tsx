@@ -7,7 +7,9 @@ import {
 import { useSolanaConfig } from '@/solana/hooks';
 import { useMemo } from 'react';
 
-export function useSolanaClient(clusterMoniker: SolanaClusterMoniker) {
+export function useSolanaClient(
+  clusterMoniker: SolanaClusterMoniker
+): SolanaClient {
   const config = useSolanaConfig();
 
   const client = useMemo(() => {
@@ -15,8 +17,7 @@ export function useSolanaClient(clusterMoniker: SolanaClusterMoniker) {
       cluster => cluster.cluster === clusterMoniker
     );
     if (!cluster) {
-      console.warn(`Solana cluster ${clusterMoniker} not found`);
-      return;
+      throw new Error(`Solana cluster ${clusterMoniker} not found in config`);
     }
     return new SolanaClient({
       rpcUrlOrMoniker: cluster.urlOrMoniker,

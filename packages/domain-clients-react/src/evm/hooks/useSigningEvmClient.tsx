@@ -17,7 +17,7 @@ export function useSigningEvmClient(
       return;
     }
     if (!walletClient) {
-      console.warn('No evm wallet client found');
+      console.warn('No evm wallet client found for chainId: ', chainId);
       return;
     }
     return new SigningEvmClient({
