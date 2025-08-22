@@ -11,6 +11,7 @@ import {
   createTransaction,
   signTransactionMessageWithSigners,
   type TransactionVersion,
+  type Signature,
 } from 'gill';
 import {
   getAssociatedTokenAccountAddress,
@@ -40,7 +41,7 @@ export class SigningSolanaClient extends SolanaBaseClient {
     toAddress: Address;
     amount: bigint;
     version?: TransactionVersion;
-  }): Promise<any> {
+  }): Promise<Signature> {
     const instructions = [
       getTransferSolInstruction({
         source: this.signer,
@@ -74,6 +75,7 @@ export class SigningSolanaClient extends SolanaBaseClient {
       destination,
       tokenProgram
     );
+    const sourceAddress = address(this.signer.address);
     const sourceAta = await getAssociatedTokenAccountAddress(
       tokenMintAddress,
       this.signer,
@@ -86,8 +88,8 @@ export class SigningSolanaClient extends SolanaBaseClient {
         mint: tokenMintAddress,
         payer: this.signer,
         tokenProgram,
-        owner: toAddress,
-        ata: toAddress,
+        owner: sourceAddress,
+        ata: sourceAta,
       }),
       getTransferInstruction({
         source: sourceAta,
