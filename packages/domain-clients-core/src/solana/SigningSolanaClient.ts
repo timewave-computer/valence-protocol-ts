@@ -1,7 +1,7 @@
 import {
   SolanaBaseClient,
   type SolanaBaseClientArgs,
-  type TokenProgramId,
+  type SolanaTokenProgramId,
 } from '@/solana';
 import {
   Address,
@@ -66,7 +66,7 @@ export class SigningSolanaClient extends SolanaBaseClient {
     toAddress: Address;
     tokenMintAddress: Address;
     amount: bigint;
-    tokenProgram: TokenProgramId;
+    tokenProgram: SolanaTokenProgramId;
     version?: TransactionVersion;
   }) {
     const destination = address(toAddress);

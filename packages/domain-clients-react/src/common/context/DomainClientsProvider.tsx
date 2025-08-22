@@ -4,10 +4,12 @@ import { EvmClientProvider } from '@/evm';
 import { CosmosClientProvider } from '@/cosmos';
 import { CosmosConfig } from '@valence-protocol/domain-clients-core/cosmos';
 import { EvmConfig } from '@valence-protocol/domain-clients-core/evm';
+import { SolanaConfig } from '@valence-protocol/domain-clients-core/solana';
 
 export interface DomainClientsConfig {
   evm?: EvmConfig;
   cosmos?: CosmosConfig;
+  solana?: SolanaConfig;
 }
 
 const DomainClientsConfigContext = createContext<
