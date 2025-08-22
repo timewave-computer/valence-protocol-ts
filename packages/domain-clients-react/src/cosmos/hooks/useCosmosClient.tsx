@@ -1,29 +1,16 @@
 'use client';
-import { useEffect, useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useCosmosChainConfig } from '@/cosmos';
 import { CosmosClient } from '@valence-protocol/domain-clients-core/cosmos';
 
-export interface UseCosmosClientResult {
-  client?: CosmosClient;
-}
-
-export function useCosmosClient(chainId: string): UseCosmosClientResult {
+export function useCosmosClient(chainId: string): CosmosClient {
   const config = useCosmosChainConfig(chainId);
 
-  const [client, setClient] = useState<CosmosClient | undefined>(undefined);
-
-  useEffect(() => {
+  return useMemo(() => {
     const client = new CosmosClient({
       chainId,
       rpcUrl: config.rpc,
     });
-    setClient(client);
-  }, [config.rpc, chainId, setClient]);
-
-  return useMemo(
-    () => ({
-      client,
-    }),
-    [client]
-  );
+    return client;
+  }, [config.rpc, chainId]);
 }

@@ -1,26 +1,19 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useCosmosSigningChainConfig, useCosmosSigningTypes } from '@/cosmos';
 import { SigningCosmosClient } from '@valence-protocol/domain-clients-core/cosmos';
 import { useAccount, useOfflineSigners } from 'graz';
-export interface UseSigningCosmosClientResult {
-  client: SigningCosmosClient | undefined;
-}
 
 export function useSigningCosmosClient({
   chainId,
 }: {
   chainId: string;
-}): UseSigningCosmosClientResult {
+}): SigningCosmosClient | undefined {
   const signingTypes = useCosmosSigningTypes();
   const { chainInfo, chainConfig } = useCosmosSigningChainConfig(chainId);
 
   const { data: account } = useAccount({ chainId });
   const { data: signers } = useOfflineSigners({ chainId });
-
-  const [client, setClient] = useState<SigningCosmosClient | undefined>(
-    undefined
-  );
 
   const offlineSigner = useMemo(() => {
     return signers?.offlineSigner;
@@ -30,26 +23,30 @@ export function useSigningCosmosClient({
     return account?.bech32Address;
   }, [account]);
 
-  useEffect(() => {
+  return useMemo(() => {
     if (!chainConfig.gas) {
-      throw new Error(`Default gas not set for ${chainId}`);
+      console.error(`Default gas not set for ${chainId}`);
+      return;
     }
-    if (!account || !offlineSigner) {
-      setClient(undefined);
+    if (!account) {
+      console.warn('No cosmos account found');
+      return;
+    }
+    if (!offlineSigner) {
+      console.warn('No cosmos offline signer found');
       return;
     }
 
-    setClient(
-      new SigningCosmosClient({
-        chainId,
-        rpcUrl: chainInfo.rpc,
-        gas: chainConfig.gas,
-        signer: offlineSigner,
-        senderAddress: accountAddress,
-        protobufRegistry: signingTypes.protobufRegistry,
-        aminoTypes: signingTypes.aminoTypes,
-      })
-    );
+    const client = new SigningCosmosClient({
+      chainId,
+      rpcUrl: chainInfo.rpc,
+      gas: chainConfig.gas,
+      signer: offlineSigner,
+      senderAddress: accountAddress,
+      protobufRegistry: signingTypes.protobufRegistry,
+      aminoTypes: signingTypes.aminoTypes,
+    });
+    return client;
   }, [
     account,
     offlineSigner,
@@ -59,11 +56,4 @@ export function useSigningCosmosClient({
     signingTypes.protobufRegistry,
     signingTypes.aminoTypes,
   ]);
-
-  return useMemo(
-    () => ({
-      client,
-    }),
-    [client]
-  );
 }
