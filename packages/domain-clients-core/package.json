@@ -19,6 +19,11 @@
       "types": "./dist/cosmos/index.d.ts",
       "import": "./dist/cosmos/index.mjs",
       "require": "./dist/cosmos/index.js"
+    },
+    "./solana": {
+      "types": "./dist/solana/index.d.ts",
+      "import": "./dist/solana/index.mjs",
+      "require": "./dist/solana/index.js"
     }
   },
   "files": [

@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Solana public client and signing client
+- Signing and public clients for solana
 
 ## [0.2.0] 2025-08-19
 

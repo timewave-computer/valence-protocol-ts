@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] YYYY-MM-DD
 
+### Added
+
+- Solana context provider, and hooks for accessing client and config
+
+### Changed
+
+- Simplify evm and cosmos client hook state
+
 ## [0.2.0] 2025-8-19
 
 ### Changed
