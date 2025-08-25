@@ -1,16 +1,24 @@
 'use client';
 import { useCallback, useMemo } from 'react';
 import { useSetAtom } from 'jotai';
-import { useWalletUi, type UiWallet } from '@wallet-ui/react';
+import {
+  type UiWallet,
+  useWalletUi,
+  useWalletUiWallets,
+  useWallets,
+} from '@wallet-ui/react';
 import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
 import { solanaWalletAtom, type SolanaConnector } from '@/hooks/solana';
 import { ChainType } from '@/index';
 
 export const useSolanaConnectors = (): SolanaConnector[] => {
+  const wallets = useWalletUiWallets();
   const walletUi = useWalletUi();
-  const { wallets } = walletUi;
-  console.log('walletUI', walletUi);
   console.log('wallets', wallets);
+  console.log('walletUi', walletUi);
+  const uWallet = useWallets();
+  console.log('uWallet', uWallet);
+
   const config = useSolanaConfig();
   const setSolanaWallet = useSetAtom(solanaWalletAtom);
 
@@ -22,6 +30,7 @@ export const useSolanaConnectors = (): SolanaConnector[] => {
 
   const connectWallet = useCallback(async (wallet: UiWallet) => {
     // await walletUi.connect(wallet.accounts[0]);
+
     console.log('connecting wallet', wallet);
   }, []);
 
