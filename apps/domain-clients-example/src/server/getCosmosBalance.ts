@@ -2,7 +2,7 @@
 import {
   CosmosClient,
   type CosmosChainInfo,
-} from '@valence-protocol/domain-clients-core';
+} from '@valence-protocol/domain-clients-core/cosmos';
 import { domainClientsConfig } from '@/config/domainClientsConfig';
 
 export const getCosmosBalance = async ({
@@ -24,7 +24,7 @@ export const getCosmosBalance = async ({
     rpcUrl: rpcUrl,
   });
 
-  const balance = await cosmosClient.getDenomBalance({
+  const balance = await cosmosClient.queryDenomBalance({
     address,
     denom,
   });

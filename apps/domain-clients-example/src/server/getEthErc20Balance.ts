@@ -1,6 +1,6 @@
 'use server';
 import { domainClientsConfig } from '@/config/domainClientsConfig';
-import { EvmClient } from '@valence-protocol/domain-clients-core';
+import { EvmClient } from '@valence-protocol/domain-clients-core/evm';
 import { type Address, erc20Abi } from 'viem';
 
 export const getEthErc20Balance = async ({
@@ -20,7 +20,7 @@ export const getEthErc20Balance = async ({
     config: config.wagmiConfig,
     chainId,
   });
-  const balance = await evmClient.getErc20Balance({
+  const balance = await evmClient.queryErc20Balance({
     contractAddress: erc20Address,
     address,
   });

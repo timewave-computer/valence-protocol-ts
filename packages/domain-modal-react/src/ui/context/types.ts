@@ -3,6 +3,7 @@ import { ChainType } from '@/hooks';
 export type TargetChains = {
   [ChainType.Cosmos]?: string;
   [ChainType.Evm]?: number;
+  [ChainType.Solana]?: string;
 };
 
 export const getCosmosTargetChain = (targetChains?: TargetChains) => {

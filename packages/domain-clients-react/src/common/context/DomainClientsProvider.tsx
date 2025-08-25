@@ -2,6 +2,7 @@
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 import { EvmClientProvider } from '@/evm';
 import { CosmosClientProvider } from '@/cosmos';
+import { SolanaClientProvider } from '@/solana';
 import { CosmosConfig } from '@valence-protocol/domain-clients-core/cosmos';
 import { EvmConfig } from '@valence-protocol/domain-clients-core/evm';
 import { SolanaConfig } from '@valence-protocol/domain-clients-core/solana';
@@ -35,8 +36,12 @@ export const DomainClientsProvider = ({
       result = <EvmClientProvider>{result}</EvmClientProvider>;
     }
 
+    if (config.solana) {
+      result = <SolanaClientProvider>{result}</SolanaClientProvider>;
+    }
+
     return result;
-  }, [children, config.evm, config.cosmos]);
+  }, [children, config.evm, config.cosmos, config.solana]);
 
   return (
     <DomainClientsConfigContext.Provider value={config}>

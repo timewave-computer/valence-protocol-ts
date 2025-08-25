@@ -1,6 +1,7 @@
 'use client';
 import { EvmConnectionManager } from '@/ui/evm';
 import { CosmosConnectionManager } from '@/ui/cosmos';
+import { SolanaConnectionManager } from '@/ui/solana';
 import { useDomainConfig } from '@valence-protocol/domain-clients-react';
 
 export const ModalContent = () => {
@@ -19,6 +20,12 @@ export const ModalContent = () => {
         <div>
           <h2 className='text-base font-semibold mb-0.5'>Cosmos Wallet</h2>
           <CosmosConnectionManager />
+        </div>
+      )}
+      {config.solana && (
+        <div>
+          <h2 className='text-base font-semibold mb-0.5'>Solana Wallet</h2>
+          <SolanaConnectionManager />
         </div>
       )}
     </div>

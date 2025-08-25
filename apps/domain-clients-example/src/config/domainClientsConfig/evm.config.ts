@@ -1,7 +1,7 @@
 import { mainnet, sepolia } from 'wagmi/chains';
 import { http } from 'wagmi';
 import { createClient } from 'viem';
-import { createEvmConfig } from '@valence-protocol/domain-clients-core';
+import { createEvmConfig } from '@valence-protocol/domain-clients-core/evm';
 
 const wagmiConfig = createEvmConfig({
   chains: [mainnet, sepolia],
