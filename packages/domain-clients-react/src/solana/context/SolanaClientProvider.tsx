@@ -7,5 +7,6 @@ export const SolanaClientProvider = ({
   children: React.ReactNode;
 }) => {
   const config = useSolanaConfig();
+  console.log('rendered solana client provider');
   return <WalletUi config={config}>{children}</WalletUi>;
 };

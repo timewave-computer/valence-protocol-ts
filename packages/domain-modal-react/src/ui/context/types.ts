@@ -14,6 +14,10 @@ export const getEvmTargetChain = (targetChains?: TargetChains) => {
   return targetChains?.[ChainType.Evm];
 };
 
+export const getSolanaTargetChain = (targetChains?: TargetChains) => {
+  return targetChains?.[ChainType.Solana];
+};
+
 export interface DomainModalContextType {
   showModal: (chain?: TargetChains) => void;
   closeModal: () => void;
