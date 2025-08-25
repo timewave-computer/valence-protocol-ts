@@ -7,7 +7,10 @@ import { solanaWalletAtom, type SolanaConnector } from '@/hooks/solana';
 import { ChainType } from '@/index';
 
 export const useSolanaConnectors = (): SolanaConnector[] => {
-  const { wallets } = useWalletUi();
+  const walletUi = useWalletUi();
+  const { wallets } = walletUi;
+  console.log('walletUI', walletUi);
+  console.log('wallets', wallets);
   const config = useSolanaConfig();
   const setSolanaWallet = useSetAtom(solanaWalletAtom);
 
@@ -28,7 +31,7 @@ export const useSolanaConnectors = (): SolanaConnector[] => {
       walletInfo: {
         walletName: wallet.name,
         walletPrettyName: wallet.name,
-        walletIcon: wallet.icon,
+        logo: wallet.icon,
       },
       isAvailable: true,
       connect: () => connectWallet(wallet),

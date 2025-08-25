@@ -1,0 +1,45 @@
+{
+  "name": "@valence-protocol/domain-clients-example",
+  "description": "Example app for Valence Protocol domain clients",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "gen:cosmos": "graz generate -g",
+    "postinstall": "pnpm gen:cosmos"
+  },
+  "dependencies": {
+    "@next/bundle-analyzer": "^15.4.6",
+    "@tanstack/react-query": "^5.84.1",
+    "@uiw/react-json-view": "2.0.0-alpha.34",
+    "@valence-protocol/domain-clients-core": "workspace:*",
+    "@valence-protocol/domain-clients-react": "workspace:*",
+    "@valence-protocol/domain-modal-react": "workspace:*",
+    "@wallet-ui/react": "^1.1.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "gill": "^0.10.3",
+    "graz": "^0.3.3",
+    "next": "15.4.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.0",
+    "viem": "^2.33.2",
+    "wagmi": "^2.16.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

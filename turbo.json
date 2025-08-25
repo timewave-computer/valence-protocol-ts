@@ -12,7 +12,7 @@
       ],
       "outputs": ["dist/**"]
     },
-    "@valence-protocol/example-app#build": {
+    "@valence-protocol/domain-clients-example#build": {
       "dependsOn": [
         "@valence-protocol/domain-modal-react#build",
         "@valence-protocol/domain-clients-react#build",

@@ -1,0 +1,28 @@
+{
+  "node": {
+    "7ff4cbaefe0883d08e1226dbd33179d4cdc602cf34": {
+      "workers": {
+        "app/page": {
+          "moduleId": "(rsc)/../../node_modules/.pnpm/next@15.4.5_react-dom@18.3.0_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flenamikhaylova%2FDocuments%2Ftimewave%2Fvalence-protocol-ts%2Fapps%2Fexample-app%2Fsrc%2Fserver%2FgetCosmosBalance.ts%22%2C%5B%7B%22id%22%3A%227ff4cbaefe0883d08e1226dbd33179d4cdc602cf34%22%2C%22exportedName%22%3A%22getCosmosBalance%22%7D%5D%5D%2C%5B%22%2FUsers%2Flenamikhaylova%2FDocuments%2Ftimewave%2Fvalence-protocol-ts%2Fapps%2Fexample-app%2Fsrc%2Fserver%2FgetEthErc20Balance.ts%22%2C%5B%7B%22id%22%3A%227f24f66edf98794b2eaef987c49e44d983a9f78208%22%2C%22exportedName%22%3A%22getEthErc20Balance%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    },
+    "7f24f66edf98794b2eaef987c49e44d983a9f78208": {
+      "workers": {
+        "app/page": {
+          "moduleId": "(rsc)/../../node_modules/.pnpm/next@15.4.5_react-dom@18.3.0_react@18.3.1__react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Flenamikhaylova%2FDocuments%2Ftimewave%2Fvalence-protocol-ts%2Fapps%2Fexample-app%2Fsrc%2Fserver%2FgetCosmosBalance.ts%22%2C%5B%7B%22id%22%3A%227ff4cbaefe0883d08e1226dbd33179d4cdc602cf34%22%2C%22exportedName%22%3A%22getCosmosBalance%22%7D%5D%5D%2C%5B%22%2FUsers%2Flenamikhaylova%2FDocuments%2Ftimewave%2Fvalence-protocol-ts%2Fapps%2Fexample-app%2Fsrc%2Fserver%2FgetEthErc20Balance.ts%22%2C%5B%7B%22id%22%3A%227f24f66edf98794b2eaef987c49e44d983a9f78208%22%2C%22exportedName%22%3A%22getEthErc20Balance%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "KW208QYehMbjJ4+1yZWzJ+XJXuNHw+/j3uMr6qT5enI="
+}
