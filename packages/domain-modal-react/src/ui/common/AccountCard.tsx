@@ -35,7 +35,7 @@ export function AccountCard({
       </div>
       <button
         onClick={async () => await onDisconnect()}
-        className='px-2 py-1 border text-xs rounded-sm border-gray-700 text-gray-700   transition-colors duration-200 hover:bg-gray-100 md:min-w-24'
+        className='px-2 py-1  text-xs rounded-sm hover:bg-gray-100 text-gray-700   transition-colors duration-200  md:min-w-24'
       >
         Disconnect
       </button>

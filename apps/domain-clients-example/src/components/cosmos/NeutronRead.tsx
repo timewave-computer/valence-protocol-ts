@@ -65,17 +65,14 @@ export const NeutronRead = ({
   }, [error]);
 
   return (
-    <div className='flex flex-col gap-2 w-1/2 max-w-md'>
-      <h2 className='font-semibold text-sm'>Neutron</h2>
-      <BalanceView
-        inputAddress={inputAddress}
-        setInputAddress={setInputAddress}
-        isLoading={isLoading}
-        isError={isError}
-        decimals={decimals}
-        symbol={symbol}
-        amount={balance?.amount}
-      />
-    </div>
+    <BalanceView
+      inputAddress={inputAddress}
+      setInputAddress={setInputAddress}
+      isLoading={isLoading}
+      isError={isError}
+      decimals={decimals}
+      symbol={symbol}
+      amount={balance?.amount}
+    />
   );
 };

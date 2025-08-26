@@ -1,3 +1,4 @@
+'use client';
 /***
  * !! Important: Keeps wallet metadata synced !!
  * Required for handling external wallet state changes, and page reloads

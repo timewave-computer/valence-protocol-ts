@@ -21,19 +21,19 @@ export const ConnectCosmosChain = ({
   if (isCosmosConnected) {
     return (
       <Button
-        variant='secondary'
-        className='w-fit min-w-76'
+        variant='ghost'
+        className='w-fit min-w-60'
         onClick={() => {
-          disconnect();
+          disconnect({ chainId: chainInfo.chainId });
         }}
       >
-        Disconnect from {chainInfo.chainName}
+        Disconnect {chainInfo.chainName}
       </Button>
     );
   }
   return (
     <Button
-      className='w-fit min-w-76'
+      className='w-fit min-w-60'
       onClick={() => {
         suggestAndConnect({
           chainInfo: chainInfo,
@@ -44,7 +44,7 @@ export const ConnectCosmosChain = ({
         });
       }}
     >
-      Connect to {chainInfo.chainName}
+      Connect {chainInfo.chainName}
     </Button>
   );
 };

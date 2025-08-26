@@ -56,8 +56,7 @@ export const NeutronTestnetWrite = ({
   });
 
   return (
-    <div className='flex flex-col gap-2 w-1/2 max-w-md'>
-      <h2 className='font-semibold text-sm'>Neutron Testnet</h2>
+    <div className='flex flex-col gap-2 '>
       <div className='flex flex-col'>
         <Label htmlFor='amount'>Amount NTRN</Label>
         <Input
@@ -78,10 +77,15 @@ export const NeutronTestnetWrite = ({
           onChange={e => setToAddress(e.target.value)}
         />
       </div>
-      <div className='flex flex-row gap-4'>
+      <div className='flex flex-row gap-2 items-center'>
         <Button disabled={!isConnected} onClick={() => sendTokens()}>
           <span>Transfer</span>
         </Button>
+        {!isConnected && (
+          <div className='text-xs text-gray-500'>
+            Connect to Neutron Testnet to transfer NTRN
+          </div>
+        )}
       </div>
       {isError && (
         <div className='text-xs text-red-500'>Transaction failed</div>

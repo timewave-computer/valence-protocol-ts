@@ -68,8 +68,7 @@ export const EthereumTestnetWrite = ({
   });
 
   return (
-    <div className='flex flex-col gap-2 w-1/2 max-w-md'>
-      <h2 className='font-semibold text-sm'>Sepolia</h2>
+    <div className='flex flex-col gap-2'>
       <div className='flex flex-col'>
         <Label htmlFor='amount'>Amount SepoliaETH</Label>
         <Input
@@ -90,10 +89,15 @@ export const EthereumTestnetWrite = ({
           onChange={e => setToAddress(e.target.value)}
         />
       </div>
-      <div className='flex flex-row gap-4'>
+      <div className='flex flex-row gap-2 items-center'>
         <Button disabled={!isChainConnected} onClick={() => sendTokens()}>
           <span>Transfer</span>
         </Button>
+        {!isChainConnected && (
+          <p className='text-xs text-gray-500'>
+            Connect to Sepolia to transfer tokens
+          </p>
+        )}
       </div>
       {isError && (
         <div className='text-xs text-red-500'>Transaction failed</div>
