@@ -14,10 +14,8 @@ import { AccountCard, SelectWalletButton } from '@/ui/common';
 export const SolanaConnectionManager = () => {
   const solanaConnectors = useSolanaConnectors();
   const solanaWallet = useAtomValue(solanaWalletAtom);
-  const w = useWalletUi();
   const { disconnect, account } = useWalletUi();
   const isConnected = useIsSolanaConnected();
-  console.log('isConnected', isConnected);
   const config = useSolanaConfig();
   const { targetChains } = useDomainModal();
   const { clusters, setCluster, cluster } = useWalletUiCluster();

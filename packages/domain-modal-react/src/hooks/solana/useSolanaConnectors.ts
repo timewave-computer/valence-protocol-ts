@@ -5,7 +5,6 @@ import {
   type UiWallet,
   type UiWalletAccount,
   useWalletUi,
-  useWalletUiCluster,
 } from '@wallet-ui/react';
 import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
 import { ChainType } from '@/hooks/common';

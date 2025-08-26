@@ -8,7 +8,6 @@ export const useIsSolanaConnected = (args?: {
 }) => {
   const { connected } = useWalletUi();
   const { cluster } = useWalletUiCluster();
-  console.log('cluster', cluster);
   if (!connected) return false;
   if (!args?.clusterId) return connected;
 

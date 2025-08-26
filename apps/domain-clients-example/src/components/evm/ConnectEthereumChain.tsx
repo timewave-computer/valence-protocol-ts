@@ -4,7 +4,7 @@ import {
   useDomainModal,
   useIsEvmChainConnected,
 } from '@valence-protocol/domain-modal-react';
-import { useDisconnect, useSwitchChain } from 'wagmi';
+import { useDisconnect } from 'wagmi';
 
 export const ConnectEthereumChain = ({
   chainId,
@@ -14,7 +14,6 @@ export const ConnectEthereumChain = ({
   chainName: string;
 }) => {
   const { showModal } = useDomainModal();
-  const { switchChain } = useSwitchChain();
   const isEvmConnected = useIsEvmChainConnected(chainId);
   const { disconnect } = useDisconnect();
 
@@ -36,7 +35,6 @@ export const ConnectEthereumChain = ({
     <Button
       className='w-fit min-w-60'
       onClick={() => {
-        switchChain({ chainId: chainId });
         showModal({
           evm: chainId,
         });

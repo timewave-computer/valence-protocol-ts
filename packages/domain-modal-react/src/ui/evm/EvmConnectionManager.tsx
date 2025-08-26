@@ -1,6 +1,7 @@
 'use client';
 
-import { useAccount, useDisconnect } from 'wagmi';
+import { useAccount, useDisconnect, useSwitchChain } from 'wagmi';
+import { useEffect, useState } from 'react';
 import { useAtomValue } from 'jotai';
 import { evmWalletAtom, useEvmConnectors } from '@/hooks';
 import { SelectWalletButton, AccountCard } from '@/ui/common';
@@ -15,8 +16,22 @@ export const EvmConnectionManager = () => {
   const config = useEvmConfig();
   const isConnected = account?.status === 'connected';
   const { targetChains } = useDomainModal();
-  const chainIdToConnect =
-    getEvmTargetChain(targetChains) ?? config.defaultChainId;
+  const { switchChain } = useSwitchChain();
+  const [chainIdToConnect, setChainIdToConnect] = useState<number>(
+    config.defaultChainId
+  );
+
+  useEffect(() => {
+    const targetChainId =
+      getEvmTargetChain(targetChains) ?? config.defaultChainId;
+    setChainIdToConnect(targetChainId);
+  }, [targetChains, config]);
+
+  useEffect(() => {
+    if (isConnected && !!account) {
+      switchChain({ chainId: chainIdToConnect });
+    }
+  }, [isConnected, chainIdToConnect, account, switchChain]);
 
   if (!config) {
     throw new Error(
