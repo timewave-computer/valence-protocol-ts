@@ -5,6 +5,7 @@ import {
   useConnect,
   useDisconnect,
   Connector,
+  useSwitchChain,
 } from 'wagmi';
 import { useMemo, useCallback } from 'react';
 import {
@@ -24,6 +25,7 @@ export const useEvmConnectors = (): EvmConnector[] => {
   } = useAccount();
   const { connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
+  const { switchChain } = useSwitchChain();
   useKeepEvmWalletStateSynced();
 
   const setEvmWallet = useSetAtom(evmWalletAtom);
@@ -41,6 +43,10 @@ export const useEvmConnectors = (): EvmConnector[] => {
         await connector?.switchChain?.({
           chainId: Number(chainId),
         });
+      }
+
+      if (chainId !== connectorChainId) {
+        switchChain({ chainId: Number(chainId) });
       }
 
       await connectAsync({ connector, chainId });

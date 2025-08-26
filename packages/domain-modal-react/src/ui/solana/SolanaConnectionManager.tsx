@@ -27,7 +27,7 @@ export const SolanaConnectionManager = () => {
     if (targetCluster) {
       setCluster(targetCluster.id);
     }
-  }, [clusters, targetChains]);
+  }, [clusters, targetChains, config.defaultClusterId, setCluster]);
 
   if (!config) {
     throw new Error(
