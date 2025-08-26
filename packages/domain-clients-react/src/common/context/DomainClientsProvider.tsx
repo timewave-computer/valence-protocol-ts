@@ -24,7 +24,6 @@ export const DomainClientsProvider = ({
   config: DomainClientsConfig;
   children: ReactNode;
 }) => {
-  // TODO: this is not tree-shakable
   return (
     <DomainClientsConfigContext.Provider value={config}>
       <SolanaClientProvider>

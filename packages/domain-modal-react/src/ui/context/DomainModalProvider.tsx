@@ -11,10 +11,6 @@ import {
 import * as Dialog from '@radix-ui/react-dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import {
-  DomainClientsProvider,
-  type DomainClientsConfig,
-} from '@valence-protocol/domain-clients-react';
-import {
   ModalContent,
   cn,
   DomainModalContextType,
@@ -26,13 +22,7 @@ const DomainModalContext = createContext<DomainModalContextType | undefined>(
   undefined
 );
 
-export const DomainModalProvider = ({
-  children,
-  config,
-}: {
-  children: ReactNode;
-  config: DomainClientsConfig;
-}) => {
+export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [targetChains, setTargetChains] = useState<TargetChains | undefined>(
     undefined

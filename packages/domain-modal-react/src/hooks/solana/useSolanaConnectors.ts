@@ -16,8 +16,6 @@ export const useSolanaConnectors = (): SolanaConnector[] => {
   const walletUi = useWalletUi();
   console.log('wallets', wallets);
   console.log('walletUi', walletUi);
-  const uWallet = useWallets();
-  console.log('uWallet', uWallet);
 
   const config = useSolanaConfig();
   const setSolanaWallet = useSetAtom(solanaWalletAtom);
