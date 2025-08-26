@@ -3,7 +3,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { BalanceView } from '@/components';
 import { Address } from 'viem';
-import { useEvmClient } from '@valence-protocol/domain-clients-react';
+import { useEvmClient } from '@valence-protocol/domain-clients-react/evm';
 
 interface EthereumReadProps {
   initialAddress: Address;
@@ -23,13 +23,13 @@ export const EthereumRead = ({
   chainId,
 }: EthereumReadProps) => {
   const [inputAddress, setInputAddress] = useState<Address>(initialAddress);
-  const { client: evmClient } = useEvmClient(chainId);
+  const evmClient = useEvmClient(chainId);
 
   const queryBalance = useCallback(async () => {
     if (!evmClient) {
       throw new Error('EVM client not found');
     }
-    const balance = await evmClient.getErc20Balance({
+    const balance = await evmClient.queryErc20Balance({
       contractAddress: erc20Address,
       address: inputAddress,
     });

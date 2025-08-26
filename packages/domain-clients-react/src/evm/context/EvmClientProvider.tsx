@@ -1,9 +1,14 @@
 'use client';
 import { ReactNode } from 'react';
-import { useEvmConfig } from '@/evm/hooks';
+import { useDomainConfig } from '@/common';
 import { WagmiProvider } from 'wagmi';
 
 export const EvmClientProvider = ({ children }: { children: ReactNode }) => {
-  const config = useEvmConfig();
-  return <WagmiProvider config={config.wagmiConfig}>{children}</WagmiProvider>;
+  const config = useDomainConfig();
+  if (!config.evm) {
+    return children;
+  }
+  return (
+    <WagmiProvider config={config.evm.wagmiConfig}>{children}</WagmiProvider>
+  );
 };

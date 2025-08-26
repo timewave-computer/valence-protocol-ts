@@ -1,7 +1,8 @@
 'use client';
-import { createContext, ReactNode, useContext, useMemo } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 import { EvmClientProvider } from '@/evm';
 import { CosmosClientProvider } from '@/cosmos';
+import { SolanaClientProvider } from '@/solana';
 import { CosmosConfig } from '@valence-protocol/domain-clients-core/cosmos';
 import { EvmConfig } from '@valence-protocol/domain-clients-core/evm';
 import { SolanaConfig } from '@valence-protocol/domain-clients-core/solana';
@@ -23,24 +24,13 @@ export const DomainClientsProvider = ({
   config: DomainClientsConfig;
   children: ReactNode;
 }) => {
-  // TODO: check if tree-shaking works with this method
-  const content = useMemo(() => {
-    let result = children;
-
-    if (config.cosmos) {
-      result = <CosmosClientProvider>{result}</CosmosClientProvider>;
-    }
-
-    if (config.evm) {
-      result = <EvmClientProvider>{result}</EvmClientProvider>;
-    }
-
-    return result;
-  }, [children, config.evm, config.cosmos]);
-
   return (
     <DomainClientsConfigContext.Provider value={config}>
-      {content}
+      <SolanaClientProvider>
+        <EvmClientProvider>
+          <CosmosClientProvider>{children}</CosmosClientProvider>
+        </EvmClientProvider>
+      </SolanaClientProvider>
     </DomainClientsConfigContext.Provider>
   );
 };

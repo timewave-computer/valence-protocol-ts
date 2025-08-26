@@ -2,7 +2,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { BalanceView } from '@/components';
-import { useCosmosClient } from '@valence-protocol/domain-clients-react';
+import { useCosmosClient } from '@valence-protocol/domain-clients-react/cosmos';
 
 interface NeutronReadProps {
   initialBalance: string;
@@ -23,13 +23,13 @@ export const NeutronRead = ({
 }: NeutronReadProps) => {
   const [inputAddress, setInputAddress] = useState(initialAddress);
 
-  const { client: cosmosClient } = useCosmosClient(chainId);
+  const cosmosClient = useCosmosClient(chainId);
 
   const queryBalance = useCallback(async () => {
     if (!cosmosClient) {
       throw new Error('Cosmos client not found');
     }
-    const balance = await cosmosClient.getDenomBalance({
+    const balance = await cosmosClient.queryDenomBalance({
       address: inputAddress,
       denom,
     });

@@ -4,7 +4,7 @@ export interface SolanaBaseClientArgs {
   rpcUrlOrMoniker: SolanaClusterMoniker | string;
 }
 
-export class SolanaBaseClient {
+export abstract class SolanaBaseClient {
   public readonly rpcUrlOrMoniker: SolanaClusterMoniker | string;
 
   constructor(args: SolanaBaseClientArgs) {

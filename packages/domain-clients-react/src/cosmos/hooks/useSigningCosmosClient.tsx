@@ -28,11 +28,9 @@ export function useSigningCosmosClient({
       throw new Error(`Default gas not set for cosmos chain: ${chainId}`);
     }
     if (!account) {
-      console.warn('No cosmos account found for chainId: ', chainId);
       return;
     }
     if (!offlineSigner) {
-      console.warn('No cosmos offline signer found for chainId: ', chainId);
       return;
     }
 

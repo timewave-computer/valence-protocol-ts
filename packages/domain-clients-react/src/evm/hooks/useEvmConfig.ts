@@ -4,7 +4,6 @@ import { EvmConfig } from '@valence-protocol/domain-clients-core/evm';
 
 export function useEvmConfig(): EvmConfig {
   const config = useDomainConfig();
-  if (!config.evm)
-    throw new Error('useEvmConfig must be used within a DomainClientsProvider');
+  if (!config.evm) throw new Error('Evm config is not set');
   return config.evm;
 }

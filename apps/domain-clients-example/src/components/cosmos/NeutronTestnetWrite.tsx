@@ -2,7 +2,7 @@
 
 import { Button, Input, Label } from '@/components/ui';
 import { useCallback, useState } from 'react';
-import { useSigningCosmosClient } from '@valence-protocol/domain-clients-react';
+import { useSigningCosmosClient } from '@valence-protocol/domain-clients-react/cosmos';
 import { useMutation } from '@tanstack/react-query';
 import { baseToMicro } from '@valence-protocol/domain-clients-core';
 import { useIsCosmosChainConnected } from '@valence-protocol/domain-modal-react';
@@ -22,7 +22,7 @@ export const NeutronTestnetWrite = ({
   const [amount, setAmount] = useState('');
   const isConnected = useIsCosmosChainConnected({ chainId });
 
-  const { client: signingCosmosClient } = useSigningCosmosClient({ chainId });
+  const signingCosmosClient = useSigningCosmosClient({ chainId });
 
   const onSubmit = useCallback(async () => {
     if (!signingCosmosClient) {

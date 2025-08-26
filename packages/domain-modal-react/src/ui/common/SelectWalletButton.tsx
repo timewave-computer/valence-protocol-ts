@@ -1,10 +1,14 @@
 import { WalletLogo } from '@/ui/common';
-import { EvmConnector, CosmosConnector } from '@/hooks';
+import {
+  type EvmConnector,
+  type CosmosConnector,
+  type SolanaConnector,
+} from '@/hooks';
 
 interface SelectWalletButtonProps {
-  wallet: CosmosConnector | EvmConnector;
+  wallet: CosmosConnector | EvmConnector | SolanaConnector;
   walletLogoClassName?: string;
-  onConnect: (chainId: number | string) => Promise<void>;
+  onConnect: (args?: unknown) => Promise<void>;
 }
 
 export const SelectWalletButton = ({
@@ -14,7 +18,7 @@ export const SelectWalletButton = ({
 }: SelectWalletButtonProps) => {
   return (
     <button
-      onClick={() => onConnect(wallet.chainType)}
+      onClick={onConnect}
       disabled={!wallet.isAvailable}
       className='w-full flex flex-wrap gap-1 items-center justify-between px-4 py-3 border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200'
     >

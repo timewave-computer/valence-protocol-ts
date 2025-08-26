@@ -13,11 +13,9 @@ export function useSigningEvmClient(
 
   return useMemo(() => {
     if (!account) {
-      console.warn('No evm account found');
       return;
     }
     if (!walletClient) {
-      console.warn('No evm wallet client found for chainId: ', chainId);
       return;
     }
     return new SigningEvmClient({

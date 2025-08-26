@@ -1,11 +1,15 @@
 import { WalletUi } from '@wallet-ui/react';
-import { useSolanaConfig } from '@/solana/hooks';
+import { useDomainConfig } from '@/common';
 
 export const SolanaClientProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const config = useSolanaConfig();
-  return <WalletUi config={config}>{children}</WalletUi>;
+  const config = useDomainConfig();
+
+  if (!config.solana) {
+    return children;
+  }
+  return <WalletUi config={config.solana}>{children}</WalletUi>;
 };

@@ -20,7 +20,6 @@ export const useSolanaSigningClient = (
       throw new Error(`Solana cluster ${clusterMoniker} not found in config`);
     }
     if (!signer) {
-      console.warn('No signer found for solana');
       return;
     }
 

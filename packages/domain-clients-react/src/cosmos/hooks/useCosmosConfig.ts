@@ -8,10 +8,7 @@ import {
 
 export function useCosmosConfig(): CosmosConfig {
   const config = useDomainConfig();
-  if (!config.cosmos)
-    throw new Error(
-      'useCosmosConfig must be used within a DomainClientsProvider'
-    );
+  if (!config.cosmos) throw new Error('Cosmos config is not set');
   return config.cosmos;
 }
 

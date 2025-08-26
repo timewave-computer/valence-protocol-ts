@@ -3,6 +3,7 @@ import { ChainType } from '@/hooks';
 export type TargetChains = {
   [ChainType.Cosmos]?: string;
   [ChainType.Evm]?: number;
+  [ChainType.Solana]?: string;
 };
 
 export const getCosmosTargetChain = (targetChains?: TargetChains) => {
@@ -11,6 +12,10 @@ export const getCosmosTargetChain = (targetChains?: TargetChains) => {
 
 export const getEvmTargetChain = (targetChains?: TargetChains) => {
   return targetChains?.[ChainType.Evm];
+};
+
+export const getSolanaTargetRpcUrlOrMoniker = (targetChains?: TargetChains) => {
+  return targetChains?.[ChainType.Solana];
 };
 
 export interface DomainModalContextType {

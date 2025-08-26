@@ -78,5 +78,5 @@ Start apps in development mode.
 ```bash
 turbo dev
 
-turbo dev --filter @valence-protocol/domain-clients-example-app
+turbo dev --filter @valence-protocol/domain-clients-example
 ```

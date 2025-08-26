@@ -13,6 +13,11 @@ export function detectAddressType(address: string): ChainType | undefined {
     return ChainType.Cosmos;
   }
 
+  // Solana: Base58, typically 32–44 chars, excludes 0, O, I, l
+  if (/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)) {
+    return ChainType.Solana;
+  }
+
   return undefined;
 }
 
@@ -27,6 +32,8 @@ export function shortenAddress(address: string): string {
   switch (detectAddressType(address)) {
     case ChainType.Cosmos:
       return `${address.slice(0, 6)}…${address.slice(-4)}`;
+    case ChainType.Solana:
+      return `${address.slice(0, 4)}…${address.slice(-4)}`;
     case ChainType.Evm:
     default:
       return `${address.slice(0, 6)}…${address.slice(-4)}`;

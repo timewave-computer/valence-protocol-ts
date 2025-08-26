@@ -1,4 +1,4 @@
-import { type CosmosConfig } from '@valence-protocol/domain-clients-core';
+import { type CosmosConfig } from '@valence-protocol/domain-clients-core/cosmos';
 import { neutron, neutrontestnet } from 'graz/chains'; // need to run `graz generate -g` first
 
 export const cosmosConfig: CosmosConfig = {

@@ -3,7 +3,7 @@ import {
   getAssociatedTokenAccountAddress,
   TOKEN_PROGRAM_ADDRESS,
 } from 'gill/programs/token';
-import { SolanaBaseClient, type SolanaBaseClientArgs } from '@/solana';
+import { SolanaBaseClient, type SolanaBaseClientArgs } from './BaseClient'; // direct import to avoid circular dependency
 
 export class SolanaClient extends SolanaBaseClient {
   constructor(args: SolanaBaseClientArgs) {

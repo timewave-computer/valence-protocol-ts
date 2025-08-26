@@ -21,10 +21,9 @@ export const CosmosConnectionManager = () => {
   });
 
   if (!config) {
-    console.warn(
+    throw new Error(
       'Attempted to use CosmosConnectionManager with undefined cosmosconfig'
     );
-    return null;
   }
 
   if (isConnected) {

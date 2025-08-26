@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Simplify evm and cosmos client hook state
 
+### Fixed
+
+- Domain provider conditional rendering offloaded to domain specific providers. Will prevent app from erroring out if a config for a domain is not set, and fix unavailable context issues.
+
 ## [0.2.0] 2025-8-19
 
 ### Changed

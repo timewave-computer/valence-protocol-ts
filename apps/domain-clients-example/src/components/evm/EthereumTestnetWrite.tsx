@@ -6,7 +6,7 @@ import { parseUnits } from 'viem';
 import {
   useSigningEvmClient,
   useEvmClient,
-} from '@valence-protocol/domain-clients-react';
+} from '@valence-protocol/domain-clients-react/evm';
 import { useMutation } from '@tanstack/react-query';
 import { useSwitchChain } from 'wagmi';
 import { useIsEvmChainConnected } from '@valence-protocol/domain-modal-react';
@@ -25,8 +25,8 @@ export const EthereumTestnetWrite = ({
   const { switchChain } = useSwitchChain();
   const isChainConnected = useIsEvmChainConnected(chainId);
 
-  const { client: signingEvmClient } = useSigningEvmClient(chainId);
-  const { client: publicEvmClient } = useEvmClient(chainId);
+  const signingEvmClient = useSigningEvmClient(chainId);
+  const publicEvmClient = useEvmClient(chainId);
 
   const onSubmit = useCallback(async () => {
     switchChain({ chainId: chainId });

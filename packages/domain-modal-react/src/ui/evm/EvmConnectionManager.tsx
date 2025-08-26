@@ -19,10 +19,9 @@ export const EvmConnectionManager = () => {
     getEvmTargetChain(targetChains) ?? config.defaultChainId;
 
   if (!config) {
-    console.warn(
-      'Attempted to use EvmConnectionManager with undefined evmconfig'
+    throw new Error(
+      'Attempting to use EvmConnectionManager with undefined evmconfig'
     );
-    return null;
   }
 
   if (isConnected && !!account) {
