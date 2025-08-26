@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Provider, hooks, and UI for connecting to solana
 
+### Changed
+
+- [breaking] chainId for evmConnector.connect is required
+- [breaking] throw errors if trying to use domain without config
+
+### Fixed
+
+- DomainModalProvider correctly nested within DomainClientsProvider
+
 ## [0.2.0] 2025-08-19
 
 ### Changed
