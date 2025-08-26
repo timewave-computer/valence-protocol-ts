@@ -72,7 +72,7 @@ export const EthereumTestnetWrite = ({
       <div className='flex flex-col'>
         <Label htmlFor='amount'>Amount SepoliaETH</Label>
         <Input
-          className='border border-gray-300 rounded-sm p-1 font-mono text-xs'
+          className='border border-gray-300 rounded-sm p-1 font-mono text-xs max-w-[400px]'
           placeholder='Enter amount'
           type='number'
           value={amount}
@@ -82,7 +82,7 @@ export const EthereumTestnetWrite = ({
       <div className='flex flex-col'>
         <Label htmlFor='toAddress'>Recipient Address</Label>
         <Input
-          className='border border-gray-300 rounded-sm p-1 font-mono text-xs'
+          className='border border-gray-300 rounded-sm p-1 font-mono text-xs max-w-[400px]'
           placeholder='Enter address'
           type='text'
           value={toAddress}

@@ -18,7 +18,7 @@ export const EthereumOps = async () => {
   return (
     <div className='flex flex-col gap-2'>
       <div className='flex flex-col gap-1'>
-        <ConnectEthereumChain chainName={mainnet.name} chainId={mainnet.id} />{' '}
+        <ConnectEthereumChain chainName={mainnet.name} chainId={mainnet.id} />
         <ConnectEthereumChain chainName={sepolia.name} chainId={sepolia.id} />
       </div>
       <h3 className='font-semibold pt-2'>Read USDC ERC20 balance (Mainnet)</h3>

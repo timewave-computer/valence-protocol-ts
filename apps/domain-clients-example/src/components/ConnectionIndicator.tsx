@@ -1,5 +1,6 @@
 'use client';
 import { shortenAddress } from '@valence-protocol/domain-modal-react';
+import { cn } from '@/components/ui';
 
 export const ConnectionIndicator = ({
   logo,
@@ -27,9 +28,7 @@ export const WalletLogo = ({
 }) => {
   if (!logo) {
     return (
-      <div
-        className={`w-4 h-4 rounded-sm bg-gray-400 flex items-center justify-center text-white text-xs font-medium`}
-      >
+      <div className='w-4 h-4 rounded-sm bg-gray-400 flex items-center justify-center text-white text-xs font-medium'>
         w
       </div>
     );
@@ -38,7 +37,7 @@ export const WalletLogo = ({
     <img
       src={logo}
       alt='Wallet Logo'
-      className={`rounded-sm h-4 w-4  ${className}`}
+      className={cn('rounded-sm h-4 w-4 ', className)}
     />
   );
 };
