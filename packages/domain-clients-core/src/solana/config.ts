@@ -1,6 +1,6 @@
-import type { SolanaCluster, SolanaUrlOrMoniker } from '@/solana';
+import type { SolanaCluster, SolanaClusterId } from '@/solana';
 
 export interface SolanaConfig {
   clusters: SolanaCluster[];
-  defaultUrlOrMoniker: SolanaUrlOrMoniker;
+  defaultClusterId: SolanaClusterId;
 }

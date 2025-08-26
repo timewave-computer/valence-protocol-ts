@@ -1,20 +1,27 @@
 import { ChainType } from '@/hooks';
+import { SolanaClusterId } from '@valence-protocol/domain-clients-core/solana';
 
 export type TargetChains = {
-  [ChainType.Cosmos]?: string;
-  [ChainType.Evm]?: number;
-  [ChainType.Solana]?: string;
+  [ChainType.Cosmos]?: string; // chain id
+  [ChainType.Evm]?: number; // chain id
+  [ChainType.Solana]?: SolanaClusterId; // cluster id
 };
 
-export const getCosmosTargetChain = (targetChains?: TargetChains) => {
+export const getCosmosTargetChain = (
+  targetChains?: TargetChains
+): string | undefined => {
   return targetChains?.[ChainType.Cosmos];
 };
 
-export const getEvmTargetChain = (targetChains?: TargetChains) => {
+export const getEvmTargetChain = (
+  targetChains?: TargetChains
+): number | undefined => {
   return targetChains?.[ChainType.Evm];
 };
 
-export const getSolanaTargetRpcUrlOrMoniker = (targetChains?: TargetChains) => {
+export const getSolanaTargetCluster = (
+  targetChains?: TargetChains
+): SolanaClusterId | undefined => {
   return targetChains?.[ChainType.Solana];
 };
 

@@ -1,25 +1,35 @@
 'use client';
-
+import { useEffect } from 'react';
 import {
   solanaWalletAtom,
   useIsSolanaConnected,
   useSolanaConnectors,
 } from '@/hooks/solana';
-import { getSolanaTargetRpcUrlOrMoniker, useDomainModal } from '@/index';
+import { getSolanaTargetCluster, useDomainModal } from '@/index';
 import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
-import { useWalletUi } from '@wallet-ui/react';
+import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
 import { useAtomValue } from 'jotai';
 import { AccountCard, SelectWalletButton } from '@/ui/common';
 
 export const SolanaConnectionManager = () => {
   const solanaConnectors = useSolanaConnectors();
   const solanaWallet = useAtomValue(solanaWalletAtom);
-  const { disconnect, account, cluster } = useWalletUi();
+  const w = useWalletUi();
+  const { disconnect, account } = useWalletUi();
   const isConnected = useIsSolanaConnected();
+  console.log('isConnected', isConnected);
   const config = useSolanaConfig();
   const { targetChains } = useDomainModal();
-  const targetRpcUrlOrMoniker =
-    getSolanaTargetRpcUrlOrMoniker(targetChains) ?? config.defaultUrlOrMoniker;
+  const { clusters, setCluster, cluster } = useWalletUiCluster();
+
+  useEffect(() => {
+    const targetClusterId =
+      getSolanaTargetCluster(targetChains) ?? config.defaultClusterId;
+    const targetCluster = clusters.find(c => c.id === targetClusterId);
+    if (targetCluster) {
+      setCluster(targetCluster.id);
+    }
+  }, [clusters, targetChains]);
 
   if (!config) {
     throw new Error(

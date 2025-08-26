@@ -8,6 +8,7 @@ import {
   TabsContent,
   EthereumOps,
   CosmosOps,
+  SolanaOps,
 } from '@/components';
 
 export default async function Home() {
@@ -32,11 +33,12 @@ export default async function Home() {
           <ConfigView />
         </div>
         <div>
-          <h2 className='font-semibold text-xl pb-2 '>Domain Operations</h2>
-          <Tabs defaultValue='evm'>
+          <h2 className='font-semibold text-xl pb-2  '>Domain Operations</h2>
+          <Tabs className='md:max-w-[400px]' defaultValue='solana'>
             <TabsList>
               <TabsTrigger value='evm'>Ethereum</TabsTrigger>
               <TabsTrigger value='cosmos'>Cosmos</TabsTrigger>
+              <TabsTrigger value='solana'>Solana</TabsTrigger>
             </TabsList>
             <TabsContent value='evm'>
               <Suspense fallback={<div>Loading...</div>}>
@@ -46,6 +48,11 @@ export default async function Home() {
             <TabsContent value='cosmos'>
               <Suspense fallback={<div>Loading...</div>}>
                 <CosmosOps />
+              </Suspense>
+            </TabsContent>
+            <TabsContent value='solana'>
+              <Suspense fallback={<div>Loading...</div>}>
+                <SolanaOps />
               </Suspense>
             </TabsContent>
           </Tabs>
