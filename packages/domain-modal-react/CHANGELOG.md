@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [breaking] chainId for evmConnector.connect is required
 - [breaking] throw errors if trying to use domain without config
+- using wagmi `switchChain` is no longer required, the modal does it interally if a target is specified
 
 ### Fixed
 

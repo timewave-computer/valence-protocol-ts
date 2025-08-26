@@ -16,6 +16,7 @@ import {
 
 export const useSolanaConnectors = (): SolanaConnector[] => {
   const { wallets, connect } = useWalletUi();
+
   useKeepSolanaWalletStateSynced();
 
   const config = useSolanaConfig();
