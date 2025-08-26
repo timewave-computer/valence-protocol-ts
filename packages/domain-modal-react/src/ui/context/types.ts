@@ -14,7 +14,7 @@ export const getEvmTargetChain = (targetChains?: TargetChains) => {
   return targetChains?.[ChainType.Evm];
 };
 
-export const getSolanaTargetChain = (targetChains?: TargetChains) => {
+export const getSolanaTargetRpcUrlOrMoniker = (targetChains?: TargetChains) => {
   return targetChains?.[ChainType.Solana];
 };
 
