@@ -21,20 +21,20 @@ export const ConnectEthereumChain = ({
   if (isEvmConnected) {
     return (
       <Button
-        variant='secondary'
-        className='w-fit min-w-76'
+        variant='ghost'
+        className='w-fit min-w-60'
         onClick={() => {
           disconnect();
         }}
       >
-        Disconnect from {chainName}
+        Disconnect {chainName}
       </Button>
     );
   }
 
   return (
     <Button
-      className='w-fit min-w-76'
+      className='w-fit min-w-60'
       onClick={() => {
         switchChain({ chainId: chainId });
         showModal({
@@ -42,7 +42,7 @@ export const ConnectEthereumChain = ({
         });
       }}
     >
-      Connect to {chainName}
+      Connect {chainName}
     </Button>
   );
 };

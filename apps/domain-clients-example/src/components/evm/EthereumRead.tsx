@@ -63,19 +63,14 @@ export const EthereumRead = ({
   }, [error]);
 
   return (
-    <div className='flex flex-col gap-2 w-1/2 max-w-md'>
-      <h2 className='font-semibold text-sm'>Ethereum</h2>
-      <BalanceView
-        inputAddress={inputAddress}
-        setInputAddress={(address: string) =>
-          setInputAddress(address as Address)
-        }
-        isLoading={isLoading}
-        isError={isError}
-        decimals={decimals}
-        symbol={symbol}
-        amount={balance?.balance.toString()}
-      />
-    </div>
+    <BalanceView
+      inputAddress={inputAddress}
+      setInputAddress={(address: string) => setInputAddress(address as Address)}
+      isLoading={isLoading}
+      isError={isError}
+      decimals={decimals}
+      symbol={symbol}
+      amount={balance?.balance.toString()}
+    />
   );
 };

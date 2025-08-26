@@ -5,3 +5,4 @@ export * from './BalanceView';
 export * from './cosmos';
 export * from './evm';
 export * from './WalletButton';
+export * from './ConnectionIndicator';

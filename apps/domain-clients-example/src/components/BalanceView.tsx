@@ -25,7 +25,7 @@ export const BalanceView = ({
       <div className='flex flex-col'>
         <Label htmlFor='address'>Address</Label>
         <Input
-          className='border border-gray-300 rounded-sm p-1 font-mono text-xs'
+          className='border border-gray-300 rounded-sm p-1 font-mono text-xs max-w-[400px]'
           placeholder='Enter address'
           type='text'
           value={inputAddress}
