@@ -32,9 +32,10 @@ export function shortenAddress(address: string): string {
   switch (detectAddressType(address)) {
     case ChainType.Cosmos:
       return `${address.slice(0, 6)}…${address.slice(-4)}`;
-    case ChainType.Evm:
+
     case ChainType.Solana:
       return `${address.slice(0, 4)}…${address.slice(-4)}`;
+    case ChainType.Evm:
     default:
       return `${address.slice(0, 6)}…${address.slice(-4)}`;
   }

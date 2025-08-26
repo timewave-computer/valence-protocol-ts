@@ -4,9 +4,6 @@ import { SolanaConfig } from '@valence-protocol/domain-clients-core/solana';
 
 export function useSolanaConfig(): SolanaConfig {
   const config = useDomainConfig();
-  if (!config.solana)
-    throw new Error(
-      'useSolanaConfig must be used within a DomainClientsProvider'
-    );
+  if (!config.solana) throw new Error('Solana config is not set');
   return config.solana;
 }
