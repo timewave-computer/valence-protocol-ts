@@ -25,8 +25,8 @@ export const EthereumNativeTransfer = ({
   const { switchChain } = useSwitchChain();
   const isChainConnected = useIsEvmChainConnected(chainId);
 
-  const signingEvmClient = useSigningEvmClient(chainId);
-  const publicEvmClient = useEvmClient(chainId);
+  const signingEvmClient = useSigningEvmClient({ chainId });
+  const publicEvmClient = useEvmClient({ chainId });
 
   const onSubmit = useCallback(async () => {
     switchChain({ chainId: chainId });

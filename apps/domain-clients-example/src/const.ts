@@ -17,3 +17,5 @@ export const neutronNtrn = {
   decimals: 6, // hardcoded for brevity
 };
 export const neutronUser = 'neutron1fl48vsnmsdzcv85q5d2q4z5ajdha8yu33yqdrs'; // Top holder
+
+export const solanaUsdc = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';

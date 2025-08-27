@@ -19,13 +19,20 @@ export const ConnectSolana = ({
   const { disconnect } = useWalletUi();
   if (isSolanaConnected) {
     return (
-      <Button variant='ghost' onClick={() => disconnect()}>
+      <Button
+        variant='ghost'
+        className='w-fit min-w-60'
+        onClick={() => disconnect()}
+      >
         Disconnect {chainName}
       </Button>
     );
   }
   return (
-    <Button onClick={() => showModal({ solana: clusterId })}>
+    <Button
+      className='w-fit min-w-60'
+      onClick={() => showModal({ solana: clusterId })}
+    >
       Connect {chainName}
     </Button>
   );

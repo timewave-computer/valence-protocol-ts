@@ -1,4 +1,4 @@
-import { ConnectSolana } from '@/components/solana';
+import { ConnectSolana, SolanaSplTransfer } from '@/components/solana';
 import { devnet, mainnet } from '@/config/domainClientsConfig/solana.config';
 
 export const SolanaOps = () => {
@@ -9,6 +9,7 @@ export const SolanaOps = () => {
         <ConnectSolana chainName={mainnet.label} clusterId={mainnet.id} />
       </div>
       <h3 className='font-semibold pt-2'>Transfer SPL (Devnet)</h3>
+      <SolanaSplTransfer clusterId={devnet.id} />
     </div>
   );
 };

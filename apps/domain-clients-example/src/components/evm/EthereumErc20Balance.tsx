@@ -23,7 +23,7 @@ export const EthereumErc20Balance = ({
   chainId,
 }: EthereumErc20BalanceProps) => {
   const [inputAddress, setInputAddress] = useState<Address>(initialAddress);
-  const evmClient = useEvmClient(chainId);
+  const evmClient = useEvmClient({ chainId });
 
   const queryBalance = useCallback(async () => {
     if (!evmClient) {

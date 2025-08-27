@@ -23,7 +23,7 @@ export const CosmosDenomBalance = ({
 }: CosmosDenomBalanceProps) => {
   const [inputAddress, setInputAddress] = useState(initialAddress);
 
-  const cosmosClient = useCosmosClient(chainId);
+  const cosmosClient = useCosmosClient({ chainId });
 
   const queryBalance = useCallback(async () => {
     if (!cosmosClient) {

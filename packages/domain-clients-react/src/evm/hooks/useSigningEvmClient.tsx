@@ -4,9 +4,11 @@ import { useEvmConfig } from '@/evm';
 import { SigningEvmClient } from '@valence-protocol/domain-clients-core/evm';
 import { useAccount, useWalletClient } from 'wagmi';
 
-export function useSigningEvmClient(
-  chainId: number
-): SigningEvmClient | undefined {
+export function useSigningEvmClient({
+  chainId,
+}: {
+  chainId: number;
+}): SigningEvmClient | undefined {
   const config = useEvmConfig();
   const account = useAccount();
   const { data: walletClient } = useWalletClient({ chainId });
