@@ -2,46 +2,58 @@
 
 import { Button, Input, Label } from '@/components/ui';
 import { useCallback, useState } from 'react';
-import { useSigningCosmosClient } from '@valence-protocol/domain-clients-react/cosmos';
+import { parseUnits } from 'viem';
+import {
+  useSigningEvmClient,
+  useEvmClient,
+} from '@valence-protocol/domain-clients-react/evm';
 import { useMutation } from '@tanstack/react-query';
-import { baseToMicro } from '@valence-protocol/domain-clients-core';
-import { useIsCosmosChainConnected } from '@valence-protocol/domain-modal-react';
+import { useSwitchChain } from 'wagmi';
+import { useIsEvmChainConnected } from '@valence-protocol/domain-modal-react';
 
-type NeutronTestnetWriteProps = {
-  chainId: string;
-  decimals: number;
-  denom: string;
+type EthereumNativeTransferProps = {
+  chainId: number;
 };
 
-export const NeutronTestnetWrite = ({
+const sepoliaEthDecimals = 18;
+
+export const EthereumNativeTransfer = ({
   chainId,
-  decimals,
-  denom,
-}: NeutronTestnetWriteProps) => {
+}: EthereumNativeTransferProps) => {
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
-  const isConnected = useIsCosmosChainConnected({ chainId });
+  const { switchChain } = useSwitchChain();
+  const isChainConnected = useIsEvmChainConnected(chainId);
 
-  const signingCosmosClient = useSigningCosmosClient({ chainId });
+  const signingEvmClient = useSigningEvmClient(chainId);
+  const publicEvmClient = useEvmClient(chainId);
 
   const onSubmit = useCallback(async () => {
-    if (!signingCosmosClient) {
-      throw new Error('Cosmos signing client not found');
+    switchChain({ chainId: chainId });
+    if (!signingEvmClient || !publicEvmClient) {
+      throw new Error('EVM client not found');
     }
+    const amountInWei = parseUnits(amount, sepoliaEthDecimals);
 
-    const amountInBase = baseToMicro(amount, decimals);
-
-    const tx = await signingCosmosClient.sendTokens({
-      recipient: toAddress,
-      amount: [
-        {
-          amount: amountInBase.toString(),
-          denom,
-        },
-      ],
+    const tx = await signingEvmClient.sendTokens({
+      to: toAddress as `0x${string}`,
+      value: amountInWei,
     });
-    return tx;
-  }, [decimals, denom, amount, toAddress, signingCosmosClient]);
+    const txHash = await publicEvmClient.waitForTransactionReceipt({
+      txHash: tx,
+    });
+    if (txHash.status === 'success') {
+      return txHash;
+    }
+    throw new Error('Transaction failed');
+  }, [
+    amount,
+    toAddress,
+    signingEvmClient,
+    publicEvmClient,
+    chainId,
+    switchChain,
+  ]);
 
   const {
     mutate: sendTokens,
@@ -56,9 +68,9 @@ export const NeutronTestnetWrite = ({
   });
 
   return (
-    <div className='flex flex-col gap-2 '>
+    <div className='flex flex-col gap-2'>
       <div className='flex flex-col'>
-        <Label htmlFor='amount'>Amount NTRN</Label>
+        <Label htmlFor='amount'>Amount SepoliaETH</Label>
         <Input
           className='border border-gray-300 rounded-sm p-1 font-mono text-xs max-w-[400px]'
           placeholder='Enter amount'
@@ -78,13 +90,13 @@ export const NeutronTestnetWrite = ({
         />
       </div>
       <div className='flex flex-row gap-2 items-center'>
-        <Button disabled={!isConnected} onClick={() => sendTokens()}>
+        <Button disabled={!isChainConnected} onClick={() => sendTokens()}>
           <span>Transfer</span>
         </Button>
-        {!isConnected && (
-          <div className='text-xs text-gray-500'>
-            Connect to Neutron Testnet to transfer NTRN
-          </div>
+        {!isChainConnected && (
+          <p className='text-xs text-gray-500'>
+            Connect to Sepolia to transfer tokens
+          </p>
         )}
       </div>
       {isError && (

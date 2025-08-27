@@ -1,8 +1,8 @@
 import { mainnet, sepolia } from 'viem/chains';
 import {
   ConnectEthereumChain,
-  EthereumRead,
-  EthereumTestnetWrite,
+  EthereumErc20Balance,
+  EthereumNativeTransfer,
 } from '@/components';
 import { evmUsdc, evmUser } from '@/const';
 import { getEthErc20Balance } from '@/server';
@@ -23,7 +23,7 @@ export const EthereumOps = async () => {
       </div>
       <h3 className='font-semibold pt-2'>Read USDC ERC20 balance (Mainnet)</h3>
 
-      <EthereumRead
+      <EthereumErc20Balance
         chainId={evmUsdc.chainId}
         erc20Address={evmUsdc.tokenAddress}
         initialBalance={usdcBalance.balance}
@@ -34,7 +34,7 @@ export const EthereumOps = async () => {
 
       <h3 className='font-semibold pt-2'>Transfer SepoliaETH</h3>
 
-      <EthereumTestnetWrite chainId={sepolia.id} />
+      <EthereumNativeTransfer chainId={sepolia.id} />
     </div>
   );
 };

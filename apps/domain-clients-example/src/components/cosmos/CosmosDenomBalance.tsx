@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { BalanceView } from '@/components';
 import { useCosmosClient } from '@valence-protocol/domain-clients-react/cosmos';
 
-interface NeutronReadProps {
+interface CosmosDenomBalanceProps {
   initialBalance: string;
   decimals: number;
   initialAddress: string;
@@ -13,14 +13,14 @@ interface NeutronReadProps {
   chainId: string;
 }
 
-export const NeutronRead = ({
+export const CosmosDenomBalance = ({
   initialBalance,
   decimals,
   initialAddress,
   symbol,
   denom,
   chainId,
-}: NeutronReadProps) => {
+}: CosmosDenomBalanceProps) => {
   const [inputAddress, setInputAddress] = useState(initialAddress);
 
   const cosmosClient = useCosmosClient(chainId);
@@ -46,7 +46,7 @@ export const NeutronRead = ({
     isError,
     error,
   } = useQuery({
-    queryKey: ['neutron-balance', inputAddress, denom, chainId],
+    queryKey: ['cosmos-balance', inputAddress, denom, chainId],
     queryFn: () => queryBalance(),
     enabled: !!inputAddress && !!cosmosClient,
     retry: false,
@@ -60,7 +60,7 @@ export const NeutronRead = ({
 
   useEffect(() => {
     if (error) {
-      console.error('Error fetching Neutron balance', error);
+      console.error(`Error fetching ${denom} balance on ${chainId}`, error);
     }
   }, [error]);
 
