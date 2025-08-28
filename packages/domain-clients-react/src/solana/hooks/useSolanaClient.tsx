@@ -2,26 +2,27 @@
 
 import {
   SolanaClient,
-  SolanaClusterMoniker,
+  SolanaClusterId,
 } from '@valence-protocol/domain-clients-core/solana';
 import { useSolanaConfig } from '@/solana/hooks';
 import { useMemo } from 'react';
 
-export function useSolanaClient(
-  clusterMoniker: SolanaClusterMoniker
-): SolanaClient {
+export function useSolanaClient({
+  clusterId,
+}: {
+  clusterId: SolanaClusterId;
+}): SolanaClient {
   const config = useSolanaConfig();
 
   const client = useMemo(() => {
-    const cluster = config.clusters.find(
-      cluster => cluster.cluster === clusterMoniker
-    );
+    const cluster = config.clusters.find(cluster => cluster.id === clusterId);
     if (!cluster) {
-      throw new Error(`Solana cluster ${clusterMoniker} not found in config`);
+      throw new Error(`Solana cluster ${clusterId} not found in config`);
     }
+    const rpcUrlOrMoniker = cluster.urlOrMoniker;
     return new SolanaClient({
-      rpcUrlOrMoniker: cluster.urlOrMoniker,
+      rpcUrlOrMoniker,
     });
-  }, [config, clusterMoniker]);
+  }, [config, clusterId]);
   return client;
 }

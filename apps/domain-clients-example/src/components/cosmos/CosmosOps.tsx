@@ -1,7 +1,7 @@
 import {
   ConnectCosmosChain,
-  NeutronRead,
-  NeutronTestnetWrite,
+  CosmosDenomBalance,
+  CosmosDenomTransfer,
 } from '@/components/cosmos';
 import { neutronNtrn, neutronUser } from '@/const';
 import { getCosmosBalance } from '@/server';
@@ -21,7 +21,7 @@ export const CosmosOps = async () => {
         <ConnectCosmosChain chainInfo={neutron} />
       </div>
       <h3 className='font-semibold pt-2'>Read NTRN Balance (Mainnet)</h3>
-      <NeutronRead
+      <CosmosDenomBalance
         denom={neutronNtrn.denom}
         chainId={neutronNtrn.chainId}
         initialBalance={cosmosBalance.amount}
@@ -30,7 +30,7 @@ export const CosmosOps = async () => {
         symbol={neutronNtrn.symbol}
       />
       <h3 className='font-semibold pt-2'>Transfer NTRN (Testnet)</h3>
-      <NeutronTestnetWrite
+      <CosmosDenomTransfer
         denom={neutronNtrn.denom}
         decimals={neutronNtrn.decimals}
         chainId={neutrontestnet.chainId}

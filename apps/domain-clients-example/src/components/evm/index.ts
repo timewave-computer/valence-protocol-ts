@@ -1,4 +1,4 @@
-export * from './EthereumRead';
-export * from './EthereumTestnetWrite';
+export * from './EthereumErc20Balance';
+export * from './EthereumNativeTransfer';
 export * from './ConnectEthereumChain';
 export * from './EthereumOps';
