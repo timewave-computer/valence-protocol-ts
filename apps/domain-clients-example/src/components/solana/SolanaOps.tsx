@@ -1,5 +1,6 @@
 import { ConnectSolana, SolanaSplTransfer } from '@/components/solana';
 import { devnet, mainnet } from '@/config/domainClientsConfig/solana.config';
+import { solanaUsdc } from '@/const';
 
 export const SolanaOps = () => {
   return (
@@ -9,7 +10,13 @@ export const SolanaOps = () => {
         <ConnectSolana chainName={mainnet.label} clusterId={mainnet.id} />
       </div>
       <h3 className='font-semibold pt-2'>Transfer SPL (Devnet)</h3>
-      <SolanaSplTransfer clusterId={devnet.id} />
+      <SolanaSplTransfer
+        clusterId={devnet.id}
+        token={{
+          mintAddress: solanaUsdc.mintAddress,
+          decimals: solanaUsdc.decimals,
+        }}
+      />
     </div>
   );
 };

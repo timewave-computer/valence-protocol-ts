@@ -38,7 +38,7 @@ export const SolanaSplTransfer = ({
       tokenMintAddress: token.mintAddress,
     });
     return tx;
-  }, [signingSolanaClient, toAddress, amount]);
+  }, [signingSolanaClient, toAddress, amount, token]);
 
   return <div>SolanaSplTransfer</div>;
 };

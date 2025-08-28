@@ -18,6 +18,7 @@ export const baseToMicro = (
   if (typeof amount === 'string') {
     amount = parseFloat(amount);
   }
-  amount = amount * Math.pow(10, decimals);
+  // rounds to remove floating point inaccuracies - e.g., 8.029409 * 10**6 resulting in 8029409.000000001 instead of 8029409
+  amount = Math.round(amount * Math.pow(10, decimals));
   return isNaN(amount) ? 0 : amount;
 };
