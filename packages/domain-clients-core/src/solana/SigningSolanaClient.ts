@@ -66,7 +66,7 @@ export class SigningSolanaClient extends SolanaBaseClient {
     toAddress: Address;
     tokenMintAddress: Address;
     amount: bigint;
-    tokenProgram: SolanaTokenProgramId;
+    tokenProgram?: SolanaTokenProgramId;
     version?: TransactionVersion;
   }) {
     const destination = address(toAddress);
