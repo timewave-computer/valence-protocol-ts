@@ -1,25 +1,30 @@
-import { Blockhash, createSolanaClient, SolanaClusterMoniker } from 'gill';
+import { Blockhash, createSolanaClient } from 'gill';
 
 export interface SolanaBaseClientArgs {
-  rpcUrlOrMoniker: SolanaClusterMoniker | string;
+  rpcUrl: string;
 }
 
 export abstract class SolanaBaseClient {
-  public readonly rpcUrlOrMoniker: SolanaClusterMoniker | string;
+  public readonly rpcUrl: string;
 
   constructor(args: SolanaBaseClientArgs) {
-    this.rpcUrlOrMoniker = args.rpcUrlOrMoniker;
+    this.rpcUrl = args.rpcUrl;
   }
 
   public getClient() {
     return createSolanaClient({
-      urlOrMoniker: this.rpcUrlOrMoniker,
+      urlOrMoniker: this.rpcUrl,
     });
   }
 
   public async queryLatestBlockHash() {
     const client = this.getClient();
+
     const response = await client.rpc.getLatestBlockhash().send();
     return response.value;
+  }
+
+  public getRpcUrl() {
+    return this.rpcUrl;
   }
 }

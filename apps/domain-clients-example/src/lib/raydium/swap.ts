@@ -1,16 +1,15 @@
 import {
-  type ApiV3PoolInfoConcentratedItem,
-  type ClmmKeys,
   type ComputeBudgetConfig,
   type TxTipConfig,
   MIN_SQRT_PRICE_X64,
   MAX_SQRT_PRICE_X64,
   SqrtPriceMath,
   ClmmInstrument,
+  Raydium,
+  Clmm,
 } from '@raydium-io/raydium-sdk-v2';
 import {
   type Address,
-  type TransactionVersion,
   type Instruction,
   address,
   type TransactionSigner,
@@ -24,33 +23,47 @@ import {
 } from 'gill/programs/token';
 import { PublicKey } from '@solana/web3.js'; // this is legacy, but this is what the raydium sdk uses as input, so it is required until the library migrates to solana-kit
 import { fromLegacyTransactionInstruction } from '@solana/compat';
+import { Connection } from '@solana/web3.js'; // used because raydium uses legacy tools
 
-type SwapParams = {
-  poolInfo: ApiV3PoolInfoConcentratedItem;
-  poolKeys: ClmmKeys;
+type SwapInParams = {
+  poolId: Address;
   inputMint: Address;
   amountIn: bigint;
   amountOutMin: bigint;
   priceLimit: Decimal;
-  observationId: Address;
   remainingAccounts?: Address[];
   computeBudgetConfig?: ComputeBudgetConfig; // not used
   txTipConfig?: TxTipConfig; // not used
   signer: TransactionSigner;
+  connection: Connection;
 };
 
-// WSOLMint = "So11111111111111111111111111111111111111112"
-export const createClmmSwapInstruction = async ({
-  poolInfo,
+export const createClmmSwapInInstructions = async ({
+  poolId,
   inputMint,
   priceLimit,
-  poolKeys,
-  observationId,
   amountIn,
   amountOutMin,
   signer,
   remainingAccounts,
-}: SwapParams): Promise<Instruction[]> => {
+  connection,
+}: SwapInParams): Promise<Instruction[]> => {
+  const raydium = await Raydium.load({
+    connection,
+  });
+
+  const clmm = new Clmm({
+    scope: raydium,
+    moduleName: 'clmm',
+  });
+
+  const { poolInfo, poolKeys, computePoolInfo } = await getPoolInfo(
+    poolId,
+    connection
+  );
+
+  const observationId = computePoolInfo.observationId;
+
   const baseIn = inputMint === poolInfo.mintA.address;
   const signerPubkey = new PublicKey(signer.address);
 
@@ -127,4 +140,17 @@ export const createClmmSwapInstruction = async ({
   // TODO: add customComputeInstruction
   // TODO: addtip instruction
   return instructions;
+};
+
+export const getPoolInfo = async (poolId: Address, connection: Connection) => {
+  const raydium = await Raydium.load({
+    connection,
+  });
+
+  const clmm = new Clmm({
+    scope: raydium,
+    moduleName: 'clmm',
+  });
+
+  return clmm.getPoolInfoFromRpc(poolId);
 };

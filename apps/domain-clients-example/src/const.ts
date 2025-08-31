@@ -23,3 +23,7 @@ export const solanaUsdc = {
   mintAddress: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v' as SolanaAddress,
   decimals: 6,
 };
+
+export const solanaSolUsdcConcetratedLiqudityPool = {
+  address: '3ucNos4NbumPLZNWztqGHNFFgkHeRMBQAVemeeomsUxv' as SolanaAddress,
+};

@@ -19,9 +19,8 @@ export function useSolanaClient({
     if (!cluster) {
       throw new Error(`Solana cluster ${clusterId} not found in config`);
     }
-    const rpcUrlOrMoniker = cluster.urlOrMoniker;
     return new SolanaClient({
-      rpcUrlOrMoniker,
+      rpcUrl: cluster.urlOrMoniker,
     });
   }, [config, clusterId]);
   return client;

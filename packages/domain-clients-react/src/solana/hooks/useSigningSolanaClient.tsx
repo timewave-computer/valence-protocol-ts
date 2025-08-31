@@ -22,16 +22,9 @@ export const useSigningSolanaClient = ({
     if (!cluster) {
       throw new Error(`Solana cluster ${clusterId} not found in config`);
     }
-    const rpcUrlOrMoniker = cluster.urlOrMoniker;
-
-    console.log('signer', signer);
-    console.log('config', config);
-    console.log('clusterId', clusterId);
-    console.log('cluster', cluster);
-    console.log('rpcUrlOrMoniker', rpcUrlOrMoniker);
 
     return new SigningSolanaClient({
-      rpcUrlOrMoniker,
+      rpcUrl: cluster.urlOrMoniker,
       signer,
     });
   }, [config, clusterId, signer]);

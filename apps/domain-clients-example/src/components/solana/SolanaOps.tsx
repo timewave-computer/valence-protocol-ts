@@ -13,7 +13,7 @@ export const SolanaOps = () => {
         <ConnectSolana chainName={devnet.label} clusterId={devnet.id} />
         <ConnectSolana chainName={mainnet.label} clusterId={mainnet.id} />
       </div>
-      <h3 className='font-semibold pt-2'>Transfer SPL (Devnet)</h3>
+      <h3 className='font-semibold pt-2'>USDC SPL Transfer (Devnet)</h3>
       <SolanaSplTransfer
         clusterId={devnet.id}
         token={{
