@@ -4,9 +4,9 @@ import {
   SolanaClusterId,
   baseToMicro,
 } from '@valence-protocol/domain-clients-core';
-import { useSigningSolanaClient } from '@valence-protocol/domain-clients-react';
+import { useSigningSolanaClient } from '@valence-protocol/domain-clients-react/solana';
 import { useIsSolanaConnected } from '@valence-protocol/domain-modal-react';
-import { address, type Address } from 'gill';
+import { type Address, address } from 'gill';
 
 export const SolanaSplTransfer = ({
   clusterId,
@@ -40,5 +40,5 @@ export const SolanaSplTransfer = ({
     return tx;
   }, [signingSolanaClient, toAddress, amount, token]);
 
-  return <div>SolanaSplTransfer</div>;
+  return <div>Solana SPL Transfer</div>;
 };

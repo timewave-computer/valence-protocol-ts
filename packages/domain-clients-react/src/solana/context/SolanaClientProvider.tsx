@@ -1,3 +1,4 @@
+'use client';
 import { WalletUi } from '@wallet-ui/react';
 import { useDomainConfig } from '@/common';
 
