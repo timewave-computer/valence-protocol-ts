@@ -115,8 +115,8 @@ export const createClmmSwapInInstructions = async ({
       tokenAccountB: new PublicKey(ownerTokenAccountB),
     },
     inputMint: new PublicKey(inputMint),
-    amountIn,
-    amountOutMin,
+    amountIn: new BN(amountIn),
+    amountOutMin: new BN(amountOutMin),
     sqrtPriceLimitX64,
     remainingAccounts:
       remainingAccounts?.map(account => new PublicKey(account)) ?? [],
