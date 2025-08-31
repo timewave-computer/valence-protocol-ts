@@ -52,11 +52,6 @@ export const createClmmSwapInInstructions = async ({
     connection,
   });
 
-  const clmm = new Clmm({
-    scope: raydium,
-    moduleName: 'clmm',
-  });
-
   const { poolInfo, poolKeys, computePoolInfo } = await getPoolInfo(
     poolId,
     connection
