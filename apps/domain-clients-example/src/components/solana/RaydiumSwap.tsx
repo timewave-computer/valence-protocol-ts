@@ -42,7 +42,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
   const { data: poolInfo, isLoading: isPoolInfoLoading } = useQuery({
     queryKey: ['poolInfo', poolId],
     queryFn: () => queryPoolInfo(),
-    enabled: isAddress(poolId) && mintAddress !== '',
+    enabled: !!poolId && poolId !== '',
   });
 
   const onSubmit = useCallback(async () => {

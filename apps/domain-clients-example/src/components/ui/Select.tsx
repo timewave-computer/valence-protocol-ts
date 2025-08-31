@@ -123,20 +123,3 @@ export const SelectItem = ({
     </SelectPrimitive.Item>
   );
 };
-
-interface SelectLabelProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-interface SelectSeparatorProps {
-  className?: string;
-}
-
-export const SelectSeparator = ({ className }: SelectSeparatorProps) => {
-  return (
-    <SelectPrimitive.Separator
-      className={cn('-mx-1 my-1 h-px bg-gray-200', className)}
-    />
-  );
-};

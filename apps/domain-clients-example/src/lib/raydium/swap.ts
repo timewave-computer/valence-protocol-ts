@@ -16,14 +16,12 @@ import {
 } from 'gill';
 import BN from 'bn.js';
 import { Decimal } from 'decimal.js';
-
 import {
   getAssociatedTokenAccountAddress,
   getCreateAssociatedTokenIdempotentInstruction,
 } from 'gill/programs/token';
-import { PublicKey } from '@solana/web3.js'; // this is legacy, but this is what the raydium sdk uses as input, so it is required until the library migrates to solana-kit
+import { PublicKey, Connection } from '@solana/web3.js'; // this is legacy, but this is what the raydium sdk uses as input, so it is required until the library migrates to solana-kit
 import { fromLegacyTransactionInstruction } from '@solana/compat';
-import { Connection } from '@solana/web3.js'; // used because raydium uses legacy tools
 
 type SwapInParams = {
   poolId: Address;
@@ -48,10 +46,6 @@ export const createClmmSwapInInstructions = async ({
   remainingAccounts,
   connection,
 }: SwapInParams): Promise<Instruction[]> => {
-  const raydium = await Raydium.load({
-    connection,
-  });
-
   const { poolInfo, poolKeys, computePoolInfo } = await getPoolInfo(
     poolId,
     connection
@@ -89,7 +83,7 @@ export const createClmmSwapInInstructions = async ({
       payer: signer,
       tokenProgram: address(poolInfo.mintA.programId),
       owner: address(signer.address),
-      ata: address(poolInfo.mintA.address),
+      ata: ownerTokenAccountA,
     });
 
   instructions.push(createAssociatedTokenInstructionA);
@@ -106,7 +100,7 @@ export const createClmmSwapInInstructions = async ({
       payer: signer,
       tokenProgram: address(poolInfo.mintB.programId),
       owner: address(signer.address),
-      ata: address(poolInfo.mintB.address),
+      ata: ownerTokenAccountB,
     });
 
   instructions.push(createAssociatedTokenInstructionB);
