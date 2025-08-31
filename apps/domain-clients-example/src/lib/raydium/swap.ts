@@ -15,7 +15,6 @@ import {
   address,
   type TransactionSigner,
 } from 'gill';
-
 import BN from 'bn.js';
 import { Decimal } from 'decimal.js';
 
@@ -35,32 +34,22 @@ type SwapParams = {
   priceLimit: Decimal;
   observationId: Address;
   remainingAccounts?: Address[];
-  associatedOnly?: boolean;
-  checkCreatedAtOwner?: boolean;
-  txVersion?: TransactionVersion;
-  computeBudgetConfig?: ComputeBudgetConfig;
-  txTipConfig?: TxTipConfig;
-  feePayer?: Address;
+  computeBudgetConfig?: ComputeBudgetConfig; // not used
+  txTipConfig?: TxTipConfig; // not used
   signer: TransactionSigner;
-  ownerInfo: {
-    useSOLBalance?: boolean;
-    feePayer: Address;
-  };
 };
 
 // WSOLMint = "So11111111111111111111111111111111111111112"
 export const createClmmSwapInstruction = async ({
   poolInfo,
   inputMint,
-
   priceLimit,
   poolKeys,
   observationId,
   amountIn,
   amountOutMin,
   signer,
-  computeBudgetConfig,
-  txTipConfig,
+  remainingAccounts,
 }: SwapParams): Promise<Instruction[]> => {
   const baseIn = inputMint === poolInfo.mintA.address;
   const signerPubkey = new PublicKey(signer.address);
@@ -127,7 +116,8 @@ export const createClmmSwapInstruction = async ({
     amountIn,
     amountOutMin,
     sqrtPriceLimitX64,
-    remainingAccounts: [],
+    remainingAccounts:
+      remainingAccounts?.map(account => new PublicKey(account)) ?? [],
   });
 
   swapBaseInInstructions.instructions.forEach(instruction => {
