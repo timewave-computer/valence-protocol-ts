@@ -1,18 +1,13 @@
 'use client';
 import { useEffect } from 'react';
-import {
-  solanaWalletAtom,
-  useIsSolanaConnected,
-  useSolanaConnectors,
-} from '@/hooks/solana';
+import { solanaWalletAtom, useIsSolanaConnected } from '@/hooks/solana';
 import { getSolanaTargetCluster, useDomainModal } from '@/index';
 import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
 import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
 import { useAtomValue } from 'jotai';
-import { AccountCard, SelectWalletButton } from '@/ui/common';
+import { AccountCard } from '@/ui/common';
 
-export const SolanaConnectionManager = () => {
-  const solanaConnectors = useSolanaConnectors();
+export const SolanaConnection = () => {
   const solanaWallet = useAtomValue(solanaWalletAtom);
   const { disconnect, account } = useWalletUi();
   const isConnected = useIsSolanaConnected();
@@ -35,32 +30,18 @@ export const SolanaConnectionManager = () => {
     );
   }
 
-  if (isConnected) {
-    return (
-      <AccountCard
-        wallet={solanaWallet?.walletInfo}
-        address={account?.address}
-        onDisconnect={async () => disconnect()}
-        chainName={cluster?.label}
-      />
+  if (!isConnected || !account) {
+    throw new Error(
+      'SolanaConnection component should only be used when the user is connected to a solana wallet'
     );
   }
+
   return (
-    <div className='flex flex-col gap-2'>
-      {solanaConnectors.length === 0 && (
-        <div className='px-4 py-3 border border-gray-200 rounded-sm'>
-          <p className='text-sm font-medium'>No compatible wallets detected.</p>
-        </div>
-      )}
-      {solanaConnectors.map(connector => {
-        return (
-          <SelectWalletButton
-            key={connector.walletInfo.walletName}
-            wallet={connector}
-            onConnect={() => connector.connect()}
-          />
-        );
-      })}
-    </div>
+    <AccountCard
+      wallet={solanaWallet?.walletInfo}
+      address={account?.address}
+      onDisconnect={async () => disconnect()}
+      chainName={cluster?.label}
+    />
   );
 };

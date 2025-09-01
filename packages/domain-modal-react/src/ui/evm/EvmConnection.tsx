@@ -19,14 +19,18 @@ export const EvmConnection = () => {
     );
   }
 
-  if (isConnected && !!account) {
-    return (
-      <AccountCard
-        wallet={evmWallet?.walletInfo}
-        address={account.address}
-        chainName={account.chain?.name}
-        onDisconnect={async () => disconnect()}
-      />
+  if (!isConnected || !account) {
+    throw new Error(
+      'EvmConnection component should only be used when the user is connected to an evm wallet'
     );
   }
+
+  return (
+    <AccountCard
+      wallet={evmWallet?.walletInfo}
+      address={account.address}
+      chainName={account.chain?.name}
+      onDisconnect={async () => disconnect()}
+    />
+  );
 };

@@ -22,28 +22,32 @@ export const CosmosConnection = () => {
     );
   }
 
-  if (isConnected) {
-    return (
-      <div className='flex flex-col gap-2'>
-        {config.grazOptions.chains.map(chainInfo => {
-          const chainId = chainInfo.chainId;
-          const account = accounts?.[chainId];
-          if (account) {
-            return (
-              <AccountCard
-                walletLogoClassName={cn(
-                  walletLogoScale(cosmosWallet?.walletInfo?.walletName ?? '')
-                )}
-                key={chainId}
-                wallet={cosmosWallet?.walletInfo}
-                address={account.bech32Address}
-                chainName={chainInfo.chainName}
-                onDisconnect={async () => disconnect({ chainId })}
-              />
-            );
-          }
-        })}
-      </div>
+  if (!isConnected) {
+    throw new Error(
+      'CosmosConnection component should only be used when the user is connected to a cosmos wallet'
     );
   }
+
+  return (
+    <div className='flex flex-col gap-2'>
+      {config.grazOptions.chains.map(chainInfo => {
+        const chainId = chainInfo.chainId;
+        const account = accounts?.[chainId];
+        if (account) {
+          return (
+            <AccountCard
+              walletLogoClassName={cn(
+                walletLogoScale(cosmosWallet?.walletInfo?.walletName ?? '')
+              )}
+              key={chainId}
+              wallet={cosmosWallet?.walletInfo}
+              address={account.bech32Address}
+              chainName={chainInfo.chainName}
+              onDisconnect={async () => disconnect({ chainId })}
+            />
+          );
+        }
+      })}
+    </div>
+  );
 };

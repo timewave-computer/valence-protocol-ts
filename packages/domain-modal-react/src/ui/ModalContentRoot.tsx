@@ -3,6 +3,7 @@ import { MainPage, useModalNavigation, ModalPage } from '@/ui/main';
 import { useDomainConfig } from '@valence-protocol/domain-clients-react';
 import { ConnectCosmosPage } from '@/ui/cosmos';
 import { ConnectEthereumPage } from '@/ui/evm';
+import { ConnectSolanaPage } from '@/ui/solana';
 
 export const ModalContentRoot = () => {
   const config = useDomainConfig();
@@ -34,7 +35,9 @@ export const ModalContentRoot = () => {
       {navigationStack.current === ModalPage.EVM && (
         <ConnectEthereumPage onBack={() => navigationStack.pop()} />
       )}
-      {navigationStack.current === ModalPage.SOLANA && <div>Solana</div>}
+      {navigationStack.current === ModalPage.SOLANA && (
+        <ConnectSolanaPage onBack={() => navigationStack.pop()} />
+      )}
     </>
   );
 };
