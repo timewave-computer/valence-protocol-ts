@@ -4,3 +4,4 @@ export * from './cosmos';
 export * from './util';
 export * from './context';
 export * from './main';
+export * from './ModalContentRoot';

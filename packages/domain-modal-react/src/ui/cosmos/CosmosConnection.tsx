@@ -1,20 +1,16 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
-import { SelectWalletButton, AccountCard } from '@/ui/common';
-import { useCosmosConnectors, cosmosWalletAtom } from '@/hooks';
+import { AccountCard } from '@/ui/common';
+import { cosmosWalletAtom } from '@/hooks';
 import { useAccount, disconnect } from 'graz';
 import { useCosmosConfig } from '@valence-protocol/domain-clients-react';
 import { cn } from '@/ui/util';
-import { useDomainModal, getCosmosTargetChain } from '@/ui/context';
+import { walletLogoScale } from '@/ui/cosmos';
 
-export const CosmosConnectionManager = () => {
-  const cosmosConnectors = useCosmosConnectors();
+export const CosmosConnection = () => {
   const cosmosWallet = useAtomValue(cosmosWalletAtom);
   const config = useCosmosConfig();
-  const { targetChains } = useDomainModal();
-  const chainIdToConnect =
-    getCosmosTargetChain(targetChains) ?? config.defaultChainId;
 
   const { data: accounts, isConnected } = useAccount({
     multiChain: true,
@@ -49,30 +45,5 @@ export const CosmosConnectionManager = () => {
         })}
       </div>
     );
-  } else
-    return (
-      <div className='flex flex-col gap-2'>
-        {cosmosConnectors.map(connector => {
-          return (
-            <SelectWalletButton
-              walletLogoClassName={cn(
-                walletLogoScale(connector.walletInfo.walletName)
-              )}
-              key={connector.walletInfo.walletName}
-              wallet={connector}
-              onConnect={() => connector.connect(chainIdToConnect)}
-            />
-          );
-        })}
-      </div>
-    );
-};
-
-const walletLogoScale = (walletName: string) => {
-  // some logos have transparent backgrounds, need to scale them up
-  // permanent fix is to change the logo assets in getCosmosWalletInfo
-  return {
-    Keplr: 'scale-[1.3]',
-    Leap: 'scale-[1.3]',
-  }[walletName];
+  }
 };

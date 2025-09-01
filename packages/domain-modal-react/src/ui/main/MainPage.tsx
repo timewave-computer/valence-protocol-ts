@@ -1,8 +1,7 @@
 'use client';
 
 import { useDomainConfig } from '@valence-protocol/domain-clients-react';
-import { ModalPage } from '@/ui/main';
-import { EthereumMainPageSection } from './EthereumMainPageSection';
+import { ModalPage, EthereumMainSection, CosmosMainSection } from '@/ui/main';
 
 export const MainPage = ({
   onSelect,
@@ -16,9 +15,16 @@ export const MainPage = ({
       <p>Select a wallet</p>
 
       {config.evm && (
-        <EthereumMainPageSection
+        <EthereumMainSection
           onClick={() => {
             onSelect(ModalPage.EVM);
+          }}
+        />
+      )}
+      {config.cosmos && (
+        <CosmosMainSection
+          onClick={() => {
+            onSelect(ModalPage.COSMOS);
           }}
         />
       )}

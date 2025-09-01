@@ -7,7 +7,7 @@
  * @param title - The title of the domain page.
  * @param onBack - The function to call when the back button is clicked.
  */
-export const DomainPageRoot = ({
+export const ConnectDomainPageRoot = ({
   children,
   title,
   onBack,

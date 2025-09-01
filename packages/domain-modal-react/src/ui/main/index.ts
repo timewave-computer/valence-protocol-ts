@@ -1,5 +1,4 @@
-export * from './ModalContent';
 export * from './MainPage';
-export * from './DomainPageRoot';
+export * from './ConnectDomainPageRoot';
 export * from './useModalNavigationStack';
-export * from './EthereumMainPageSection';
+export * from './domain-sections';

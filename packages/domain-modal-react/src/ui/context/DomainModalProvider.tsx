@@ -11,10 +11,10 @@ import {
 import * as Dialog from '@radix-ui/react-dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import {
-  ModalContent,
   cn,
   DomainModalContextType,
   type TargetChains,
+  ModalContentRoot,
 } from '@/ui';
 import '@/globals.css';
 
@@ -66,7 +66,7 @@ export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
                 Modal for connecting to multiple blockchain domains.
               </Dialog.Description>
             </VisuallyHidden>
-            <ModalContent />
+            <ModalContentRoot />
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

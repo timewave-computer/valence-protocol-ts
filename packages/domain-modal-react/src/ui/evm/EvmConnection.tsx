@@ -6,7 +6,7 @@ import { evmWalletAtom } from '@/hooks';
 import { AccountCard } from '@/ui/common';
 import { useEvmConfig } from '@valence-protocol/domain-clients-react';
 
-export const EvmConnection = ({}) => {
+export const EvmConnection = () => {
   const evmWallet = useAtomValue(evmWalletAtom);
   const account = useAccount();
   const { disconnect } = useDisconnect();

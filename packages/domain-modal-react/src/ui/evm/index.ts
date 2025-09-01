@@ -1,3 +1,3 @@
 export * from './EvmConnectors';
-export * from './EthereumPage';
+export * from './ConnectEthereumPage';
 export * from './EvmConnection';

@@ -4,11 +4,7 @@ import { useIsEvmChainConnected } from '@/hooks';
 import { EvmConnection } from '@/ui/evm';
 import { SelectDomainButton } from '@/ui/common';
 
-export const EthereumMainPageSection = ({
-  onClick,
-}: {
-  onClick: () => void;
-}) => {
+export const EthereumMainSection = ({ onClick }: { onClick: () => void }) => {
   const isEvmConnected = useIsEvmChainConnected();
 
   if (!isEvmConnected) {
