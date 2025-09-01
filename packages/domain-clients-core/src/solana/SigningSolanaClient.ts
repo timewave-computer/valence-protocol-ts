@@ -76,6 +76,7 @@ export class SigningSolanaClient extends SolanaBaseClient {
       tokenProgram
     );
     const sourceAddress = address(this.signer.address);
+
     const sourceAta = await getAssociatedTokenAccountAddress(
       tokenMintAddress,
       this.signer,

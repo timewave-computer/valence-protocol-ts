@@ -1,7 +1,8 @@
+'use client';
 import { useSolanaConfig } from '@/solana/hooks';
 import { SigningSolanaClient } from '@valence-protocol/domain-clients-core/solana';
 import { useMemo } from 'react';
-import { SolanaClusterId, useWalletUiSigner } from '@wallet-ui/react';
+import { SolanaClusterId } from '@wallet-ui/react';
 
 export const useSigningSolanaClient = ({
   clusterId,
@@ -9,7 +10,9 @@ export const useSigningSolanaClient = ({
   clusterId: SolanaClusterId;
 }): SigningSolanaClient | undefined => {
   const config = useSolanaConfig();
-  const signer = useWalletUiSigner();
+  // TODO: this throws an error, 'chains' not defined
+  // const signer = useWalletUiSigner();
+  const signer = undefined;
 
   const signingClient = useMemo(() => {
     if (!signer) {
@@ -19,10 +22,9 @@ export const useSigningSolanaClient = ({
     if (!cluster) {
       throw new Error(`Solana cluster ${clusterId} not found in config`);
     }
-    const rpcUrlOrMoniker = cluster.urlOrMoniker;
 
     return new SigningSolanaClient({
-      rpcUrlOrMoniker,
+      rpcUrl: cluster.urlOrMoniker,
       signer,
     });
   }, [config, clusterId, signer]);

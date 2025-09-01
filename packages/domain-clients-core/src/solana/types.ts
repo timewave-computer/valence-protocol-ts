@@ -23,9 +23,28 @@ export type SolanaClusterMoniker =
   | 'mainnet'
   | 'testnet';
 
-export interface SolanaCluster {
+interface _WalletUiSolanaCluster {
   cluster: SolanaClusterMoniker;
   id: SolanaClusterId;
   label: string;
   urlOrMoniker: SolanaUrlOrMoniker;
+}
+
+export interface SolanaCluster
+  extends Omit<_WalletUiSolanaCluster, 'urlOrMoniker'> {
+  url: string;
+}
+
+/**
+ * Type guard to check if a string starts with "solana:"
+ * @param value - The string to check
+ * @returns True if the string starts with "solana:", false otherwise
+ */
+export function isSolanaClusterId(value: string): value is `solana:${string}` {
+  return value.startsWith('solana:');
+}
+
+export interface SolanaConfig {
+  clusters: _WalletUiSolanaCluster[];
+  defaultClusterId: SolanaClusterId;
 }

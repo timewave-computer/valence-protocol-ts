@@ -6,6 +6,7 @@ export default defineConfig({
     'common/index': 'src/common/index.ts',
     'evm/index': 'src/evm/index.ts',
     'cosmos/index': 'src/cosmos/index.ts',
+    'solana/index': 'src/solana/index.ts',
   },
   outDir: 'dist', // output directory
   format: ['esm', 'cjs'],
