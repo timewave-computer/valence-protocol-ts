@@ -8,7 +8,11 @@ export const ConnectEthereumPage = ({ onBack }: { onBack: () => void }) => {
   const isEvmConnected = useIsEvmChainConnected();
   return (
     <ConnectDomainPageRoot title='Select Ethereum Wallet' onBack={onBack}>
-      {isEvmConnected ? <EvmConnection /> : <EvmConnectors />}
+      {isEvmConnected ? (
+        <EvmConnection />
+      ) : (
+        <EvmConnectors onSuccess={onBack} />
+      )}
     </ConnectDomainPageRoot>
   );
 };

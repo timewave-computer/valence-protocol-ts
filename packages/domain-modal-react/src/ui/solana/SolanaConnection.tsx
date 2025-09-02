@@ -1,6 +1,6 @@
 'use client';
 import { useEffect } from 'react';
-import { solanaWalletAtom, useIsSolanaConnected } from '@/hooks/solana';
+import { solanaWalletAtom, useIsSolanaChainConnected } from '@/hooks/solana';
 import { getSolanaTargetCluster, useDomainModal } from '@/index';
 import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
 import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
@@ -10,7 +10,7 @@ import { AccountCard } from '@/ui/common';
 export const SolanaConnection = () => {
   const solanaWallet = useAtomValue(solanaWalletAtom);
   const { disconnect, account } = useWalletUi();
-  const isConnected = useIsSolanaConnected();
+  const isConnected = useIsSolanaChainConnected();
   const config = useSolanaConfig();
   const { targetChains } = useDomainModal();
   const { clusters, setCluster, cluster } = useWalletUiCluster();

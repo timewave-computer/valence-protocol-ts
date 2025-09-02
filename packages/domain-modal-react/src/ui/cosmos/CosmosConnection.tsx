@@ -29,7 +29,7 @@ export const CosmosConnection = () => {
   }
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col'>
       {config.grazOptions.chains.map(chainInfo => {
         const chainId = chainInfo.chainId;
         const account = accounts?.[chainId];

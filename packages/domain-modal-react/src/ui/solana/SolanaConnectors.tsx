@@ -6,7 +6,7 @@ import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
 import { useWalletUiCluster } from '@wallet-ui/react';
 import { SelectWalletButton } from '@/ui/common';
 
-export const SolanaConnectors = () => {
+export const SolanaConnectors = ({ onSuccess }: { onSuccess: () => void }) => {
   const solanaConnectors = useSolanaConnectors();
   const config = useSolanaConfig();
   const { targetChains } = useDomainModal();
@@ -38,7 +38,10 @@ export const SolanaConnectors = () => {
           <SelectWalletButton
             key={connector.walletInfo.walletName}
             wallet={connector}
-            onConnect={() => connector.connect()}
+            onConnect={async () => {
+              await connector.connect();
+              onSuccess();
+            }}
           />
         );
       })}

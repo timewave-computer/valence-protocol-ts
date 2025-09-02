@@ -2,7 +2,7 @@
 import { Button } from '@/components';
 import {
   useDomainModal,
-  useIsSolanaConnected,
+  useIsSolanaChainConnected,
 } from '@valence-protocol/domain-modal-react';
 import { useWalletUi } from '@wallet-ui/react';
 import { SolanaClusterId } from '@valence-protocol/domain-clients-core/solana';
@@ -15,7 +15,7 @@ export const ConnectSolana = ({
   clusterId: SolanaClusterId;
 }) => {
   const { showModal } = useDomainModal();
-  const isSolanaConnected = useIsSolanaConnected({ clusterId });
+  const isSolanaConnected = useIsSolanaChainConnected({ clusterId });
   const { disconnect } = useWalletUi();
   if (isSolanaConnected) {
     return (

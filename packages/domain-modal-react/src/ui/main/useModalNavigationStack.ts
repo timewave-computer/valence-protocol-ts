@@ -11,7 +11,7 @@ export enum ModalPage {
 
 export const useModalNavigation = () => {
   const [stack, setStack] = useState<ModalPage[]>([ModalPage.MAIN]);
-  const [direction, setDirection] = useState(1); // 1 = forward, -1 = back
+  const [direction, setDirection] = useState(0); // 1 = forward, -1 = back. default is 0 for initial state
 
   const push = (page: ModalPage) => {
     setStack(s => [...s, page]);

@@ -1,5 +1,5 @@
 export * from './useSolanaConnectors';
 export * from './state';
 export * from './types';
-export * from './useIsSolanaConnected';
+export * from './useIsSolanaChainConnected';
 export * from './useKeepSolanaWalletStateSynced';

@@ -9,7 +9,7 @@ import {
   useKeepEvmWalletStateSynced,
   useKeepCosmosWalletStateSynced,
   useKeepSolanaWalletStateSynced,
-  useIsSolanaConnected,
+  useIsSolanaChainConnected,
   useSolanaWallet,
 } from '@valence-protocol/domain-modal-react';
 import { useAccount as useEvmAccount } from 'wagmi';
@@ -21,7 +21,7 @@ export const WalletButton = () => {
   const { showModal } = useDomainModal();
   const isCosmosConnected = useIsCosmosChainConnected();
   const isEvmConnected = useIsEvmChainConnected();
-  const isSolanaConnected = useIsSolanaConnected();
+  const isSolanaConnected = useIsSolanaChainConnected();
 
   const evmWallet = useEvmWallet();
   const cosmosWallet = useCosmosWallet();

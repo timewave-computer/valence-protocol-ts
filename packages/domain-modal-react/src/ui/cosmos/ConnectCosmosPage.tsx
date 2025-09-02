@@ -8,7 +8,11 @@ export const ConnectCosmosPage = ({ onBack }: { onBack: () => void }) => {
   const isCosmosConnected = useIsCosmosChainConnected();
   return (
     <ConnectDomainPageRoot title='Select Cosmos Wallet' onBack={onBack}>
-      {isCosmosConnected ? <CosmosConnection /> : <CosmosConnectors />}
+      {isCosmosConnected ? (
+        <CosmosConnection />
+      ) : (
+        <CosmosConnectors onSuccess={onBack} />
+      )}
     </ConnectDomainPageRoot>
   );
 };

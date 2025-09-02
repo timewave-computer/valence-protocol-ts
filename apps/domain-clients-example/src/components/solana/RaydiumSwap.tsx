@@ -17,7 +17,7 @@ import {
   SelectItem,
   Button,
 } from '@/components';
-import { useIsSolanaConnected } from '@valence-protocol/domain-modal-react';
+import { useIsSolanaChainConnected } from '@valence-protocol/domain-modal-react';
 
 export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
   const signingSolanaClient = useSigningSolanaClient({ clusterId });
@@ -29,7 +29,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
   const [amountIn, setAmountIn] = useState<string>('1000000000');
   const [amountOutMin, setAmountOutMin] = useState<string>('1000000000');
   const [priceLimit, setPriceLimit] = useState<string>('1');
-  const isSolanaConnected = useIsSolanaConnected({ clusterId });
+  const isSolanaConnected = useIsSolanaChainConnected({ clusterId });
 
   const queryPoolInfo = useCallback(async () => {
     if (!signingSolanaClient)
