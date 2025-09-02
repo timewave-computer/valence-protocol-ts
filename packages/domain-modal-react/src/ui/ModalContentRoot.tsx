@@ -26,7 +26,7 @@ export const ModalContentRoot = () => {
   }
 
   return (
-    <>
+    <div>
       {navigationStack.current === ModalPage.MAIN && (
         <motion.div {...mainPageAnimation(navigationStack.direction)}>
           <MainPage onSelect={navigationStack.push} />
@@ -49,7 +49,7 @@ export const ModalContentRoot = () => {
           <ConnectSolanaPage onBack={() => navigationStack.pop()} />
         </motion.div>
       )}
-    </>
+    </div>
   );
 };
 
