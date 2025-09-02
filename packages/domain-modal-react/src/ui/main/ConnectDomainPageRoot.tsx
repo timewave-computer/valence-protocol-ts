@@ -20,7 +20,7 @@ export const ConnectDomainPageRoot = ({
     <div className='flex flex-col gap-4 relative'>
       {onBack && (
         <button
-          className='absolute -top-6 left-0 text-xs font-semibold cursor-pointer hover:bg-gray-100 rounded-sm px-2 py-1 -mx-2'
+          className='absolute -top-6 left-0 text-xs font-semibold cursor-pointer hover:bg-gray-100 rounded-sm px-1 py-0.5 -mx-1'
           onClick={onBack}
         >
           Back

@@ -26,63 +26,49 @@ export const ModalContentRoot = () => {
   }
 
   return (
-    <AnimatePresence mode='wait'>
+    <>
       {navigationStack.current === ModalPage.MAIN && (
-        <motion.div
-          key={ModalPage.MAIN} // key is required for resize animation to work
-          layout // for resize animation to work
-          {...mainPageAnimation(navigationStack.direction)}
-        >
+        <motion.div {...mainPageAnimation(navigationStack.direction)}>
           <MainPage onSelect={navigationStack.push} />
         </motion.div>
       )}
       {navigationStack.current === ModalPage.COSMOS && (
-        <motion.div
-          key={ModalPage.COSMOS} // key is required for resize animation to work
-          layout // for resize animation to work
-          {...domainPageAnimation(navigationStack.direction)}
-        >
+        <motion.div {...domainPageAnimation(navigationStack.direction)}>
           <ConnectCosmosPage onBack={() => navigationStack.pop()} />
         </motion.div>
       )}
 
       {navigationStack.current === ModalPage.EVM && (
-        <motion.div
-          key={ModalPage.EVM} // key is required for resize animation to work
-          layout // for resize animation to work
-          {...domainPageAnimation(navigationStack.direction)}
-        >
+        <motion.div {...domainPageAnimation(navigationStack.direction)}>
           <ConnectEthereumPage onBack={() => navigationStack.pop()} />
         </motion.div>
       )}
 
       {navigationStack.current === ModalPage.SOLANA && (
-        <motion.div
-          key={ModalPage.SOLANA} // key is required for resize animation to work
-          layout // for resize animation to work
-          {...domainPageAnimation(navigationStack.direction)}
-        >
+        <motion.div {...domainPageAnimation(navigationStack.direction)}>
           <ConnectSolanaPage onBack={() => navigationStack.pop()} />
         </motion.div>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 
 const mainPageAnimation = (direction: number) => {
   return {
-    initial: { x: 50 * direction, opacity: 0 },
+    layout: true,
+    initial: { x: 100 * direction, opacity: 0 },
     animate: { x: 0, opacity: 1 },
-    exit: { x: -50, opacity: 0 },
+    exit: { x: 100 * direction, opacity: 0 },
     transition: { duration: 0.25 },
   };
 };
 
 const domainPageAnimation = (direction: number) => {
   return {
-    initial: { x: 50 * direction, opacity: 0 },
+    layout: true,
+    initial: { x: 100 * direction, opacity: 0 },
     animate: { x: 0, opacity: 1 },
-    exit: { x: 50, opacity: 0 },
+    exit: { x: 100 * direction, opacity: 0 },
     transition: { duration: 0.25 },
   };
 };

@@ -17,7 +17,7 @@ export const MainPage = ({
 
   return (
     <div className='flex flex-col gap-4'>
-      <p className='text-xl font-bold'>Select a wallet</p>
+      <p className='text-xl font-bold'>Select a Wallet</p>
 
       <div className='flex flex-col gap-2'>
         {config.evm && (
