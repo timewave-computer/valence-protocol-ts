@@ -9,8 +9,9 @@ import { motion } from 'framer-motion';
 export const ModalContentRoot = () => {
   const config = useDomainConfig();
 
+  // TODO: this is a workaround to hide the domains
   const configEntries = Object.entries(config)
-    .filter(([_, value]) => !!value)
+    .filter(([_, value]) => !value.hide)
     .map(([key, value]) => ({ domain: key, value }));
 
   const navigationStack = useModalNavigation();
@@ -21,14 +22,14 @@ export const ModalContentRoot = () => {
     );
   }
 
-  if (Object.keys(config).length === 1) {
-    if (config.solana) {
+  if (configEntries.length === 1) {
+    if (configEntries[0].domain === 'solana') {
       return <ConnectSolanaPage />;
     }
-    if (config.evm) {
+    if (configEntries[0].domain === 'evm') {
       return <ConnectEthereumPage />;
     }
-    if (config.cosmos) {
+    if (configEntries[0].domain === 'cosmos') {
       return <ConnectCosmosPage />;
     }
     throw new Error(

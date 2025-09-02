@@ -3,6 +3,7 @@ import {
   TOKEN_2022_PROGRAM_ADDRESS,
 } from 'gill/programs';
 import type { DevnetUrl, LocalnetUrl, MainnetUrl, TestnetUrl } from 'gill';
+import { DomainClientConfig } from '@/common';
 
 export type SolanaTokenProgramId =
   | typeof TOKEN_PROGRAM_ADDRESS
@@ -44,7 +45,7 @@ export function isSolanaClusterId(value: string): value is `solana:${string}` {
   return value.startsWith('solana:');
 }
 
-export interface SolanaConfig {
+export interface SolanaConfig extends DomainClientConfig {
   clusters: _WalletUiSolanaCluster[];
   defaultClusterId: SolanaClusterId;
 }

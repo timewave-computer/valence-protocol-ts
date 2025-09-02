@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Signing and public clients for solana
 - Config constructor for solana
+- _Breaking_ require `hide` prop to determine if to show domain in modal. This is a temporary solution
 
 ## [0.2.0] 2025-08-19
 

@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Simplify evm and cosmos client hook state
-- [breaking] change hook input convention to accept object as argument for improved readability
+- _Breaking_ change hook input convention to accept object as argument for improved readability
 
 ### Fixed
 

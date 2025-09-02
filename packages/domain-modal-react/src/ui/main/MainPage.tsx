@@ -23,7 +23,7 @@ export const MainPage = ({
     const connected: ReactNode[] = [];
     const unconnected: ReactNode[] = [];
 
-    if (config.evm) {
+    if (config.evm && !config.evm.hide) {
       if (isEvmChainConnected)
         connected.push(
           <Connection title='Ethereum Wallet' children={<EvmConnection />} />
@@ -36,7 +36,7 @@ export const MainPage = ({
         );
     }
 
-    if (config.solana) {
+    if (config.solana && !config.solana.hide) {
       if (isSolanaChainConnected)
         connected.push(
           <Connection title='Solana Wallet' children={<SolanaConnection />} />
@@ -49,7 +49,7 @@ export const MainPage = ({
         );
     }
 
-    if (config.cosmos) {
+    if (config.cosmos && !config.cosmos.hide) {
       if (isCosmosChainConnected)
         connected.push(
           <Connection title='Cosmos Wallet' children={<CosmosConnection />} />
