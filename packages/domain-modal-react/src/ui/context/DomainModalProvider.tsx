@@ -54,8 +54,8 @@ export const DomainModalProvider = ({ children }: { children: ReactNode }) => {
           <Dialog.Content
             className={cn(
               'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-sm bg-white z-[1001] shadow-md outline-none',
-              'md:w-[50vw] md:max-w-[640px] md:max-h-[80vh] px-8 py-10',
-              'w-[90vw] max-w-full max-h-[90vh] ',
+              'md:min-w-[50vw] md:max-w-[640px]  px-8 py-10',
+              'min-w-[90vw] max-w-full ',
               'overflow-x-hidden'
             )}
           >

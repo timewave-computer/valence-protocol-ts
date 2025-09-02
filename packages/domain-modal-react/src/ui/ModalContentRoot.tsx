@@ -4,7 +4,7 @@ import { useDomainConfig } from '@valence-protocol/domain-clients-react';
 import { ConnectCosmosPage } from '@/ui/cosmos';
 import { ConnectEthereumPage } from '@/ui/evm';
 import { ConnectSolanaPage } from '@/ui/solana';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export const ModalContentRoot = () => {
   const config = useDomainConfig();
