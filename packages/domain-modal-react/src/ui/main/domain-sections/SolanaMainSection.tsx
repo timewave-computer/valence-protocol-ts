@@ -1,7 +1,7 @@
 'use client';
 
 import { useIsSolanaConnected } from '@/hooks';
-import { SelectDomainButton } from '@/ui/common';
+import { ConnectDomainButton } from '@/ui/common';
 import { SolanaConnection } from '@/ui/solana';
 
 export const SolanaMainSection = ({ onClick }: { onClick: () => void }) => {
@@ -9,9 +9,9 @@ export const SolanaMainSection = ({ onClick }: { onClick: () => void }) => {
 
   if (!isSolanaConnected) {
     return (
-      <SelectDomainButton onClick={onClick}>
+      <ConnectDomainButton onClick={onClick}>
         Connect Solana Wallet
-      </SelectDomainButton>
+      </ConnectDomainButton>
     );
   }
 

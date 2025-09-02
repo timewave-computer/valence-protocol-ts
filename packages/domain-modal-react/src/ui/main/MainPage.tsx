@@ -17,29 +17,31 @@ export const MainPage = ({
 
   return (
     <div className='flex flex-col gap-4'>
-      <p>Select a wallet</p>
+      <p className='text-xl font-bold'>Select a wallet</p>
 
-      {config.evm && (
-        <EthereumMainSection
-          onClick={() => {
-            onSelect(ModalPage.EVM);
-          }}
-        />
-      )}
-      {config.cosmos && (
-        <CosmosMainSection
-          onClick={() => {
-            onSelect(ModalPage.COSMOS);
-          }}
-        />
-      )}
-      {config.solana && (
-        <SolanaMainSection
-          onClick={() => {
-            onSelect(ModalPage.SOLANA);
-          }}
-        />
-      )}
+      <div className='flex flex-col gap-2'>
+        {config.evm && (
+          <EthereumMainSection
+            onClick={() => {
+              onSelect(ModalPage.EVM);
+            }}
+          />
+        )}
+        {config.cosmos && (
+          <CosmosMainSection
+            onClick={() => {
+              onSelect(ModalPage.COSMOS);
+            }}
+          />
+        )}
+        {config.solana && (
+          <SolanaMainSection
+            onClick={() => {
+              onSelect(ModalPage.SOLANA);
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 };

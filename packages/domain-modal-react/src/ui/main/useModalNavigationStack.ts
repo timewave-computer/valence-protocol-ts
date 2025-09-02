@@ -11,10 +11,27 @@ export enum ModalPage {
 
 export const useModalNavigation = () => {
   const [stack, setStack] = useState<ModalPage[]>([ModalPage.MAIN]);
+  const [direction, setDirection] = useState(1); // 1 = forward, -1 = back
 
-  const push = (page: ModalPage) => setStack(s => [...s, page]);
-  const pop = () => setStack(s => (s.length > 1 ? s.slice(0, -1) : s));
-  const reset = (page: ModalPage) => setStack([page]);
+  const push = (page: ModalPage) => {
+    setStack(s => [...s, page]);
+    setDirection(1);
+  };
+  const pop = () => {
+    setStack(s => (s.length > 1 ? s.slice(0, -1) : s));
+    setDirection(-1);
+  };
+  const reset = (page: ModalPage) => {
+    setStack([page]);
+    setDirection(1);
+  };
 
-  return { current: stack[stack.length - 1], push, pop, reset };
+  return {
+    current: stack[stack.length - 1],
+    push,
+    pop,
+    reset,
+    direction,
+    stackHeight: stack.length,
+  };
 };

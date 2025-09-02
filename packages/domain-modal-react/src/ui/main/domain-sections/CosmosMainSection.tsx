@@ -1,7 +1,7 @@
 'use client';
 
 import { useIsCosmosChainConnected } from '@/hooks';
-import { SelectDomainButton } from '@/ui/common';
+import { ConnectDomainButton } from '@/ui/common';
 import { CosmosConnection } from '@/ui/cosmos';
 
 export const CosmosMainSection = ({ onClick }: { onClick: () => void }) => {
@@ -9,9 +9,9 @@ export const CosmosMainSection = ({ onClick }: { onClick: () => void }) => {
 
   if (!isCosmosConnected) {
     return (
-      <SelectDomainButton onClick={onClick}>
+      <ConnectDomainButton onClick={onClick}>
         Connect Cosmos Wallet
-      </SelectDomainButton>
+      </ConnectDomainButton>
     );
   }
 
