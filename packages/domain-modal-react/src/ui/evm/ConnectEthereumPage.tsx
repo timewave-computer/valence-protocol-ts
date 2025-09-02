@@ -4,10 +4,13 @@ import { ConnectDomainPageRoot } from '@/ui/main';
 import { EvmConnection, EvmConnectors } from '@/ui/evm';
 import { useIsEvmChainConnected } from '@/hooks';
 
-export const ConnectEthereumPage = ({ onBack }: { onBack: () => void }) => {
+export const ConnectEthereumPage = ({ onBack }: { onBack?: () => void }) => {
   const isEvmConnected = useIsEvmChainConnected();
   return (
-    <ConnectDomainPageRoot title='Select Ethereum Wallet' onBack={onBack}>
+    <ConnectDomainPageRoot
+      title={`${isEvmConnected ? 'Ethereum Wallet' : 'Select Ethereum Wallet'}`}
+      onBack={onBack}
+    >
       {isEvmConnected ? (
         <EvmConnection />
       ) : (

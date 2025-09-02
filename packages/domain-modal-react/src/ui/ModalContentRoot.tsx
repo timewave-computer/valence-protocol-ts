@@ -22,7 +22,18 @@ export const ModalContentRoot = () => {
   }
 
   if (Object.keys(config).length === 1) {
-    return <div>todo</div>;
+    if (config.solana) {
+      return <ConnectSolanaPage />;
+    }
+    if (config.evm) {
+      return <ConnectEthereumPage />;
+    }
+    if (config.cosmos) {
+      return <ConnectCosmosPage />;
+    }
+    throw new Error(
+      'At least one domain must be configured in the domain clients config.'
+    );
   }
 
   return (

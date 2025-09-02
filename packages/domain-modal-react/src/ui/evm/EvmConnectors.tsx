@@ -5,7 +5,7 @@ import { NoWalletsAvailable, SelectWalletButton } from '@/ui/common';
 import { useEvmConfig } from '@valence-protocol/domain-clients-react';
 import { getEvmTargetChain, useDomainModal } from '@/ui/context';
 
-export const EvmConnectors = ({ onSuccess }: { onSuccess: () => void }) => {
+export const EvmConnectors = ({ onSuccess }: { onSuccess?: () => void }) => {
   const evmConnectors = useEvmConnectors();
   const config = useEvmConfig();
   const { targetChains } = useDomainModal();
@@ -32,7 +32,7 @@ export const EvmConnectors = ({ onSuccess }: { onSuccess: () => void }) => {
           wallet={connector}
           onConnect={async () => {
             await connector.connect(chainIdToConnect);
-            onSuccess();
+            onSuccess?.();
           }}
         />
       ))}

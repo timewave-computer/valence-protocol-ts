@@ -7,7 +7,7 @@ import { useWalletUiCluster } from '@wallet-ui/react';
 import { NoWalletsAvailable, SelectWalletButton } from '@/ui/common';
 import { useWalletUiWallet } from '@wallet-ui/react';
 
-export const SolanaConnectors = ({ onSuccess }: { onSuccess: () => void }) => {
+export const SolanaConnectors = ({ onSuccess }: { onSuccess?: () => void }) => {
   const solanaConnectors = useSolanaConnectors();
   const config = useSolanaConfig();
   const { targetChains } = useDomainModal();
@@ -47,7 +47,7 @@ const ConnectSolanaWalletButton = ({
   onSuccess,
 }: {
   connector: SolanaConnector;
-  onSuccess: () => void;
+  onSuccess?: () => void;
 }) => {
   const { connect } = useWalletUiWallet({ wallet: connector.wallet });
 
@@ -56,7 +56,7 @@ const ConnectSolanaWalletButton = ({
       wallet={connector}
       onConnect={async () => {
         await connect();
-        onSuccess();
+        onSuccess?.();
       }}
     />
   );

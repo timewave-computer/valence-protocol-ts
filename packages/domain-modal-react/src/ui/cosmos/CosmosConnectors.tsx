@@ -7,7 +7,7 @@ import { cn } from '@/ui/util';
 import { useDomainModal, getCosmosTargetChain } from '@/ui/context';
 import { walletLogoScale } from '@/ui/cosmos';
 
-export const CosmosConnectors = ({ onSuccess }: { onSuccess: () => void }) => {
+export const CosmosConnectors = ({ onSuccess }: { onSuccess?: () => void }) => {
   const cosmosConnectors = useCosmosConnectors();
   const config = useCosmosConfig();
   const { targetChains } = useDomainModal();
@@ -33,7 +33,7 @@ export const CosmosConnectors = ({ onSuccess }: { onSuccess: () => void }) => {
             wallet={connector}
             onConnect={async () => {
               await connector.connect(chainIdToConnect);
-              onSuccess();
+              onSuccess?.();
             }}
           />
         );

@@ -18,16 +18,16 @@ export const ConnectDomainPageRoot = ({
 }) => {
   return (
     <div className='flex flex-col gap-4'>
-      <div className='relative'>
-        {onBack && (
+      {onBack && (
+        <div className='relative'>
           <button
             className='absolute -top-2 left-0 text-base font-semibold cursor-pointer hover:bg-gray-100 rounded-sm px-1  -mx-1'
             onClick={onBack}
           >
             {'<'}
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       <h1 className='text-xl font-bold'>{title}</h1>
       {children}

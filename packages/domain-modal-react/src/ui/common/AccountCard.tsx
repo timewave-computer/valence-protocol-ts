@@ -16,7 +16,7 @@ export function AccountCard({
   walletLogoClassName?: string;
 }) {
   return (
-    <div className='w-full flex flex-wrap gap-1 items-center justify-between px-4 py-3 '>
+    <div className='w-full flex flex-wrap gap-1 items-center justify-between px-4 py-0.5 '>
       <div className='flex items-center space-x-3'>
         {wallet?.logo && (
           <WalletLogo logo={wallet.logo} className={walletLogoClassName} />
