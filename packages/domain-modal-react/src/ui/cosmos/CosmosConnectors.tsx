@@ -1,6 +1,6 @@
 'use client';
 
-import { SelectWalletButton } from '@/ui/common';
+import { NoWalletsAvailable, SelectWalletButton } from '@/ui/common';
 import { useCosmosConnectors } from '@/hooks';
 import { useCosmosConfig } from '@valence-protocol/domain-clients-react';
 import { cn } from '@/ui/util';
@@ -22,6 +22,7 @@ export const CosmosConnectors = ({ onSuccess }: { onSuccess: () => void }) => {
 
   return (
     <div className='flex flex-col gap-2'>
+      {!cosmosConnectors.length && <NoWalletsAvailable />}
       {cosmosConnectors.map(connector => {
         return (
           <SelectWalletButton

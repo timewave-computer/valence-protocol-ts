@@ -1,10 +1,11 @@
 'use client';
 import { useEffect } from 'react';
-import { useSolanaConnectors } from '@/hooks/solana';
+import { SolanaConnector, useSolanaConnectors } from '@/hooks/solana';
 import { getSolanaTargetCluster, useDomainModal } from '@/index';
 import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
 import { useWalletUiCluster } from '@wallet-ui/react';
-import { SelectWalletButton } from '@/ui/common';
+import { NoWalletsAvailable, SelectWalletButton } from '@/ui/common';
+import { useWalletUiWallet } from '@wallet-ui/react';
 
 export const SolanaConnectors = ({ onSuccess }: { onSuccess: () => void }) => {
   const solanaConnectors = useSolanaConnectors();
@@ -28,23 +29,35 @@ export const SolanaConnectors = ({ onSuccess }: { onSuccess: () => void }) => {
   }
   return (
     <div className='flex flex-col gap-2'>
-      {solanaConnectors.length === 0 && (
-        <div className='px-4 py-3 border border-gray-200 rounded-sm'>
-          <p className='text-sm font-medium'>No compatible wallets detected.</p>
-        </div>
-      )}
+      {!solanaConnectors.length && <NoWalletsAvailable />}
       {solanaConnectors.map(connector => {
         return (
-          <SelectWalletButton
-            key={connector.walletInfo.walletName}
-            wallet={connector}
-            onConnect={async () => {
-              await connector.connect();
-              onSuccess();
-            }}
+          <ConnectSolanaWalletButton
+            connector={connector}
+            onSuccess={onSuccess}
           />
         );
       })}
     </div>
+  );
+};
+
+const ConnectSolanaWalletButton = ({
+  connector,
+  onSuccess,
+}: {
+  connector: SolanaConnector;
+  onSuccess: () => void;
+}) => {
+  const { connect } = useWalletUiWallet({ wallet: connector.wallet });
+
+  return (
+    <SelectWalletButton
+      wallet={connector}
+      onConnect={async () => {
+        await connect();
+        onSuccess();
+      }}
+    />
   );
 };

@@ -4,23 +4,31 @@ import {
   type CosmosConnector,
   type SolanaConnector,
 } from '@/hooks';
+import { cn } from '@/ui/util';
 
 interface SelectWalletButtonProps {
   wallet: CosmosConnector | EvmConnector | SolanaConnector;
   walletLogoClassName?: string;
   onConnect: (args?: unknown) => Promise<void>;
+  children?: React.ReactNode;
+  className?: string;
 }
 
 export const SelectWalletButton = ({
   wallet,
   onConnect,
   walletLogoClassName,
+  children,
+  className,
 }: SelectWalletButtonProps) => {
   return (
     <button
       onClick={onConnect}
       disabled={!wallet.isAvailable}
-      className='w-full flex flex-wrap gap-1 items-center justify-between px-4 py-3 border border-gray-200 rounded-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200'
+      className={cn(
+        'w-full flex flex-col gap-2 items-start justify-center px-4 py-3 rounded-sm bg-gray-100 hover:bg-gray-200  transition-colors duration-200',
+        className
+      )}
     >
       <div className='flex items-center space-x-3'>
         <WalletLogo
@@ -31,15 +39,7 @@ export const SelectWalletButton = ({
           {wallet.walletInfo.walletPrettyName}
         </span>
       </div>
-      <span
-        className={`text-xs px-2 py-1 rounded md:min-w-24 ${
-          wallet.isAvailable
-            ? 'bg-green-100 text-green-800'
-            : 'bg-gray-100 text-gray-800'
-        }`}
-      >
-        {wallet.isAvailable ? 'Installed' : 'Not Installed'}
-      </span>
+      {children}
     </button>
   );
 };

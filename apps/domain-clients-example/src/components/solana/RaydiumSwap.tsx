@@ -26,8 +26,8 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
     solanaSolUsdcConcetratedLiqudityPool.address
   );
   const [mintAddress, setMintAddress] = useState<string | undefined>();
-  const [amountIn, setAmountIn] = useState<string>('1000000000');
-  const [amountOutMin, setAmountOutMin] = useState<string>('1000000000');
+  const [amountIn, setAmountIn] = useState<string>('');
+  const [amountOutMin, setAmountOutMin] = useState<string>('');
   const [priceLimit, setPriceLimit] = useState<string>('1');
   const isSolanaConnected = useIsSolanaChainConnected({ clusterId });
 
@@ -125,7 +125,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
         <Input
           value={amountIn}
           onChange={e => setAmountIn(e.target.value)}
-          type='text'
+          type='number'
           placeholder='Enter amount in'
         />
       </div>
@@ -134,7 +134,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
         <Input
           value={amountOutMin}
           onChange={e => setAmountOutMin(e.target.value)}
-          type='text'
+          type='number'
           placeholder='Enter amount out min'
         />
       </div>
@@ -143,7 +143,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
         <Input
           value={priceLimit}
           onChange={e => setPriceLimit(e.target.value)}
-          type='text'
+          type='number'
           placeholder='Enter price limit'
         />
       </div>

@@ -16,6 +16,7 @@ import {
 
 export const useSolanaConnectors = (): SolanaConnector[] => {
   const { wallets, connect } = useWalletUi();
+  console.log('wallets', wallets);
 
   useKeepSolanaWalletStateSynced();
 
@@ -52,18 +53,15 @@ export const useSolanaConnectors = (): SolanaConnector[] => {
     const connectorList: SolanaConnector[] = [];
 
     wallets.forEach(wallet => {
-      wallet.accounts.forEach(account => {
-        connectorList.push({
-          chainType: ChainType.Solana,
-          walletInfo: {
-            walletName: wallet.name,
-            walletPrettyName: wallet.name,
-            logo: wallet.icon,
-          },
-          isAvailable: true,
-          account: account,
-          connect: () => connectWallet(wallet, account),
-        });
+      connectorList.push({
+        chainType: ChainType.Solana,
+        walletInfo: {
+          walletName: wallet.name,
+          walletPrettyName: wallet.name,
+          logo: wallet.icon,
+        },
+        wallet: wallet,
+        isAvailable: true,
       });
     });
     return connectorList;

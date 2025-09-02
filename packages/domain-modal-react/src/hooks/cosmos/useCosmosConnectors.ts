@@ -61,6 +61,17 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
 
     supportedCosmosWallets.forEach(walletType => {
       const walletInfo = getCosmosWalletInfo(walletType);
+      const isAvailable = (() => {
+        try {
+          const w = getWallet(walletType);
+          return Boolean(w);
+        } catch (_error) {
+          return false;
+        }
+      })();
+      if (!isAvailable) {
+        return;
+      }
 
       connectorList.push({
         chainType: ChainType.Cosmos,
@@ -69,14 +80,7 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
           walletName: walletInfo.name,
           walletPrettyName: walletInfo.name,
         },
-        isAvailable: (() => {
-          try {
-            const w = getWallet(walletType);
-            return Boolean(w);
-          } catch (_error) {
-            return false;
-          }
-        })(),
+        isAvailable: true,
         connect: (chainId: string) => connectWallet(walletType, chainId),
       });
     });
