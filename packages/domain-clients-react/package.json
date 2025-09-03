@@ -1,6 +1,6 @@
 {
   "name": "@valence-protocol/domain-clients-react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "React hooks and components for Valence Protocol domain clients.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -45,7 +45,7 @@
     "wagmi": "^2.16.0",
     "@wallet-ui/react": "^1.1.1",
     "graz": "^0.3.3",
-    "@valence-protocol/domain-clients-core": "workspace:*"
+    "@valence-protocol/domain-clients-core": "0.3.0"
   },
   "devDependencies": {
     "@types/react": "18.3.1",
