@@ -10,7 +10,6 @@ export type DomainConnector = {
   chainType: ChainType;
   walletInfo: MinimalWalletInfo;
   connect: (chainId: unknown) => Promise<void>;
-  isAvailable: boolean;
 };
 
 export interface MinimalWalletState {

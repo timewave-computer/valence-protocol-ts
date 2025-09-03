@@ -7,9 +7,11 @@ import {
 export const createSolanaDomainClientsConfig = ({
   clusters,
   defaultClusterId,
+  hide,
 }: {
   clusters: SolanaCluster[];
   defaultClusterId: string;
+  hide: boolean;
 }): SolanaConfig => {
   if (!isSolanaClusterId(defaultClusterId)) {
     throw new Error('Default cluster id must start with "solana:"');
@@ -28,5 +30,6 @@ export const createSolanaDomainClientsConfig = ({
   return {
     clusters: convertedClusters,
     defaultClusterId: defaultClusterId,
+    hide: hide,
   };
 };

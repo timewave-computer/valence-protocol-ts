@@ -3,7 +3,7 @@
 import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
 import { SolanaClusterId } from '@valence-protocol/domain-clients-core/solana';
 
-export const useIsSolanaConnected = (args?: {
+export const useIsSolanaChainConnected = (args?: {
   clusterId?: SolanaClusterId;
 }) => {
   const { connected } = useWalletUi();

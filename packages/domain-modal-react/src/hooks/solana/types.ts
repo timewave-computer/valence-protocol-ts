@@ -1,7 +1,7 @@
 import { DomainConnector } from '@/hooks/common';
-import { UiWalletAccount } from '@wallet-ui/react';
+import { UiWallet } from '@wallet-ui/react';
 
-export type SolanaConnector = DomainConnector & {
-  connect: () => Promise<void>;
-  account: UiWalletAccount;
+// connect needs to be done via hook (for now)
+export type SolanaConnector = Omit<DomainConnector, 'connect'> & {
+  wallet: UiWallet;
 };

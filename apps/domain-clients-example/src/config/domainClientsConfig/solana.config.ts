@@ -19,4 +19,5 @@ export const mainnet: SolanaCluster = {
 export const solanaConfig = createSolanaDomainClientsConfig({
   clusters: [devnet, mainnet],
   defaultClusterId: devnet.id,
+  hide: false,
 });

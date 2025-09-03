@@ -10,12 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Provider, hooks, and UI for connecting to solana
+- Progressive UX to gracefully handle supporting more than one domain
+- Cleaner styles
 
 ### Changed
 
-- [breaking] chainId for evmConnector.connect is required
-- [breaking] throw errors if trying to use domain without config
+- _Breaking_ chainId for evmConnector.connect is required
+- _Breaking_ throw errors if trying to use domain without config
 - using wagmi `switchChain` is no longer required, the modal does it interally if a target is specified
+- Only show wallets that are 'available', do not show compatiable wallets that are not installed
 
 ### Fixed
 

@@ -4,7 +4,7 @@ import { Button, Input, Label } from '@/components/ui';
 import { useCallback, useState } from 'react';
 import { useSigningCosmosClient } from '@valence-protocol/domain-clients-react/cosmos';
 import { useMutation } from '@tanstack/react-query';
-import { baseToMicro } from '@valence-protocol/domain-clients-core';
+import { microToBase } from '@valence-protocol/domain-clients-core';
 import { useIsCosmosChainConnected } from '@valence-protocol/domain-modal-react';
 
 type CosmosDenomTransferProps = {
@@ -29,13 +29,13 @@ export const CosmosDenomTransfer = ({
       throw new Error('Cosmos signing client not found');
     }
 
-    const amountInBase = baseToMicro(amount, decimals);
+    const amountInMicro = microToBase(amount, decimals);
 
     const tx = await signingCosmosClient.sendTokens({
       recipient: toAddress,
       amount: [
         {
-          amount: amountInBase.toString(),
+          amount: amountInMicro,
           denom,
         },
       ],

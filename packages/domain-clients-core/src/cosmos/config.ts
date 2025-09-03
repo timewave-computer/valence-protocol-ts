@@ -1,13 +1,14 @@
 import { ConfigureGrazArgs } from 'graz';
 import { AminoTypes } from '@cosmjs/stargate';
 import { Registry } from '@cosmjs/proto-signing';
+import { DomainClientConfig } from '@/common';
 
-export type CosmosConfig = {
+export interface CosmosConfig extends DomainClientConfig {
   grazOptions: ConfigureGrazArgs;
   protobufRegistry?: Registry;
   aminoTypes?: AminoTypes;
   defaultChainId: string;
-};
+}
 
 export type CosmosChainInfo = CosmosConfig['grazOptions']['chains'][number];
 export type CosmosChainConfig = NonNullable<

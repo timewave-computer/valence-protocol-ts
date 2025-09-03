@@ -5,7 +5,7 @@ import {
   baseToMicro,
 } from '@valence-protocol/domain-clients-core';
 import { useSigningSolanaClient } from '@valence-protocol/domain-clients-react/solana';
-import { useIsSolanaConnected } from '@valence-protocol/domain-modal-react';
+import { useIsSolanaChainConnected } from '@valence-protocol/domain-modal-react';
 import { type Address, address } from 'gill';
 import { Input, Label, Button } from '@/components';
 
@@ -21,7 +21,7 @@ export const SolanaSplTransfer = ({
 }) => {
   const [toAddress, setToAddress] = useState('');
   const [amount, setAmount] = useState('');
-  const isConnected = useIsSolanaConnected({ clusterId });
+  const isConnected = useIsSolanaChainConnected({ clusterId });
 
   const signingSolanaClient = useSigningSolanaClient({ clusterId });
 

@@ -17,7 +17,8 @@ import {
   SelectItem,
   Button,
 } from '@/components';
-import { useIsSolanaConnected } from '@valence-protocol/domain-modal-react';
+import { useIsSolanaChainConnected } from '@valence-protocol/domain-modal-react';
+import { baseToMicro } from '@valence-protocol/domain-clients-core';
 
 export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
   const signingSolanaClient = useSigningSolanaClient({ clusterId });
@@ -26,10 +27,10 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
     solanaSolUsdcConcetratedLiqudityPool.address
   );
   const [mintAddress, setMintAddress] = useState<string | undefined>();
-  const [amountIn, setAmountIn] = useState<string>('1000000000');
-  const [amountOutMin, setAmountOutMin] = useState<string>('1000000000');
+  const [amountIn, setAmountIn] = useState<string>('');
+  const [amountOutMin, setAmountOutMin] = useState<string>('');
   const [priceLimit, setPriceLimit] = useState<string>('1');
-  const isSolanaConnected = useIsSolanaConnected({ clusterId });
+  const isSolanaConnected = useIsSolanaChainConnected({ clusterId });
 
   const queryPoolInfo = useCallback(async () => {
     if (!signingSolanaClient)
@@ -54,11 +55,16 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
     if (!mintAddress || !isAddress(mintAddress))
       throw new Error('Invalid mint address');
 
+    // !!! TODO: need to fetch decimals for selected asset
+
+    const convertedAmountIn = baseToMicro(amountIn, 6);
+    const convertedAmountOutMin = baseToMicro(amountOutMin, 6);
+
     const instructions = await createClmmSwapInInstructions({
       poolId: address(poolId),
       inputMint: address(mintAddress),
-      amountIn: BigInt(amountIn),
-      amountOutMin: BigInt(amountOutMin),
+      amountIn: convertedAmountIn,
+      amountOutMin: convertedAmountOutMin,
       priceLimit: new Decimal(priceLimit),
       signer: signingSolanaClient.signer,
       connection,
@@ -67,7 +73,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
     const tx = await signingSolanaClient.executeInstructions({
       instructions,
     });
-    console.log('tx', tx);
+    return tx;
   }, [
     signingSolanaClient,
     mintAddress,
@@ -89,7 +95,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
         />
       </div>
       <div className='flex flex-col'>
-        <Label htmlFor='mintAddress'>Mint Address</Label>
+        <Label htmlFor='mintAddress'>Mint Address to sell</Label>
         <Select
           value={mintAddress}
           onValueChange={value => setMintAddress(value)}
@@ -100,7 +106,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
                 ? 'Loading...'
                 : poolInfo?.poolKeys
                   ? 'Select mint address'
-                  : 'No pool keys found for pool address'
+                  : 'No pool keys found for pool'
             }
           >
             {mintAddress}
@@ -125,7 +131,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
         <Input
           value={amountIn}
           onChange={e => setAmountIn(e.target.value)}
-          type='text'
+          type='number'
           placeholder='Enter amount in'
         />
       </div>
@@ -134,7 +140,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
         <Input
           value={amountOutMin}
           onChange={e => setAmountOutMin(e.target.value)}
-          type='text'
+          type='number'
           placeholder='Enter amount out min'
         />
       </div>
@@ -143,7 +149,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
         <Input
           value={priceLimit}
           onChange={e => setPriceLimit(e.target.value)}
-          type='text'
+          type='number'
           placeholder='Enter price limit'
         />
       </div>
