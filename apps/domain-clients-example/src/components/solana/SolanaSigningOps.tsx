@@ -26,7 +26,7 @@ export const SolanaSigningOps = () => {
           decimals: solanaUsdc.decimals,
         }}
       />
-      <h3 className='font-semibold pt-2'>Solana Raydium Swap</h3>
+      <h3 className='font-semibold pt-2'>Solana Raydium Swap (Sell)</h3>
       <RaydiumSwap clusterId={devnet.id} />
     </>
   );

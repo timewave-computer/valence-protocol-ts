@@ -95,7 +95,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
         />
       </div>
       <div className='flex flex-col'>
-        <Label htmlFor='mintAddress'>Mint Address</Label>
+        <Label htmlFor='mintAddress'>Mint Address to sell</Label>
         <Select
           value={mintAddress}
           onValueChange={value => setMintAddress(value)}
@@ -106,7 +106,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
                 ? 'Loading...'
                 : poolInfo?.poolKeys
                   ? 'Select mint address'
-                  : 'No pool keys found for pool address'
+                  : 'No pool keys found for pool'
             }
           >
             {mintAddress}
