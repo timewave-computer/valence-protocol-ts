@@ -2,4 +2,5 @@ export * from './SolanaOps';
 export * from './ConnectSolana';
 export * from './SolanaSplTransfer';
 export * from './RaydiumSwap';
-export * from './SolanaSigningOps';
+export * from './SolanaAccountGuard';
+export * from './SolanaSplBalance';

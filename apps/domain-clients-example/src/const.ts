@@ -2,6 +2,7 @@ import { type Address as EvmAddress } from 'viem';
 import { neutron } from 'graz/chains';
 import { mainnet } from 'viem/chains';
 import { type Address as SolanaAddress } from 'gill';
+import { type SolanaClusterId } from '@valence-protocol/domain-clients-core/solana';
 
 export const evmUsdc = {
   chainId: mainnet.id,
@@ -19,9 +20,13 @@ export const neutronNtrn = {
 };
 export const neutronUser = 'neutron1fl48vsnmsdzcv85q5d2q4z5ajdha8yu33yqdrs'; // Top holder
 
+export const solanaUser =
+  'AVzP2GeRmqGphJsMxWoqjpUifPpCret7LqWhD8NWQK49' as SolanaAddress; // jupiter labs vault authority
 export const solanaUsdc = {
   mintAddress: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v' as SolanaAddress,
+  symbol: 'USDC',
   decimals: 6,
+  clusterId: `solana:mainnet` as SolanaClusterId,
 };
 
 export const solanaSolUsdcConcetratedLiqudityPool = {

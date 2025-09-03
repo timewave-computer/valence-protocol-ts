@@ -25,6 +25,7 @@ export const SolanaSplTransfer = ({
 
   const signingSolanaClient = useSigningSolanaClient({ clusterId });
 
+  // todo: place inside useMutation (cosmos, solana)
   const onSubmit = useCallback(async () => {
     if (!signingSolanaClient) {
       throw new Error('Solana client not found');
@@ -68,7 +69,7 @@ export const SolanaSplTransfer = ({
         </Button>
         {!isConnected && (
           <p className='text-xs text-gray-500'>
-            Connect to Solana to transfer tokens
+            Connect to Mainnet to transfer tokens
           </p>
         )}
       </div>

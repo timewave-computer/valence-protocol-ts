@@ -29,7 +29,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
   const [mintAddress, setMintAddress] = useState<string | undefined>();
   const [amountIn, setAmountIn] = useState<string>('');
   const [amountOutMin, setAmountOutMin] = useState<string>('');
-  const [priceLimit, setPriceLimit] = useState<string>('1');
+  const [priceLimit, setPriceLimit] = useState<string>('');
   const isSolanaConnected = useIsSolanaChainConnected({ clusterId });
 
   const queryPoolInfo = useCallback(async () => {
@@ -46,6 +46,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
     enabled: !!poolId && poolId !== '',
   });
 
+  // todo: place inside useMutation (cosmos, solana)
   const onSubmit = useCallback(async () => {
     if (!signingSolanaClient)
       throw new Error('Signing Solana client not found');
@@ -160,7 +161,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
         </Button>
         {!isSolanaConnected && (
           <p className='text-xs text-gray-500'>
-            Connect to Solana to swap tokens
+            Connect to Mainnet to swap tokens
           </p>
         )}
       </div>

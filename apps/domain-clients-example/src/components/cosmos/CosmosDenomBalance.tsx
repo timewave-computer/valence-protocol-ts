@@ -5,7 +5,7 @@ import { BalanceView } from '@/components';
 import { useCosmosClient } from '@valence-protocol/domain-clients-react/cosmos';
 
 interface CosmosDenomBalanceProps {
-  initialBalance: string;
+  initialBalance?: string;
   decimals: number;
   initialAddress: string;
   symbol: string;
