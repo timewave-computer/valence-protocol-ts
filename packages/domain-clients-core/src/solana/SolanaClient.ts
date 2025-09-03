@@ -33,6 +33,7 @@ export class SolanaClient extends SolanaBaseClient {
       userAccountPubkey,
       tokenProgram ?? TOKEN_PROGRAM_ADDRESS
     );
+
     const client = this.getClient();
     const balance = await client.rpc.getTokenAccountBalance(ata).send();
     if (!balance.value) {

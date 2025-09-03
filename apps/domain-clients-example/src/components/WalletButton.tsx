@@ -15,7 +15,6 @@ import {
 import { useAccount as useEvmAccount } from 'wagmi';
 import { useAccount as useCosmosAccount } from 'graz';
 import { useWalletUi as useSolanaAccount } from '@wallet-ui/react';
-import { neutrontestnet } from 'graz/chains';
 
 export const WalletButton = () => {
   const { showModal } = useDomainModal();
@@ -29,9 +28,12 @@ export const WalletButton = () => {
   const { address: evmAddress } = useEvmAccount();
   const isConnected = isCosmosConnected || isEvmConnected || isSolanaConnected;
 
-  const { data: cosmosAccount } = useCosmosAccount({
-    chainId: neutrontestnet.chainId,
+  const { data: cosmosAccounts } = useCosmosAccount({
+    multiChain: true,
   });
+  const cosmosAccount = cosmosAccounts
+    ? Object.values(cosmosAccounts)[0]
+    : undefined;
   const cosmosAddress = cosmosAccount?.bech32Address;
 
   const { account: solanaAccount } = useSolanaAccount();

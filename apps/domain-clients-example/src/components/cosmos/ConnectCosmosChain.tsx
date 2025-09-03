@@ -21,7 +21,7 @@ export const ConnectCosmosChain = ({
   if (isCosmosConnected) {
     return (
       <Button
-        variant='ghost'
+        variant='secondary'
         className='w-fit min-w-60'
         onClick={() => {
           disconnect({ chainId: chainInfo.chainId });

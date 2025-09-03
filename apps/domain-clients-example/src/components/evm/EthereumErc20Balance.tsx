@@ -9,7 +9,7 @@ interface EthereumErc20BalanceProps {
   initialAddress: Address;
   symbol: string;
   erc20Address: Address;
-  initialBalance: bigint;
+  initialBalance?: bigint;
   decimals: number;
   chainId: number;
 }
@@ -70,7 +70,7 @@ export const EthereumErc20Balance = ({
       isError={isError}
       decimals={decimals}
       symbol={symbol}
-      amount={balance?.balance.toString()}
+      amount={balance?.balance?.toString() ?? '0'}
     />
   );
 };

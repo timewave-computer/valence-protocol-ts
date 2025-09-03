@@ -20,7 +20,7 @@ export const ConnectSolana = ({
   if (isSolanaConnected) {
     return (
       <Button
-        variant='ghost'
+        variant='secondary'
         className='w-fit min-w-60'
         onClick={() => disconnect()}
       >
