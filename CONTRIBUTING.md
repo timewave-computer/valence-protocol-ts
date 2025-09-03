@@ -24,14 +24,18 @@ Types of changes
 
 ### Steps
 
+_Note:_ if releasing more than 1 package, all can be in the same PR, but if a package depends on another, make sure to update the version of the dependant package before releasing it, and clean install and build again.
+
 1. Open a PR to merge `next` into `main`. Can do regular merge, do not squash the commits. Review and merge.
 
 2. Set up release environment
 
 ```bash
+nix develop
 git checkout main
 git pull origin
 git checkout -b release/<name>
+rm -rf node_modules
 pnpm install
 turbo build
 ```
@@ -68,15 +72,13 @@ cd <package root>
 npm publish --access public
 ```
 
-7. Add new versions to `pnpm.overrides` in root package.json
-
-8. Open a PR from your `release/name` branch -> `main` with:
+7. Open a PR from your `release/name` branch -> `main` with:
 
 - migrated changelog
 - package `version` updated in package.json
-- new version added to root package.json `pnpm.overrides` (for app deployment with correct dependencies)
+- `pnpm-lock.yaml` should change if packages depend on eachother
 
-9. Reset `next` branch
+8. Reset `next` branch
 
 ```bash
 git checkout next

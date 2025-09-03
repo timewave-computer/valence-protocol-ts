@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] YYYY-MM-DD
 
+### [0.3.0] 2025-09-03
+
 ### Added
 
 - Provider, hooks, and UI for connecting to solana
@@ -19,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - _Breaking_ throw errors if trying to use domain without config
 - using wagmi `switchChain` is no longer required, the modal does it interally if a target is specified
 - Only show wallets that are 'available', do not show compatiable wallets that are not installed
+- Updated `@valence-protocol/domain-clients-core` dependency to 0.3.0
+- Updated `@valence-protocol/domain-clients-react` dependency to 0.3.0
 
 ### Fixed
 
