@@ -8,13 +8,13 @@ export const cosmosConfig: CosmosConfig = {
     chainsConfig: {
       [neutron.chainId]: {
         gas: {
-          price: '0.1',
+          price: '0.1', // TODO: this should be dynamic
           denom: 'untrn',
         },
       },
       [neutrontestnet.chainId]: {
         gas: {
-          price: '0.1',
+          price: '0.1', // TODO: this should be dynamic
           denom: 'untrn',
         },
       },
