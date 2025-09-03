@@ -56,6 +56,7 @@ export const createClmmSwapInInstructions = async ({
   const baseIn = inputMint === poolInfo.mintA.address;
   const signerPubkey = new PublicKey(signer.address);
 
+  // this is copy pasta from the raydium sdk for clmm swaps. not really sure why its done this way
   let sqrtPriceLimitX64: BN;
   if (!priceLimit || priceLimit.equals(new Decimal(0))) {
     sqrtPriceLimitX64 = baseIn

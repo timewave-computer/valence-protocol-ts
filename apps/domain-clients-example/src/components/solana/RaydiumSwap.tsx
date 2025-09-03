@@ -18,6 +18,7 @@ import {
   Button,
 } from '@/components';
 import { useIsSolanaChainConnected } from '@valence-protocol/domain-modal-react';
+import { baseToMicro } from '@valence-protocol/domain-clients-core';
 
 export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
   const signingSolanaClient = useSigningSolanaClient({ clusterId });
@@ -54,11 +55,16 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
     if (!mintAddress || !isAddress(mintAddress))
       throw new Error('Invalid mint address');
 
+    // !!! TODO: need to fetch decimals for selected asset
+
+    const convertedAmountIn = baseToMicro(amountIn, 6);
+    const convertedAmountOutMin = baseToMicro(amountOutMin, 6);
+
     const instructions = await createClmmSwapInInstructions({
       poolId: address(poolId),
       inputMint: address(mintAddress),
-      amountIn: BigInt(amountIn),
-      amountOutMin: BigInt(amountOutMin),
+      amountIn: convertedAmountIn,
+      amountOutMin: convertedAmountOutMin,
       priceLimit: new Decimal(priceLimit),
       signer: signingSolanaClient.signer,
       connection,
@@ -67,7 +73,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
     const tx = await signingSolanaClient.executeInstructions({
       instructions,
     });
-    console.log('tx', tx);
+    return tx;
   }, [
     signingSolanaClient,
     mintAddress,

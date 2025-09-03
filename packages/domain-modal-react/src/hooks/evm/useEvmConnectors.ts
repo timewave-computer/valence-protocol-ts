@@ -92,7 +92,6 @@ export const useEvmConnectors = (): EvmConnector[] => {
           walletName: connector.id,
           walletPrettyName: connector.name,
         },
-        isAvailable: true, // always true because the connector was found in browser context
         connect: (chainId: number) => connectWallet(connector, chainId),
       });
     });

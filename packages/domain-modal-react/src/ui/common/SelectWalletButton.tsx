@@ -24,7 +24,6 @@ export const SelectWalletButton = ({
   return (
     <button
       onClick={onConnect}
-      disabled={!wallet.isAvailable}
       className={cn(
         'w-full flex flex-col gap-2 items-start justify-center px-4 py-3 rounded-sm bg-gray-100 hover:bg-gray-200  transition-colors duration-200',
         className

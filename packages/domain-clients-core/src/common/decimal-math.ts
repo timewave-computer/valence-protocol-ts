@@ -1,24 +1,36 @@
-// convert from 100000000 -> 1
-export const microToBase = (
-  amount: number | string,
-  decimals: number
-): number => {
-  if (typeof amount === 'string') {
-    amount = parseFloat(amount);
-  }
-  amount = amount / Math.pow(10, decimals);
-  return isNaN(amount) ? 0 : amount;
-};
+/**
+ * Convert from micro (integer, bigint) to base (decimal string).
+ * Example: 100000000n with decimals=8 -> "1"
+ */
+export function microToBase(amount: bigint | string, decimals: number): string {
+  const bigAmount = typeof amount === 'string' ? BigInt(amount) : amount;
+  const divisor = BigInt(10) ** BigInt(decimals);
 
-// convert from 1 -> 100000000
-export const baseToMicro = (
-  amount: number | string,
-  decimals: number
-): number => {
-  if (typeof amount === 'string') {
-    amount = parseFloat(amount);
+  const whole = bigAmount / divisor;
+  const fraction = bigAmount % divisor;
+
+  if (fraction === BigInt(0)) {
+    return whole.toString();
   }
-  // rounds to remove floating point inaccuracies - e.g., 8.029409 * 10**6 resulting in 8029409.000000001 instead of 8029409
-  amount = Math.round(amount * Math.pow(10, decimals));
-  return isNaN(amount) ? 0 : amount;
-};
+
+  // pad fractional part with leading zeros
+  const fractionStr = fraction.toString().padStart(decimals, '0');
+
+  // remove trailing zeros for a cleaner string
+  const fractionTrimmed = fractionStr.replace(/0+$/, '');
+
+  return `${whole.toString()}.${fractionTrimmed}`;
+}
+
+/**
+ * Convert from base (decimal string/number) to micro (bigint).
+ * Example: "1.2345" with decimals=6 -> 1234500n
+ */
+export function baseToMicro(amount: string | number, decimals: number): bigint {
+  const [wholeStr, fracStr = ''] = String(amount).split('.');
+
+  const whole = BigInt(wholeStr);
+  const frac = BigInt(fracStr.padEnd(decimals, '0').slice(0, decimals));
+
+  return whole * BigInt(10) ** BigInt(decimals) + frac;
+}

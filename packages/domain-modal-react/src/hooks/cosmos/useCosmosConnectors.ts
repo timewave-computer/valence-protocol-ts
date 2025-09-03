@@ -80,7 +80,6 @@ export const useCosmosConnectors = (): CosmosConnector[] => {
           walletName: walletInfo.name,
           walletPrettyName: walletInfo.name,
         },
-        isAvailable: true,
         connect: (chainId: string) => connectWallet(walletType, chainId),
       });
     });

@@ -6,7 +6,7 @@ export interface WalletLogoProps {
 
 export const WalletLogo = ({
   logo,
-  className = '',
+  className,
   showPlaceholder = true,
 }: WalletLogoProps) => {
   if (!logo && showPlaceholder) {
