@@ -73,9 +73,13 @@ export const MainPage = ({
       <p className='text-xl font-bold pb-2'>Select a Wallet</p>
 
       <div className='flex flex-col gap-2'>
-        {connectedDomains}
+        {connectedDomains.map((domain, index) => (
+          <div key={`connected-${index}`}>{domain}</div>
+        ))}
 
-        {unconnectedDomains}
+        {unconnectedDomains.map((domain, index) => (
+          <div key={`unconnected-${index}`}>{domain}</div>
+        ))}
       </div>
     </div>
   );
