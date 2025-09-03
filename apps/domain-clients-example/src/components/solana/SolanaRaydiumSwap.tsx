@@ -1,6 +1,6 @@
 'use client';
 import { useCallback, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { SolanaClusterId } from '@wallet-ui/react';
 import { useSigningSolanaClient } from '@valence-protocol/domain-clients-react/solana';
 import { createClmmSwapInInstructions, getPoolInfo } from '@/lib';
@@ -20,7 +20,11 @@ import {
 import { useIsSolanaChainConnected } from '@valence-protocol/domain-modal-react';
 import { baseToMicro } from '@valence-protocol/domain-clients-core';
 
-export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
+export const SolanaRaydiumSwap = ({
+  clusterId,
+}: {
+  clusterId: SolanaClusterId;
+}) => {
   const signingSolanaClient = useSigningSolanaClient({ clusterId });
 
   const [poolId, setPoolId] = useState<string>(
@@ -83,6 +87,18 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
     amountOutMin,
     priceLimit,
   ]);
+
+  const {
+    mutate: swapTokens,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: onSubmit,
+    onError: (error: Error) => {
+      console.error('Transaction failed', error);
+    },
+  });
 
   return (
     <>
@@ -156,7 +172,7 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
       </div>
 
       <div className='flex flex-row gap-2 items-center'>
-        <Button disabled={!isSolanaConnected} onClick={onSubmit}>
+        <Button disabled={!isSolanaConnected} onClick={() => swapTokens()}>
           Submit
         </Button>
         {!isSolanaConnected && (
@@ -165,6 +181,18 @@ export const RaydiumSwap = ({ clusterId }: { clusterId: SolanaClusterId }) => {
           </p>
         )}
       </div>
+
+      <div className='flex flex-col gap-2'>
+        {isError && (
+          <div className='text-xs text-red-500'>Transaction failed</div>
+        )}
+        {isPending && (
+          <div className='text-xs text-gray-500'>Transaction pending</div>
+        )}
+      </div>
+      {isSuccess && (
+        <div className='text-xs text-green-500'>Transaction successful</div>
+      )}
     </>
   );
 };

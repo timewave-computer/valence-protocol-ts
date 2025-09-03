@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import {
   SolanaClusterId,
   baseToMicro,
@@ -25,7 +26,6 @@ export const SolanaSplTransfer = ({
 
   const signingSolanaClient = useSigningSolanaClient({ clusterId });
 
-  // todo: place inside useMutation (cosmos, solana)
   const onSubmit = useCallback(async () => {
     if (!signingSolanaClient) {
       throw new Error('Solana client not found');
@@ -41,6 +41,18 @@ export const SolanaSplTransfer = ({
     });
     return tx;
   }, [signingSolanaClient, toAddress, amount, token]);
+
+  const {
+    mutate: sendTokens,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: onSubmit,
+    onError: (error: Error) => {
+      console.error('Transaction failed', error);
+    },
+  });
 
   return (
     <>
@@ -64,13 +76,24 @@ export const SolanaSplTransfer = ({
       </div>
 
       <div className='flex flex-row gap-2 items-center'>
-        <Button disabled={!isConnected} onClick={onSubmit}>
+        <Button disabled={!isConnected} onClick={() => sendTokens()}>
           Submit
         </Button>
         {!isConnected && (
           <p className='text-xs text-gray-500'>
             Connect to Mainnet to transfer tokens
           </p>
+        )}
+      </div>
+      <div className='flex flex-col gap-2'>
+        {isError && (
+          <div className='text-xs text-red-500'>Transaction failed</div>
+        )}
+        {isPending && (
+          <div className='text-xs text-gray-500'>Transaction pending</div>
+        )}
+        {isSuccess && (
+          <div className='text-xs text-green-500'>Transaction successful</div>
         )}
       </div>
     </>
