@@ -26,7 +26,7 @@ export const SolanaSplTransfer = ({
 
   const signingSolanaClient = useSigningSolanaClient({ clusterId });
 
-  const onSubmit = useCallback(async () => {
+  const sendTokens = useCallback(async () => {
     if (!signingSolanaClient) {
       throw new Error('Solana client not found');
     }
@@ -43,12 +43,12 @@ export const SolanaSplTransfer = ({
   }, [signingSolanaClient, toAddress, amount, token]);
 
   const {
-    mutate: sendTokens,
+    mutate: onSubmit,
     isPending,
     isError,
     isSuccess,
   } = useMutation({
-    mutationFn: onSubmit,
+    mutationFn: sendTokens,
     onError: (error: Error) => {
       console.error('Transaction failed', error);
     },
@@ -76,7 +76,7 @@ export const SolanaSplTransfer = ({
       </div>
 
       <div className='flex flex-row gap-2 items-center'>
-        <Button disabled={!isConnected} onClick={() => sendTokens()}>
+        <Button disabled={!isConnected} onClick={() => onSubmit()}>
           Submit
         </Button>
         {!isConnected && (

@@ -50,8 +50,7 @@ export const SolanaRaydiumSwap = ({
     enabled: !!poolId && poolId !== '',
   });
 
-  // todo: place inside useMutation (cosmos, solana)
-  const onSubmit = useCallback(async () => {
+  const swap = useCallback(async () => {
     if (!signingSolanaClient)
       throw new Error('Signing Solana client not found');
 
@@ -89,12 +88,12 @@ export const SolanaRaydiumSwap = ({
   ]);
 
   const {
-    mutate: swapTokens,
+    mutate: onSubmit,
     isPending,
     isError,
     isSuccess,
   } = useMutation({
-    mutationFn: onSubmit,
+    mutationFn: swap,
     onError: (error: Error) => {
       console.error('Transaction failed', error);
     },
@@ -172,7 +171,7 @@ export const SolanaRaydiumSwap = ({
       </div>
 
       <div className='flex flex-row gap-2 items-center'>
-        <Button disabled={!isSolanaConnected} onClick={() => swapTokens()}>
+        <Button disabled={!isSolanaConnected} onClick={() => onSubmit()}>
           Submit
         </Button>
         {!isSolanaConnected && (
