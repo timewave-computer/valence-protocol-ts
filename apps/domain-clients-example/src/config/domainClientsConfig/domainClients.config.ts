@@ -5,6 +5,6 @@ import { DomainClientsConfig } from '@valence-protocol/domain-clients-react';
 
 export const domainClientsConfig: DomainClientsConfig = {
   evm: evmConfig,
-  //   cosmos: cosmosConfig,
+  cosmos: cosmosConfig,
   solana: solanaConfig,
 };

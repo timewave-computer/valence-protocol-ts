@@ -1,4 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/components/ui';
 
 const buttonVariants = cva(
   'px-2 py-1 rounded-sm font-semibold transition-colors duration-200 border outline-none rounded-xs border text-sm ',
@@ -6,9 +7,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-gray-900 text-white hover:bg-gray-900/80  cursor-pointer',
-        secondary: 'border-gray-700 hover:bg-gray-100 cursor-pointer',
-        ghost:
-          'bg-gray-200 hover:bg-gray-300 cursor-pointer border-transparent',
+        secondary: 'border-gray-700 hover:pbg-gray-100 cursor-pointer',
         disabled:
           'border-gray-300 cursor-not-allowed text-gray-900 bg-gray-300',
       },
@@ -31,7 +30,7 @@ export const Button = ({
   }
   return (
     <button
-      className={buttonVariants({ variant, className })}
+      className={cn(buttonVariants({ variant, className }))}
       disabled={disabled ?? false}
       {...rest}
     >
