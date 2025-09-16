@@ -23,9 +23,8 @@ export const CosmosConnection = () => {
   }
 
   if (!isConnected) {
-    throw new Error(
-      'CosmosConnection component should only be used when the user is connected to a cosmos wallet'
-    );
+    // this is intentional, it lets us optimistically render the component and avoids tree-shaking issues when some domain configs are not set
+    return undefined;
   }
 
   return (

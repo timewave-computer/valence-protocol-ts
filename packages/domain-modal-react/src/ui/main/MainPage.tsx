@@ -2,9 +2,6 @@
 import { type ReactNode, useMemo } from 'react';
 import { useDomainConfig } from '@valence-protocol/domain-clients-react';
 import { ModalPage, ConnectDomainButton } from '@/ui/main';
-import { useIsCosmosChainConnected } from '@/hooks/cosmos';
-import { useIsEvmChainConnected } from '@/hooks/evm';
-import { useIsSolanaChainConnected } from '@/hooks/solana';
 import { CosmosConnection } from '@/ui/cosmos';
 import { EvmConnection } from '@/ui/evm';
 import { SolanaConnection } from '@/ui/solana';
@@ -15,58 +12,56 @@ export const MainPage = ({
   onSelect: (page: ModalPage) => void;
 }) => {
   const config = useDomainConfig();
-  const isCosmosChainConnected = useIsCosmosChainConnected();
-  const isEvmChainConnected = useIsEvmChainConnected();
-  const isSolanaChainConnected = useIsSolanaChainConnected();
 
   const { connectedDomains, unconnectedDomains } = useMemo(() => {
+    /** Note, all connect buttons and connections are rendered optimistically, and decided whether to show them or not is offloaded to the component itself
+     * This allows us to avoid using hooks that might not have a peer dependency installed
+     */
     const connected: ReactNode[] = [];
     const unconnected: ReactNode[] = [];
 
-    if (config.evm && !config.evm.hide) {
-      if (isEvmChainConnected)
-        connected.push(
-          <Connection title='Ethereum Wallet' children={<EvmConnection />} />
-        );
-      else
-        unconnected.push(
-          <ConnectDomainButton onClick={() => onSelect(ModalPage.EVM)}>
-            Connect Ethereum Wallet
-          </ConnectDomainButton>
-        );
-    }
+    const configEntries = Object.entries(config);
 
-    if (config.solana && !config.solana.hide) {
-      if (isSolanaChainConnected)
-        connected.push(
-          <Connection title='Solana Wallet' children={<SolanaConnection />} />
-        );
-      else
-        unconnected.push(
-          <ConnectDomainButton onClick={() => onSelect(ModalPage.SOLANA)}>
-            Connect Solana Wallet
-          </ConnectDomainButton>
-        );
-    }
-
-    if (config.cosmos && !config.cosmos.hide) {
-      if (isCosmosChainConnected)
-        connected.push(
-          <Connection title='Cosmos Wallet' children={<CosmosConnection />} />
-        );
-      else
-        unconnected.push(
-          <ConnectDomainButton onClick={() => onSelect(ModalPage.COSMOS)}>
-            Connect Cosmos Wallet
-          </ConnectDomainButton>
-        );
+    for (const [domain, config] of configEntries) {
+      if (config[domain] && !config[domain].hide) {
+        if (domain === 'evm') {
+          connected.push(
+            <Connection title='Ethereum Wallet' children={<EvmConnection />} />
+          );
+          unconnected.push(
+            <ConnectDomainButton onClick={() => onSelect(ModalPage.EVM)}>
+              Connect Ethereum Wallet
+            </ConnectDomainButton>
+          );
+        }
+        if (domain === 'solana') {
+          connected.push(
+            <Connection title='Solana Wallet' children={<SolanaConnection />} />
+          );
+          unconnected.push(
+            <ConnectDomainButton onClick={() => onSelect(ModalPage.SOLANA)}>
+              Connect Solana Wallet
+            </ConnectDomainButton>
+          );
+        }
+        if (domain === 'cosmos') {
+          connected.push(
+            <Connection title='Cosmos Wallet' children={<CosmosConnection />} />
+          );
+          unconnected.push(
+            <ConnectDomainButton onClick={() => onSelect(ModalPage.COSMOS)}>
+              Connect Cosmos Wallet
+            </ConnectDomainButton>
+          );
+        }
+      }
     }
 
     return {
       connectedDomains: connected,
       unconnectedDomains: unconnected,
     };
-  }, [isCosmosChainConnected, isEvmChainConnected, isSolanaChainConnected]);
+  }, [config]);
 
   return (
     <div className='flex flex-col gap-4'>

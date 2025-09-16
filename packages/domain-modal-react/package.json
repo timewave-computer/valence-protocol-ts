@@ -19,8 +19,8 @@
   "author": "",
   "license": "MIT",
   "peerDependencies": {
-    "@valence-protocol/domain-clients-core": "0.3.0",
-    "@valence-protocol/domain-clients-react": "0.3.0",
+    "@valence-protocol/domain-clients-core": "workspace:*",
+    "@valence-protocol/domain-clients-react": "workspace:*",
     "@wallet-ui/react": "^1.1.1",
     "graz": "^0.3.3",
     "react": "18.3.1",
