@@ -1,4 +1,4 @@
-export const ConnectDomainButton = ({
+export const ConnectDomainButtonRoot = ({
   onClick,
   children,
 }: {

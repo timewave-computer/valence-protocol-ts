@@ -10,6 +10,7 @@ import {
   CosmosOps,
   SolanaOps,
 } from '@/components';
+import { domainClientsConfig } from '@/config';
 
 export default async function Home() {
   return (
@@ -34,7 +35,7 @@ export default async function Home() {
         </div>
         <div>
           <h2 className='font-semibold text-xl pb-2  '>Domain Operations</h2>
-          <Tabs className='md:max-w-[400px]' defaultValue='solana'>
+          <Tabs className='md:max-w-[400px]' defaultValue='evm'>
             <TabsList>
               <TabsTrigger value='evm'>Ethereum</TabsTrigger>
               <TabsTrigger value='cosmos'>Cosmos</TabsTrigger>
@@ -42,17 +43,29 @@ export default async function Home() {
             </TabsList>
             <TabsContent value='evm'>
               <Suspense fallback={<div>Loading...</div>}>
-                <EthereumOps />
+                {domainClientsConfig.evm ? (
+                  <EthereumOps />
+                ) : (
+                  <div>No Ethereum operations available</div>
+                )}
               </Suspense>
             </TabsContent>
             <TabsContent value='cosmos'>
               <Suspense fallback={<div>Loading...</div>}>
-                <CosmosOps />
+                {domainClientsConfig.cosmos ? (
+                  <CosmosOps />
+                ) : (
+                  <div>No Cosmos operations available</div>
+                )}
               </Suspense>
             </TabsContent>
             <TabsContent value='solana'>
               <Suspense fallback={<div>Loading...</div>}>
-                <SolanaOps />
+                {domainClientsConfig.solana ? (
+                  <SolanaOps />
+                ) : (
+                  <div>No Solana operations available</div>
+                )}
               </Suspense>
             </TabsContent>
           </Tabs>

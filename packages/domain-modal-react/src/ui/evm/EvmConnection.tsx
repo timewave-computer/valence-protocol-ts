@@ -3,7 +3,7 @@
 import { useAccount, useDisconnect } from 'wagmi';
 import { useAtomValue } from 'jotai';
 import { evmWalletAtom } from '@/hooks';
-import { AccountCard } from '@/ui/common';
+import { AccountCard, ConnectionRoot } from '@/ui/common';
 import { useEvmConfig } from '@valence-protocol/domain-clients-react';
 
 export const EvmConnection = () => {
@@ -25,11 +25,13 @@ export const EvmConnection = () => {
   }
 
   return (
-    <AccountCard
-      wallet={evmWallet?.walletInfo}
-      address={account.address}
-      chainName={account.chain?.name}
-      onDisconnect={async () => disconnect()}
-    />
+    <ConnectionRoot title='Ethereum Wallet'>
+      <AccountCard
+        wallet={evmWallet?.walletInfo}
+        address={account.address}
+        chainName={account.chain?.name}
+        onDisconnect={async () => disconnect()}
+      />
+    </ConnectionRoot>
   );
 };

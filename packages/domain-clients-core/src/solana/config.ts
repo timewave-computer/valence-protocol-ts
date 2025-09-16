@@ -11,7 +11,7 @@ export const createSolanaDomainClientsConfig = ({
 }: {
   clusters: SolanaCluster[];
   defaultClusterId: string;
-  hide: boolean;
+  hide?: boolean;
 }): SolanaConfig => {
   if (!isSolanaClusterId(defaultClusterId)) {
     throw new Error('Default cluster id must start with "solana:"');

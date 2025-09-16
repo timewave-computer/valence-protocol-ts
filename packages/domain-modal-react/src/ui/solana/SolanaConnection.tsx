@@ -5,7 +5,7 @@ import { getSolanaTargetCluster, useDomainModal } from '@/index';
 import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
 import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
 import { useAtomValue } from 'jotai';
-import { AccountCard } from '@/ui/common';
+import { AccountCard, ConnectionRoot } from '@/ui/common';
 
 export const SolanaConnection = () => {
   const solanaWallet = useAtomValue(solanaWalletAtom);
@@ -31,17 +31,18 @@ export const SolanaConnection = () => {
   }
 
   if (!isConnected || !account) {
-    throw new Error(
-      'SolanaConnection component should only be used when the user is connected to a solana wallet'
-    );
+    // this is intentional, it lets us optimistically render the component and avoids tree-shaking issues when some domain configs are not set
+    return undefined;
   }
 
   return (
-    <AccountCard
-      wallet={solanaWallet?.walletInfo}
-      address={account?.address}
-      onDisconnect={async () => disconnect()}
-      chainName={cluster?.label}
-    />
+    <ConnectionRoot title='Solana Wallet'>
+      <AccountCard
+        wallet={solanaWallet?.walletInfo}
+        address={account?.address}
+        onDisconnect={async () => disconnect()}
+        chainName={cluster?.label}
+      />
+    </ConnectionRoot>
   );
 };
