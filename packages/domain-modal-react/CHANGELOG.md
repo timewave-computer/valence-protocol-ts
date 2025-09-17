@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] YYYY-MM-DD
 
+### Fixed
+
+- You no longer need to install peer dependencies for domains you are not using. If they are omitted from the config, the modal will not attempt to instantiate them.
+- You no longer need to instantiate a `DomainClientsProvider`, the modal provider handles this internally.
+
 ## [0.3.0] 2025-09-03
 
 ### Added
