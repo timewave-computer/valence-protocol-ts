@@ -2,6 +2,12 @@
 
 This library was built to make it easier to build cross-domain applications in JS. It unites ecosystem-specific tooling, provides some helpful abstractions but gives you the flexibility to do anything more specific, and offers a configurable modal to manage connections across one or more domains you would like to support in your app.
 
+Valence Protocol TS currently has support for these ecosystems:
+
+1. Ethereum
+2. Solana
+3. Cosmos
+
 Libraries are in their early stage. APIs subject to change.
 
 For developer docs, see `docs` folder.
@@ -15,21 +21,21 @@ pnpm install @valence-protocol/domain-clients-core @valence-protocol/domain-clie
 ```
 
 2. Install peer dependencies
-   Note: for the short term you need to install dependencies for all three supported domains (solana, evm, cosmos). There is a little more work required to allow you to install peer dependencies only for the domains that you wantt. You can still choose which domains show up in the modal in the config.
+   You will need to install the required libraries for the ecosystem you would like to support.
 
 ```bash
-# EVM
+# for EVM
 pnpm install wagmi viem
 
-# Solana
+# for Solana
 pnpm install gill @wallet-ui/react
-## when interacting with frameworks that have not moved to @solana/kit (used by gill under the hood and importable through gill), you may need to install @solana/web3.js @solana/compat
+## note: when interacting with frameworks that have not moved to @solana/kit (used by gill under the hood and importable through gill), you may need to also install @solana/web3.js and @solana/compat
 
-# Cosmos
+# for Cosmos
 pnpm install graz
 ```
 
-For graz, you will also need to add a post-install script to install chains locally. They will not be packaged with you app unless you import them.
+With graz, you will also need to add a post-install script to generate chain info locally. The generated chain infos will not be packaged with your app unless you import them.
 
 ```json
 {
@@ -41,10 +47,9 @@ For graz, you will also need to add a post-install script to install chains loca
 ```
 
 3. Define config.
+   Copy [these](https://github.com/timewave-computer/valence-protocol-ts/tree/next/apps/domain-clients-example/src/config/domainClientsConfig) config files as an example. Only include the domains you are interested in working with.
 
-- Note:\* for the short term you MUST fill some config for each domain. This will be addressed soon. If you don't want the modal to support this domain, set `hide=true` in the config. You can copy [these](https://github.com/timewave-computer/valence-protocol-ts/tree/next/apps/domain-clients-example/src/config/domainClientsConfig) config files as an example, and have minimal input for the domains you don't want to support.
-
-The root config must be
+Example of the root config:
 
 ```javascript
 import { DomainClientsConfig } from '@valence-protocol/domain-clients-react';
@@ -56,30 +61,30 @@ export const domainClientsConfig: DomainClientsConfig = {
 };
 ```
 
-4. Create app providers component with `DomainClientsProvider` and `DomainModalProvider`. They are kept separate in case you want to use a custom modal altogether.
+4. Wrap your app root in a `DomainModalProvider` and import css. For Next.js 14+, you will need to wrap the providers in a client component.
 
 ```javascript
-'use client' // for Next.js 14+
+// AppProvider.tsx (for Next.js 14+)
 
+'use client'
 import { domainClientsConfig } from '@/config';
 import { ReactQueryProvider } from '@/context';
-import { DomainClientsProvider } from '@valence-protocol/domain-clients-react';
 import { DomainModalProvider } from '@valence-protocol/domain-modal-react';
 
 export const AppProviders = ({ children }: { children: React.ReactNode }) => {
   return (
-    <ReactQueryProvider>
-      <DomainClientsProvider config={domainClientsConfig}>
-        <DomainModalProvider>{children}</DomainModalProvider>
-      </DomainClientsProvider>
-    </ReactQueryProvider>
+    <...OtherProviders>
+        <DomainModalProvider config={domainClientsConfig}>
+          {children}
+        </DomainModalProvider>
+    <...OtherProviders>
   );
 };
 ```
 
-5. Wrap root project in providers and import css
-
 ```javascript
+// layout.tsx or similar application root
+
 import '@valence-protocol/domain-modal-react/styles.css';
 
 const Root = () => {
@@ -105,21 +110,37 @@ const { showModal } = useDomainModal();
 
 ### `domain-clients-core`
 
-Pure-JS code that abstract common, implementation-specific methods away. They have a few pre-built operations for you (such as transferring tokens and reading balances). To do anything not pre-built, you can call `getClient` on the respective client and perform anything else with it. More common use patterns will be added over time.
+Pure-JS code that abstract common, implementation-specific methods. There are a few pre-built operations (such as transferring tokens and reading balances). To do anything not pre-built, you can call `getClient` on the respective client and perform anything you need. Commonly used patterns will be added as client functions over time.
 
-The imports per-domain are tree-shakeable.
+Imports per-domain are tree-shakeable. For example:
+
+```javascript
+import { EvmClient } from '@valence-protocol/domain-clients-core/evm';
+```
 
 ### `domain-clients-react`
 
-A React provider and hooks to access the config via context within the app, and use domain clients via react hooks.
+React hooks and context provider to access the config and use domain clients in a react app.
 
-The imports per-domain are tree-shakeable.
+The imports per-domain are tree-shakeable. For example:
+
+```javascript
+import {
+  useSigningSolanaClient,
+} from '@valence-protocol/domain-clients-react/solana';
+
+// component
+const solanaSigningClient = useSolanaSigningClient({clusterId:'solana:devent'})
+solanaSigningClient.getSolBalance({...})
+solanaSigningClient.transfer({...})
+
+```
 
 ### `domain-modal-react`
 
-A React provider and component that allows you to support connecting wallets and accessing the state. It is a loose wrapper around the domain-specific UI hooks.
+A React UI component and context provider that allows you to manage wallet connections across multiple domains. It is a loose wrapper around domain-specific UI libraries. Based on the domain clients configuration, it will render the appropriate wallet modal.
 
-This is NOT YET tree shakeable. It will be in the future.
+The modal will omit dependencies for ecosystems excluded from in the configuration.
 
 ## How to use the libraries
 
@@ -151,13 +172,13 @@ If your app is wrapped in the DomainClientsProvider, you can simply call `useXSi
 
 ```javascript
 import {
-  solanaClient,
+  useSolanaClient,
   useSigningSolanaClient,
   useCosmosClient,
   useSigningCosmosClient,
   useEvmClient,
   useSigningEvmClient,
-} from '@valence-protocol/domain-clients-react/solana';
+} from '@valence-protocol/domain-clients-react';
 
 const solananClient = useSolanaClient({ clusterId });
 const signingSolanaClient = useSigningSolanaClient({ clusterId });
@@ -199,7 +220,7 @@ const config = useDomainConfig();
 
 ### Domain-specific hooks
 
-Use various domain-specific utils as needed. They will work as expected because we render their providers under the hod. The implementation and naming for each varies. You can dig into the tool-specific docs as needed.
+Use various domain-specific hooks and utils as needed. They will work as expected because we render their providers under the hod. The implementation and naming for each varies. You can find some examples of how these are used in the example app, but it is suggested to consult the individual docs.
 
 ```javascript
 import { useAccount as useEvmAccount } from 'wagmi';
@@ -207,4 +228,6 @@ import { useAccount as useCosmosAccount } from 'graz';
 import { useWalletUi as useSolanaAccount } from '@wallet-ui/react';
 ```
 
-This is about it! Feel free to raise issues.
+## Contact us
+
+Feel free to raise issues, or contact the team on [Telegram](https://t.me/+Sig6DYQn-Ec0NTZh).
