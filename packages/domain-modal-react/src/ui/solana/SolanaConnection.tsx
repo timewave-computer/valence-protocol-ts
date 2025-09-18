@@ -10,6 +10,7 @@ import { AccountCard, ConnectionRoot } from '@/ui/common';
 export const SolanaConnection = () => {
   const solanaWallet = useAtomValue(solanaWalletAtom);
   const { disconnect, account } = useWalletUi();
+  console.log('solanaaccount in modal', account);
   const isConnected = useIsSolanaChainConnected();
   const config = useSolanaConfig();
   const { targetChains } = useDomainModal();
