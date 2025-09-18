@@ -19,7 +19,7 @@ export const SolanaOps = async () => {
       clusterId: solanaUsdc.clusterId,
     });
   } catch (error) {
-    console.error('Error fetching USDC balance on Solana', error);
+    console.warn('Error fetching USDC balance on Solana', error);
   }
 
   return (

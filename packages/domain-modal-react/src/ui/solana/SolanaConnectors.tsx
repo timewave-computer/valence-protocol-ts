@@ -33,6 +33,7 @@ export const SolanaConnectors = ({ onSuccess }: { onSuccess?: () => void }) => {
       {solanaConnectors.map(connector => {
         return (
           <ConnectSolanaWalletButton
+            key={connector.walletInfo.walletName}
             connector={connector}
             onSuccess={onSuccess}
           />
