@@ -1,11 +1,6 @@
 'use client';
 import { useCallback, useMemo } from 'react';
 import { useSetAtom } from 'jotai';
-import {
-  type UiWallet,
-  type UiWalletAccount,
-  useWalletUi,
-} from '@wallet-ui/react';
 import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
 import { ChainType } from '@/hooks/common';
 import {
@@ -13,9 +8,10 @@ import {
   type SolanaConnector,
   useKeepSolanaWalletStateSynced,
 } from '@/hooks/solana';
+import { useWallet, type Wallet } from '@solana/wallet-adapter-react';
 
 export const useSolanaConnectors = (): SolanaConnector[] => {
-  const { wallets, connect } = useWalletUi();
+  const { wallets, select } = useWallet();
 
   useKeepSolanaWalletStateSynced();
 
@@ -28,22 +24,21 @@ export const useSolanaConnectors = (): SolanaConnector[] => {
     );
   }
 
-  const connectWallet = useCallback(
-    async (wallet: UiWallet, account: UiWalletAccount) => {
-      connect(account);
-      setSolanaWallet({
-        id: account.address,
-        walletInfo: {
-          walletName: wallet.name,
-          walletPrettyName: wallet.name,
-          logo: wallet.icon,
-        },
-        chainType: ChainType.Solana,
-      });
-    },
-    []
-  );
+  const connectWallet = useCallback(async (wallet: Wallet) => {
+    console.log('connecting wallet', wallet);
+    await wallet.adapter.connect();
+    setSolanaWallet({
+      id: wallet.adapter.name,
+      walletInfo: {
+        walletName: wallet.adapter.name,
+        walletPrettyName: wallet.adapter.name,
+        logo: wallet.adapter.icon,
+      },
+      chainType: ChainType.Solana,
+    });
+  }, []);
 
+  console.log('wallets', wallets);
   const connectors: SolanaConnector[] = useMemo(() => {
     if (!wallets) {
       return [];
@@ -51,19 +46,24 @@ export const useSolanaConnectors = (): SolanaConnector[] => {
 
     const connectorList: SolanaConnector[] = [];
 
-    wallets.forEach(wallet => {
-      connectorList.push({
-        chainType: ChainType.Solana,
-        walletInfo: {
-          walletName: wallet.name,
-          walletPrettyName: wallet.name,
-          logo: wallet.icon,
-        },
-        wallet: wallet,
+    wallets
+      .filter(wallet => wallet.readyState === 'Installed')
+      .forEach(wallet => {
+        connectorList.push({
+          chainType: ChainType.Solana,
+          walletInfo: {
+            walletName: wallet.adapter.name,
+            walletPrettyName: wallet.adapter.name,
+            logo: wallet.adapter.icon,
+          },
+          wallet: wallet,
+          connect: () => connectWallet(wallet),
+        });
       });
-    });
     return connectorList;
   }, [wallets, connectWallet]);
+
+  console.log('connectors', connectors);
 
   return connectors;
 };

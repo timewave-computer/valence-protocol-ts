@@ -9,21 +9,21 @@ import { cn } from '@/ui/util';
 interface SelectWalletButtonProps {
   wallet: CosmosConnector | EvmConnector | SolanaConnector;
   walletLogoClassName?: string;
-  onConnect: (args?: unknown) => Promise<void>;
+  onClick: (args?: unknown) => Promise<void>;
   children?: React.ReactNode;
   className?: string;
 }
 
 export const SelectWalletButton = ({
   wallet,
-  onConnect,
+  onClick,
   walletLogoClassName,
   children,
   className,
 }: SelectWalletButtonProps) => {
   return (
     <button
-      onClick={onConnect}
+      onClick={onClick}
       className={cn(
         'w-full flex flex-col gap-2 items-start justify-center px-4 py-3 rounded-sm bg-gray-100 hover:bg-gray-200  transition-colors duration-200',
         className

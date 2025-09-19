@@ -26,6 +26,7 @@
     "@valence-protocol/domain-clients-react": "workspace:*",
     "@valence-protocol/domain-modal-react": "workspace:*",
     "@wallet-ui/react": "^1.1.1",
+    "@solana/wallet-adapter-react": "^0.15.39",
     "bn.js": "^5.2.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -36,7 +37,8 @@
     "react": "18.3.1",
     "react-dom": "18.3.0",
     "viem": "^2.33.2",
-    "wagmi": "^2.16.0"
+    "wagmi": "^2.16.0",
+    "bs58": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

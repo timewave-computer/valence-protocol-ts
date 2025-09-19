@@ -9,6 +9,7 @@ import { SolanaAccountGuard } from '@/components/solana';
 import { solanaUsdc, solanaUser } from '@/const';
 import { getSolanaSplBalance } from '@/server';
 import { Suspense } from 'react';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export const SolanaOps = async () => {
   let usdcBalance;

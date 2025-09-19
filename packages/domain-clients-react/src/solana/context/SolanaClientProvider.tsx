@@ -1,6 +1,7 @@
 'use client';
 import { WalletUi } from '@wallet-ui/react';
 import { useDomainConfig } from '@/common';
+import { WalletProvider } from '@solana/wallet-adapter-react';
 
 export const SolanaClientProvider = ({
   children,
@@ -12,5 +13,10 @@ export const SolanaClientProvider = ({
   if (!config.solana) {
     return children;
   }
-  return <WalletUi config={config.solana}>{children}</WalletUi>;
+  const wallets: any[] = [];
+  return (
+    <WalletUi config={config.solana}>
+      <WalletProvider wallets={wallets}>{children}</WalletProvider>
+    </WalletUi>
+  );
 };

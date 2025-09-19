@@ -3,13 +3,13 @@ import {
   type SolanaBaseClientArgs,
   type SolanaTokenProgramId,
 } from '@/solana';
+import { Adapter } from '@solana/wallet-adapter-base';
 import {
   Address,
   Instruction,
   TransactionSigner,
   address,
   createTransaction,
-  signTransactionMessageWithSigners,
   type TransactionVersion,
   type Signature,
 } from 'gill';
@@ -22,15 +22,20 @@ import {
 } from 'gill/programs';
 
 export type SigningSolanaClientArgs = SolanaBaseClientArgs & {
-  signer: TransactionSigner;
+  adapter: Adapter;
 };
 
 export class SigningSolanaClient extends SolanaBaseClient {
-  public readonly signer: TransactionSigner;
+  public readonly adapter: Adapter;
+  public readonly publicKey: string;
 
   constructor(args: SigningSolanaClientArgs) {
     super(args);
-    this.signer = args.signer;
+    this.adapter = args.adapter;
+    if (!args.adapter.publicKey) {
+      throw new Error('Public key is required');
+    }
+    this.publicKey = args.adapter.publicKey.toString();
   }
 
   async transferSol({
@@ -44,7 +49,7 @@ export class SigningSolanaClient extends SolanaBaseClient {
   }): Promise<Signature> {
     const instructions = [
       getTransferSolInstruction({
-        source: this.signer,
+        source: address(this.publicKey),
         destination: toAddress,
         amount,
       }),
@@ -75,11 +80,11 @@ export class SigningSolanaClient extends SolanaBaseClient {
       destination,
       tokenProgram
     );
-    const sourceAddress = address(this.signer.address);
+    const sourceAddress = address(this.publicKey);
 
     const sourceAta = await getAssociatedTokenAccountAddress(
       tokenMintAddress,
-      this.signer,
+      this.publicKey,
       tokenProgram
     );
 
@@ -87,14 +92,14 @@ export class SigningSolanaClient extends SolanaBaseClient {
       // create idempotent will gracefully fail if the ata already exists. this is the gold standard!
       getCreateAssociatedTokenIdempotentInstruction({
         mint: tokenMintAddress,
-        payer: this.signer,
+        payer: this.publicKey,
         tokenProgram,
         owner: sourceAddress,
         ata: sourceAta,
       }),
       getTransferInstruction({
         source: sourceAta,
-        authority: this.signer,
+        authority: this.publicKey,
         destination: destinationAta,
         amount: amount,
       }),
@@ -119,7 +124,7 @@ export class SigningSolanaClient extends SolanaBaseClient {
     const tx = createTransaction({
       latestBlockhash,
       version: version,
-      feePayer: this.signer,
+      feePayer: this.publicKey,
       instructions,
     });
 

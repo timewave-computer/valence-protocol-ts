@@ -31,7 +31,7 @@ export const CosmosConnectors = ({ onSuccess }: { onSuccess?: () => void }) => {
             )}
             key={connector.walletInfo.walletName}
             wallet={connector}
-            onConnect={async () => {
+            onClick={async () => {
               await connector.connect(chainIdToConnect);
               onSuccess?.();
             }}

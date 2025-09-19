@@ -30,7 +30,7 @@ export const EvmConnectors = ({ onSuccess }: { onSuccess?: () => void }) => {
         <SelectWalletButton
           key={connector.walletInfo.walletName}
           wallet={connector}
-          onConnect={async () => {
+          onClick={async () => {
             await connector.connect(chainIdToConnect);
             onSuccess?.();
           }}

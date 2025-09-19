@@ -34,22 +34,26 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {},
   "peerDependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.34.0",
     "@cosmjs/encoding": "^0.34.0",
     "@cosmjs/proto-signing": "^0.34.0",
     "@cosmjs/stargate": "^0.34.0",
+    "@solana/wallet-adapter-react": "^0.15.39",
+    "@valence-protocol/domain-clients-core": "workspace:*",
+    "@wallet-ui/react": "^1.1.1",
+    "bs58": "^6.0.0",
+    "graz": "^0.3.3",
     "react": "18.3.1",
     "react-dom": "18.3.0",
-    "wagmi": "^2.16.0",
-    "@wallet-ui/react": "^1.1.1",
-    "graz": "^0.3.3",
-    "@valence-protocol/domain-clients-core": "workspace:*"
+    "wagmi": "^2.16.0"
   },
   "devDependencies": {
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
     "tsup": "^8.5.0"
+  },
+  "dependencies": {
+    "@solana/react": "^3.0.3"
   }
 }

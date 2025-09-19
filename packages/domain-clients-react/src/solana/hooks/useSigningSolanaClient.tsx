@@ -3,7 +3,8 @@ import { useSolanaConfig } from '@/solana/hooks';
 import { SigningSolanaClient } from '@valence-protocol/domain-clients-core/solana';
 import { useMemo } from 'react';
 import { SolanaClusterId } from '@wallet-ui/react';
-import { useWalletUiSigner } from '@wallet-ui/react';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useWalletAccountTransactionSigner } from '@solana/react';
 
 /***
  * !!! NOTE: There is a bug where useWalletUiSigner() expects an account in early rendering and throws an error
@@ -17,10 +18,11 @@ export const useSigningSolanaClient = ({
 }): SigningSolanaClient | undefined => {
   const config = useSolanaConfig();
 
-  const signer = useWalletUiSigner();
+  const { wallet } = useWallet();
+  const signer = useWalletAccountTransactionSigner(account, clusterId);
 
   const signingClient = useMemo(() => {
-    if (!signer) {
+    if (!wallet?.adapter) {
       return;
     }
     const cluster = config.clusters.find(cluster => cluster.id === clusterId);
@@ -30,9 +32,9 @@ export const useSigningSolanaClient = ({
 
     return new SigningSolanaClient({
       rpcUrl: cluster.urlOrMoniker,
-      signer,
+      signer: wallet.adapter,
     });
-  }, [config, clusterId, signer]);
+  }, [config, clusterId, wallet?.adapter]);
 
   return signingClient;
 };
