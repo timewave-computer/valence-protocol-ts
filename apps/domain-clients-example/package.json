@@ -1,7 +1,7 @@
 {
   "name": "@valence-protocol/domain-clients-example",
   "description": "Example app for Valence Protocol domain clients",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",

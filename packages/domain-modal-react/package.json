@@ -1,6 +1,6 @@
 {
   "name": "@valence-protocol/domain-modal-react",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "React hooks and components for connecting to blockchains across one or more domains.",
   "main": "dist/index.js",
   "exports": {

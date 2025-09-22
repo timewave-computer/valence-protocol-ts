@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- 80d52c0: Decouple domain dependencies. You can now install only the domains you need.
+
+### Patch Changes
+
+- Updated dependencies [80d52c0]
+  - @valence-protocol/domain-clients-core@0.4.0
+  - @valence-protocol/domain-clients-react@0.4.0
+
+# Changelog Archive (pre-automation)
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
