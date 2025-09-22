@@ -29,12 +29,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --link-workspace-packages=false
 
-      - name: Create version PR
-        uses: changesets/action@v1
+      - name: Run version-packages
+        run: pnpm run version-packages
+
+      - name: Create Version Update Pull Request
+        uses: peter-evans/create-pull-request@v5
         with:
-          version: pnpm run version-packages
-          commit: 'chore(release): bump versions'
-          title: 'chore(release): version packages'
-          branch: 'version-packages'
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT }}
+          commit-message: 'chore: version packages'
+          branch: 'release/version-packages'
+          title: 'chore: version packages'
+          body: 'Automated PR with updated package versions from changesets'
