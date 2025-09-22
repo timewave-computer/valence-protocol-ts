@@ -36,5 +36,7 @@ jobs:
           commit: 'chore(release): bump versions'
           title: 'chore(release): version packages'
           branch: 'release/version-packages'
+          baseBranch: main
+
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
