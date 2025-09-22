@@ -12,6 +12,8 @@
   - @valence-protocol/domain-clients-core@0.4.0
   - @valence-protocol/domain-clients-react@0.4.0
 
+# Changelog Archive (pre-automation)
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),

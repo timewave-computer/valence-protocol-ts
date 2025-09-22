@@ -4,7 +4,9 @@
 
 ### Minor Changes
 
-- 80d52c0: Decouple domain dependencies. You can now install only the domains you need.
+- made `domainClientsConfig.hide` an optional argument
+
+# Changelog Archive (pre-automation)
 
 All notable changes to this project will be documented in this file.
 
