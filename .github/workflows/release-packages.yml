@@ -2,6 +2,9 @@ name: Release Packages
 
 on:
   workflow_dispatch: {} # run manually from GitHub UI
+  push:
+    branches:
+      - '**'
 
 permissions:
   contents: write
