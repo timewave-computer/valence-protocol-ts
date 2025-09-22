@@ -45,7 +45,7 @@
     "wagmi": "^2.16.0",
     "@wallet-ui/react": "^1.1.1",
     "graz": "^0.3.3",
-    "@valence-protocol/domain-clients-core": "workspace:*"
+    "@valence-protocol/domain-clients-core": "0.4.0"
   },
   "devDependencies": {
     "@types/react": "18.3.1",
