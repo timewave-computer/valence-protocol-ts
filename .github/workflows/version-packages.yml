@@ -35,6 +35,6 @@ jobs:
           version: pnpm run version-packages
           commit: 'chore(release): bump versions'
           title: 'chore(release): version packages'
-          branch: 'release/version-packages'
+          branch: 'version-packages'
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
