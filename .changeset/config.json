@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
   "changelog": [
-    "@changesets/changelog-github",
+    "@changesets/changelog-git",
     { "repo": "timewave-computer/valence-protocol-ts" }
   ],
   "commit": false,
@@ -9,6 +9,6 @@
   "linked": [],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "patch",
+  "updateInternalDependencies": "minor",
   "ignore": []
 }
