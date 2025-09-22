@@ -1,0 +1,41 @@
+name: Version Packages
+
+on:
+  workflow_dispatch: {} # run manually from GitHub UI
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create version PR
+        uses: changesets/action@v1
+        with:
+          version: pnpm run version-packages
+          commit: 'chore(release): bump versions'
+          title: 'chore(release): version packages'
+          branch: 'release/version-packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
