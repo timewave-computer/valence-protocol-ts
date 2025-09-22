@@ -37,6 +37,6 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           commit-message: 'chore: version packages'
-          branch: 'version-packages-update'
+          branch: 'release/version-packages'
           title: 'chore: version packages'
           body: 'Automated PR with updated package versions from changesets'
