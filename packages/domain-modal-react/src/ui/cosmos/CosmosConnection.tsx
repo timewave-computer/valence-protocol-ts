@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
-import { AccountCard } from '@/ui/common';
+import { AccountCard, ConnectionRoot } from '@/ui/common';
 import { cosmosWalletAtom } from '@/hooks';
 import { useAccount, disconnect } from 'graz';
 import { useCosmosConfig } from '@valence-protocol/domain-clients-react';
@@ -23,31 +23,32 @@ export const CosmosConnection = () => {
   }
 
   if (!isConnected) {
-    throw new Error(
-      'CosmosConnection component should only be used when the user is connected to a cosmos wallet'
-    );
+    // this is intentional, it lets us optimistically render the component and avoids tree-shaking issues when some domain configs are not set
+    return undefined;
   }
 
   return (
-    <div className='flex flex-col'>
-      {config.grazOptions.chains.map(chainInfo => {
-        const chainId = chainInfo.chainId;
-        const account = accounts?.[chainId];
-        if (account) {
-          return (
-            <AccountCard
-              walletLogoClassName={cn(
-                walletLogoScale(cosmosWallet?.walletInfo?.walletName ?? '')
-              )}
-              key={chainId}
-              wallet={cosmosWallet?.walletInfo}
-              address={account.bech32Address}
-              chainName={chainInfo.chainName}
-              onDisconnect={async () => disconnect({ chainId })}
-            />
-          );
-        }
-      })}
-    </div>
+    <ConnectionRoot title='Cosmos Wallet'>
+      <div className='flex flex-col'>
+        {config.grazOptions.chains.map(chainInfo => {
+          const chainId = chainInfo.chainId;
+          const account = accounts?.[chainId];
+          if (account) {
+            return (
+              <AccountCard
+                walletLogoClassName={cn(
+                  walletLogoScale(cosmosWallet?.walletInfo?.walletName ?? '')
+                )}
+                key={chainId}
+                wallet={cosmosWallet?.walletInfo}
+                address={account.bech32Address}
+                chainName={chainInfo.chainName}
+                onDisconnect={async () => disconnect({ chainId })}
+              />
+            );
+          }
+        })}
+      </div>
+    </ConnectionRoot>
   );
 };

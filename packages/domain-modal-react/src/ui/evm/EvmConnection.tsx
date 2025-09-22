@@ -3,7 +3,7 @@
 import { useAccount, useDisconnect } from 'wagmi';
 import { useAtomValue } from 'jotai';
 import { evmWalletAtom } from '@/hooks';
-import { AccountCard } from '@/ui/common';
+import { AccountCard, ConnectionRoot } from '@/ui/common';
 import { useEvmConfig } from '@valence-protocol/domain-clients-react';
 
 export const EvmConnection = () => {
@@ -20,17 +20,18 @@ export const EvmConnection = () => {
   }
 
   if (!isConnected || !account) {
-    throw new Error(
-      'EvmConnection component should only be used when the user is connected to an evm wallet'
-    );
+    // this is intentional, it lets us optimistically render the component and avoids tree-shaking issues when some domain configs are not set
+    return undefined;
   }
 
   return (
-    <AccountCard
-      wallet={evmWallet?.walletInfo}
-      address={account.address}
-      chainName={account.chain?.name}
-      onDisconnect={async () => disconnect()}
-    />
+    <ConnectionRoot title='Ethereum Wallet'>
+      <AccountCard
+        wallet={evmWallet?.walletInfo}
+        address={account.address}
+        chainName={account.chain?.name}
+        onDisconnect={async () => disconnect()}
+      />
+    </ConnectionRoot>
   );
 };

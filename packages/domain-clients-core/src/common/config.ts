@@ -1,3 +1,3 @@
 export type DomainClientConfig = {
-  hide: boolean;
+  hide?: boolean;
 };
