@@ -1,17 +1,29 @@
 # Contributing
 
+Do all operations inside `nix develop`.
+
 ## Branches
 
 - `main` for stable, published code
-- `next` for new, unreleased features
-- `feature/<name>` for per-feature branches off `next`
-- `release/<name>` for releases, or `patch/name` for direct updates to main
+- `feature/<name>` for per-feature branches off `main`
 
 ## Contributing to packages
 
-Each package change must be accompanied with an `Unreleased` changelog line.
+This project uses [changesets](https://github.com/changesets/changesets) to document changes and manage releases to npm.
 
-Types of changes
+Each package change must be accompanied with a changeset entry.
+
+To add a changeset to your PR:
+
+```bash
+nix develop
+pnpm changeset
+## Follow the interactive prompts to select packages and write a description.
+## You can edit the generated markdown file in `.changeset/` later if needed.
+## Commit the newly created file.
+```
+
+Please use this format for writing changesets:
 
 - `Added` for new features.
 - `Changed` for changes in existing functionality.
@@ -20,68 +32,16 @@ Types of changes
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
-## Releasing packages.
+## Releasing packages
 
 ### Steps
 
-_Note:_ if releasing more than 1 package, all can be in the same PR, but if a package depends on another, make sure to update the version of the dependant package before releasing it, and clean install and build again.
+1. Run the github action `Version Packages`
 
-1. Open a PR to merge `next` into `main`. Can do regular merge, do not squash the commits. Review and merge.
+- If there are changesets in the `.changesets` folder, the action will bump all versions and open a PR.
+- Review the PR (carefully!) to make sure all versions are accurate. It is safe to pull the branch and make edits to version numbers
+- Merge the PR
 
-2. Set up release environment
+2. Run the github action `Release Packages`
 
-```bash
-nix develop
-git checkout main
-git pull origin
-git checkout -b release/<name>
-rm -rf node_modules
-pnpm install
-turbo build
-```
-
-3. `cd` into package root
-
-4. Generate new version
-
-```bash
-# Patch release (0.0.1 → 0.0.2)
-# backward-compatible bug fixes
-npm version patch
-
-# Minor release (0.0.1 → 0.1.0)
-# backward-compatible new features
-npm version minor
-
-# Major release (0.1.0 → 1.0.0)
-# backward-incompatible changes
-npm version major
-
-# Or set an exact version
-npm version 0.2.0
-```
-
-5. Update `CHANGELOG.md` with new version.
-
-6. Publish to npm
-
-**Note:** You must have write access to the npm scope `@valence-protocol`. Run the publish command and follow the prompts to authenticate yourself via CLI.
-
-```bash
-cd <package root>
-npm publish --access public
-```
-
-7. Open a PR from your `release/name` branch -> `main` with:
-
-- migrated changelog
-- package `version` updated in package.json
-- `pnpm-lock.yaml` should change if packages depend on eachother
-
-8. Reset `next` branch
-
-```bash
-git checkout next
-git merge origin/main
-git push origin next
-```
+- This will build all packages with their dependencies, and push the bundles to npm with the version specified in their `package.json`
