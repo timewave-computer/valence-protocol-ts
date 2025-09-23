@@ -18,9 +18,9 @@ To add a changeset to your PR:
 ```bash
 nix develop
 pnpm changeset
-## run individually for each package
-## write description (you can edit it in the file system later)
-## commit file
+## Follow the interactive prompts to select packages and write a description.
+## You can edit the generated markdown file in `.changeset/` later if needed.
+## Commit the newly created file.
 ```
 
 Please use this format for writing changesets:
