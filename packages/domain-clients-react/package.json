@@ -41,7 +41,7 @@
     "@cosmjs/proto-signing": "^0.34.0",
     "@cosmjs/stargate": "^0.34.0",
     "react": "18.3.1",
-    "react-dom": "18.3.0",
+    "react-dom": "18.3.1",
     "wagmi": "^2.16.0",
     "@wallet-ui/react": "^1.1.1",
     "graz": "^0.3.3",
