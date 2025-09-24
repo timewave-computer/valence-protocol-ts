@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- bfd9177: Bump react-dom dependency from 18.3.0->18.3.1
+
 ## 0.4.0
 
 ### Minor Changes
