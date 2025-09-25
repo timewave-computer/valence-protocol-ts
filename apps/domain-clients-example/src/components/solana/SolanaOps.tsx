@@ -7,17 +7,18 @@ import {
 import { devnet, mainnet } from '@/config/domainClientsConfig/solana.config';
 import { SolanaAccountGuard } from '@/components/solana';
 import { solanaUsdc, solanaUser } from '@/const';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { getSolanaSplBalance } from '@/server';
 import { Suspense } from 'react';
 
 export const SolanaOps = async () => {
   let usdcBalance;
   try {
-    usdcBalance = await getSolanaSplBalance({
-      address: solanaUser,
-      mintAddress: solanaUsdc.mintAddress,
-      clusterId: solanaUsdc.clusterId,
-    });
+    // usdcBalance = await getSolanaSplBalance({
+    //   address: solanaUser,
+    //   mintAddress: solanaUsdc.mintAddress,
+    //   clusterId: solanaUsdc.clusterId,
+    // });
   } catch (error) {
     console.error('Error fetching USDC balance on Solana', error);
   }

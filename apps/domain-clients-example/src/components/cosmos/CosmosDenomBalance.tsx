@@ -62,7 +62,7 @@ export const CosmosDenomBalance = ({
     if (error) {
       console.error(`Error fetching ${denom} balance on ${chainId}`, error);
     }
-  }, [error]);
+  }, [error, denom, chainId]);
 
   return (
     <BalanceView

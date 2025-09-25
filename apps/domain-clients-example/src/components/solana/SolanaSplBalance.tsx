@@ -33,7 +33,7 @@ export const SolanaSplBalance = ({
       userAddress: inputAddress,
     });
     return balance;
-  }, [inputAddress, tokenMintAddress, solanaClient, decimals]);
+  }, [inputAddress, tokenMintAddress, solanaClient]);
 
   const {
     data: balance,
