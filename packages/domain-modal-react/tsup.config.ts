@@ -9,6 +9,14 @@ export default defineConfig({
   dts: true, // emit .d.ts using `tsc`
   sourcemap: true,
   clean: true,
-  external: ['react', 'react-dom'], // exclude packages from bundle (peer dependencies)
+  external: [
+    'react',
+    'react-dom',
+    'wagmi',
+    'viem',
+    'gill',
+    'graz',
+    '@wallet-ui/react',
+  ], // exclude packages from bundle (peer dependencies)
   target: 'es2017', // which version of ecmascript to compile to
 });
