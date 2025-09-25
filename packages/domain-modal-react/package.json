@@ -21,11 +21,12 @@
   "peerDependencies": {
     "@valence-protocol/domain-clients-core": "0.4.0",
     "@valence-protocol/domain-clients-react": "0.4.1",
-    "@wallet-ui/react": "^1.1.1",
-    "graz": "^0.3.3",
+    "@tanstack/react-query": "^5.90.2",
+    "@wallet-ui/react": "1.1.1",
+    "graz": "0.3.6",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "wagmi": "^2.16.0"
+    "wagmi": "2.17.4"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",

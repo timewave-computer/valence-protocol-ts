@@ -40,18 +40,24 @@
     "zod": "^3.22.2"
   },
   "peerDependencies": {
-    "@cosmjs/amino": "^0.34.0",
-    "@cosmjs/cosmwasm-stargate": "^0.34.0",
-    "@cosmjs/encoding": "^0.34.0",
-    "@cosmjs/math": "^0.34.0",
-    "@cosmjs/proto-signing": "^0.34.0",
-    "@cosmjs/stargate": "^0.34.0",
-    "@wagmi/core": "^2.16.0",
-    "gill": "^0.10.3",
-    "graz": "^0.3.3",
-    "viem": "^2.33.0"
+    "@cosmjs/amino": "0.32.4",
+    "@cosmjs/cosmwasm-stargate": "^0.32.4",
+    "@cosmjs/encoding": "0.32.4",
+    "@cosmjs/math": "0.32.4",
+    "@cosmjs/proto-signing": "0.32.4",
+    "@cosmjs/stargate": "0.32.4",
+    "@wagmi/core": "2.21.1",
+    "gill": "0.10.2",
+    "graz": "0.3.6",
+    "viem": "2.37.8",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "tsup": "^8.5.0"
+  },
+  "peerDependenciesMeta": {
+    "ws": {
+      "optional": true
+    }
   }
 }
