@@ -24,6 +24,7 @@
     "@valence-protocol/domain-clients-core": "workspace:*",
     "@valence-protocol/domain-clients-react": "workspace:*",
     "@valence-protocol/domain-modal-react": "workspace:*",
+    "use-sync-external-store": "1.5.0",
     "@wallet-ui/react": "^1.1.1",
     "bn.js": "^5.2.2",
     "class-variance-authority": "^0.7.1",
@@ -37,7 +38,8 @@
     "tailwind-merge": "^3.3.1",
     "viem": "2.37.8",
     "wagmi": "^2.17.5",
-    "zod": "3.25.76"
+    "zod": "3.25.76",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
