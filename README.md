@@ -29,8 +29,9 @@ pnpm install @tanstack/react-query ## general peer dependency
 pnpm install wagmi viem
 
 # for Solana
-pnpm install gill @wallet-ui/react
+pnpm install gill @wallet-ui/react ws
 ## note: when interacting with frameworks that have not moved to @solana/kit (used by gill under the hood and importable through gill), you may need to also install @solana/web3.js and @solana/compat
+## ws is optional if you do not want to use the websocket features in gill/solana kit
 
 # for Cosmos
 pnpm install graz
