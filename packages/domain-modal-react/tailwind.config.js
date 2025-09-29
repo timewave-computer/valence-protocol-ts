@@ -4,6 +4,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  prefix: 'vdm-',
   plugins: [],
 };
