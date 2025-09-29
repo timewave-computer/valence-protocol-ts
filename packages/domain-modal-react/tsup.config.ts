@@ -9,6 +9,13 @@ export default defineConfig({
   dts: true, // emit .d.ts using `tsc`
   sourcemap: true,
   clean: true,
-  external: ['react', 'react-dom'], // exclude packages from bundle (peer dependencies)
+  treeshake: true,
+  esbuildOptions(options) {
+    // this makes sure all peer deps (including react) are external
+    options.external = [
+      ...(options.external ?? []),
+      ...Object.keys(require('./package.json').peerDependencies),
+    ];
+  },
   target: 'es2017', // which version of ecmascript to compile to
 });

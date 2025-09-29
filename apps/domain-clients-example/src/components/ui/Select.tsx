@@ -19,7 +19,6 @@ export const Select = ({
   onValueChange,
   defaultValue,
   disabled,
-  className,
 }: SelectProps) => {
   return (
     <SelectPrimitive.Root

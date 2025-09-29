@@ -18,6 +18,7 @@ For developer docs, see `docs` folder.
 
 ```bash
 pnpm install @valence-protocol/domain-clients-core @valence-protocol/domain-clients-react @valence-protocol/domain-modal-react
+pnpm install @tanstack/react-query ## general peer dependency
 ```
 
 2. Install peer dependencies
@@ -28,8 +29,9 @@ pnpm install @valence-protocol/domain-clients-core @valence-protocol/domain-clie
 pnpm install wagmi viem
 
 # for Solana
-pnpm install gill @wallet-ui/react
+pnpm install gill @wallet-ui/react ws
 ## note: when interacting with frameworks that have not moved to @solana/kit (used by gill under the hood and importable through gill), you may need to also install @solana/web3.js and @solana/compat
+## ws is optional if you do not want to use the websocket features in gill/solana kit
 
 # for Cosmos
 pnpm install graz
@@ -61,7 +63,7 @@ export const domainClientsConfig: DomainClientsConfig = {
 };
 ```
 
-4. Wrap your app root in a `DomainModalProvider` and import css. For Next.js 14+, you will need to wrap the providers in a client component.
+4. Wrap your app root in a `DomainModalProvider` and `ReactQueryProvider` and import css. For Next.js 14+, you will need to wrap the providers in a client component.
 
 ```javascript
 // AppProvider.tsx (for Next.js 14+)
@@ -73,9 +75,11 @@ import { DomainModalProvider } from '@valence-protocol/domain-modal-react';
 export const AppProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <...OtherProviders>
+      <ReactQueryProvder {...queryClient}> // TODO: link docs for setting this up
         <DomainModalProvider config={domainClientsConfig}>
           {children}
         </DomainModalProvider>
+        </ReactQueryProvider>
     <...OtherProviders>
   );
 };
