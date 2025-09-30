@@ -18,8 +18,11 @@ export const SolanaConnection = () => {
   const { clusters, setCluster, cluster } = useWalletUiCluster();
 
   useEffect(() => {
+    if (!config.solana) {
+      return;
+    }
     const targetClusterId =
-      getSolanaTargetCluster(targetChains) ?? config.solana?.defaultClusterId;
+      getSolanaTargetCluster(targetChains) ?? config.solana.defaultClusterId;
     const targetCluster = clusters.find(c => c.id === targetClusterId);
     if (targetCluster) {
       setCluster(targetCluster.id);
