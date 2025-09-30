@@ -1,9 +1,7 @@
 name: Build packages
 
 on:
-  push:
-    branches: [main]
-  pull_request:
+  workflow_dispatch: {} # run manually from GitHub UI
 
 jobs:
   build:
