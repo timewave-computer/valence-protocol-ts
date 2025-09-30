@@ -1,6 +1,6 @@
 {
   "name": "@valence-protocol/domain-modal-react",
-  "version": "1.0.0",
+  "version": "0.5.0",
   "description": "React hooks and components for connecting to blockchains across one or more domains.",
   "main": "dist/index.js",
   "exports": {
@@ -20,7 +20,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@valence-protocol/domain-clients-core": "0.5.0",
-    "@valence-protocol/domain-clients-react": "1.0.0",
+    "@valence-protocol/domain-clients-react": "0.5.0",
     "@tanstack/react-query": "^5.90.2",
     "@wallet-ui/react": "1.1.1",
     "graz": "0.3.4",

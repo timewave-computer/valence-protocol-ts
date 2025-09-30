@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0
+## 0.5.0
 
 ### Minor Changes
 
@@ -13,7 +13,7 @@
 - Updated dependencies [b84d219]
 - Updated dependencies [b84d219]
   - @valence-protocol/domain-clients-core@0.5.0
-  - @valence-protocol/domain-clients-react@1.0.0
+  - @valence-protocol/domain-clients-react@0.5.0
 
 ## 0.4.1
 
