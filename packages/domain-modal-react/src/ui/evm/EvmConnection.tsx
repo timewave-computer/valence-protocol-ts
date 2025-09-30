@@ -5,7 +5,7 @@ import { useAtomValue } from 'jotai';
 import { evmWalletAtom } from '@/hooks';
 import { AccountCard, ConnectionRoot } from '@/ui/common';
 import { useDomainConfig } from '@valence-protocol/domain-clients-react';
-import { getDomainCount } from '@/index';
+import { getDomainCount } from '@/ui/util';
 
 export const EvmConnection = () => {
   const evmWallet = useAtomValue(evmWalletAtom);

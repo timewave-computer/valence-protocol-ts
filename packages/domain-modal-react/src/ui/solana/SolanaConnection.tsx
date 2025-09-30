@@ -1,11 +1,8 @@
 'use client';
 import { useEffect } from 'react';
 import { solanaWalletAtom, useIsSolanaChainConnected } from '@/hooks/solana';
-import {
-  getDomainCount,
-  getSolanaTargetCluster,
-  useDomainModal,
-} from '@/index';
+import { getDomainCount } from '@/ui/util';
+import { getSolanaTargetCluster, useDomainModal } from '@/ui/context';
 import { useDomainConfig } from '@valence-protocol/domain-clients-react';
 import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
 import { useAtomValue } from 'jotai';
