@@ -4,19 +4,20 @@ import { useAtomValue } from 'jotai';
 import { AccountCard, ConnectionRoot } from '@/ui/common';
 import { cosmosWalletAtom } from '@/hooks';
 import { useAccount, disconnect } from 'graz';
-import { useCosmosConfig } from '@valence-protocol/domain-clients-react';
-import { cn } from '@/ui/util';
+import { useDomainConfig } from '@valence-protocol/domain-clients-react';
+import { cn, getDomainCount } from '@/ui/util';
 import { walletLogoScale } from '@/ui/cosmos';
 
 export const CosmosConnection = () => {
   const cosmosWallet = useAtomValue(cosmosWalletAtom);
-  const config = useCosmosConfig();
+  const config = useDomainConfig();
+  const domainDisplayCount = getDomainCount(config);
 
   const { data: accounts, isConnected } = useAccount({
     multiChain: true,
   });
 
-  if (!config) {
+  if (!config.cosmos) {
     throw new Error(
       'Attempted to use CosmosConnectionManager with undefined cosmosconfig'
     );
@@ -28,9 +29,11 @@ export const CosmosConnection = () => {
   }
 
   return (
-    <ConnectionRoot title='Cosmos Wallet'>
+    <ConnectionRoot
+      title={domainDisplayCount > 1 ? 'Cosmos Wallet' : undefined}
+    >
       <div className='flex flex-col'>
-        {config.grazOptions.chains.map(chainInfo => {
+        {config.cosmos.grazOptions.chains.map(chainInfo => {
           const chainId = chainInfo.chainId;
           const account = accounts?.[chainId];
           if (account) {
