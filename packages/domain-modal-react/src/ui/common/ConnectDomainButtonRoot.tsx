@@ -7,7 +7,7 @@ export const ConnectDomainButtonRoot = ({
 }) => {
   return (
     <button
-      className='w-full flex flex-row justify-between items-center gap-2 font-bold text-base hover:bg-gray-200 bg-gray-100 rounded-sm px-4 py-2'
+      className='w-full flex flex-row justify-between items-center gap-2 font-bold text-base bg-[var(--modal-button-background)] hover:bg-[var(--modal-button-background-hover)]  text-[var(--modal-foreground)]  rounded-sm px-4 py-2'
       onClick={onClick}
     >
       {children}

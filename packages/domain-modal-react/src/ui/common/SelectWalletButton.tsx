@@ -25,7 +25,7 @@ export const SelectWalletButton = ({
     <button
       onClick={onConnect}
       className={cn(
-        'w-full flex flex-col gap-2 items-start justify-center px-4 py-3 rounded-sm bg-gray-100 hover:bg-gray-200  transition-colors duration-200',
+        'w-full flex flex-col gap-2 items-start justify-center px-4 py-3 rounded-sm bg-[var(--modal-button-background)] hover:bg-[var(--modal-button-background-hover)] text-[var(--modal-foreground)] transition-colors duration-200',
         className
       )}
     >
