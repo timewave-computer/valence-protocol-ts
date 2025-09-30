@@ -1,1 +1,17 @@
 @import 'tailwindcss';
+
+:root {
+  --modal-background: oklch(98.5% 0.002 247.839); /* gray-50 */
+  --modal-foreground: oklch(13% 0.028 261.692); /* gray-950 */
+  --modal-button-background: oklch(96.7% 0.003 264.542); /* gray-100 */
+  --modal-button-background-hover: oklch(92.8% 0.006 264.531) /* gray-200 */;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --modal-background: oklch(13% 0.028 261.692); /* gray-950 */
+    --modal-foreground: oklch(96.7% 0.003 264.542); /* gray-100 */
+    --modal-button-background: oklch(21% 0.034 264.665); /* gray-900 */
+    --modal-button-background-hover: oklch(27.8% 0.033 256.848); /* gray-800 */
+  }
+}

@@ -9,7 +9,6 @@ import { motion } from 'framer-motion';
 export const ModalContentRoot = () => {
   const config = useDomainConfig();
 
-  // TODO: this is a workaround to hide the domains
   const configEntries = Object.entries(config)
     .filter(([_, value]) => !value.hide)
     .map(([key, value]) => ({ domain: key, value }));

@@ -62,7 +62,7 @@ export const DomainModalProvider = ({
             <Dialog.Overlay className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-[1000] bg-slate-500 opacity-50' />
             <Dialog.Content
               className={cn(
-                'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-sm bg-white z-[1001] shadow-md outline-none',
+                'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-sm bg-[var(--modal-background)] text-[var(--modal-foreground)] z-[1001] shadow-md outline-none',
                 'w-full max-w-[90vw] md:max-w-[540px]',
                 'p-4 md:p-8',
                 'overflow-x-hidden'
