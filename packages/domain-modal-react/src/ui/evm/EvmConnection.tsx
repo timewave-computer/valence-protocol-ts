@@ -30,7 +30,7 @@ export const EvmConnection = () => {
   return (
     <ConnectionRoot
       // only show title if there are multiple domains displayed
-      title={domainDisplayCount < 2 ? undefined : 'Ethereum Wallet'}
+      title={domainDisplayCount > 1 ? 'Ethereum Wallet' : undefined}
     >
       <AccountCard
         wallet={evmWallet?.walletInfo}

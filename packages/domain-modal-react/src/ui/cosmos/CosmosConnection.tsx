@@ -30,7 +30,7 @@ export const CosmosConnection = () => {
 
   return (
     <ConnectionRoot
-      title={domainDisplayCount < 2 ? undefined : 'Cosmos Wallet'}
+      title={domainDisplayCount > 1 ? 'Cosmos Wallet' : undefined}
     >
       <div className='flex flex-col'>
         {config.cosmos.grazOptions.chains.map(chainInfo => {

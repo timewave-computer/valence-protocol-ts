@@ -42,7 +42,7 @@ export const SolanaConnection = () => {
 
   return (
     <ConnectionRoot
-      title={domainDisplayCount < 2 ? undefined : 'Solana Wallet'}
+      title={domainDisplayCount > 1 ? 'Solana Wallet' : undefined}
     >
       <AccountCard
         wallet={solanaWallet?.walletInfo}
