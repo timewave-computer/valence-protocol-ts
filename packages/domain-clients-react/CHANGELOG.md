@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.0
+
+### Minor Changes
+
+- b84d219: downgrade cosmjs, add other required peer dependencies
+
+### Patch Changes
+
+- Updated dependencies [b84d219]
+  - @valence-protocol/domain-clients-core@0.5.0
+
 ## 0.4.1
 
 ### Patch Changes

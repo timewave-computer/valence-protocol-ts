@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+
+### Minor Changes
+
+- b84d219: downgrade cosmjs dependencies 34.0->32.0
+
 ## 0.4.0
 
 ### Minor Changes

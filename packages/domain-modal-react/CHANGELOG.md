@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0
+
+### Minor Changes
+
+- 3a907d4: add dark mode support
+- b84d219: add more peer dependencies to resolve duplicate deps
+
+### Patch Changes
+
+- f5e3bd9: fix bug where there is a duplicate title if using modal with single domain
+- Updated dependencies [b84d219]
+- Updated dependencies [b84d219]
+  - @valence-protocol/domain-clients-core@0.5.0
+  - @valence-protocol/domain-clients-react@1.0.0
+
 ## 0.4.1
 
 ### Patch Changes
