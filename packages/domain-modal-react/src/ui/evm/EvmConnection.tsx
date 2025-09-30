@@ -4,16 +4,19 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { useAtomValue } from 'jotai';
 import { evmWalletAtom } from '@/hooks';
 import { AccountCard, ConnectionRoot } from '@/ui/common';
-import { useEvmConfig } from '@valence-protocol/domain-clients-react';
+import { useDomainConfig } from '@valence-protocol/domain-clients-react';
+import { getDomainCount } from '@/index';
 
 export const EvmConnection = () => {
   const evmWallet = useAtomValue(evmWalletAtom);
   const account = useAccount();
   const { disconnect } = useDisconnect();
-  const config = useEvmConfig();
+  const config = useDomainConfig();
+  const domainDisplayCount = getDomainCount(config);
+
   const isConnected = account?.status === 'connected';
 
-  if (!config) {
+  if (!config.evm) {
     throw new Error(
       'Attempting to use EvmConnectionManager with undefined evmconfig'
     );
@@ -25,7 +28,10 @@ export const EvmConnection = () => {
   }
 
   return (
-    <ConnectionRoot title='Ethereum Wallet'>
+    <ConnectionRoot
+      // only show title if there are multiple domains displayed
+      title={domainDisplayCount < 2 ? undefined : 'Ethereum Wallet'}
+    >
       <AccountCard
         wallet={evmWallet?.walletInfo}
         address={account.address}

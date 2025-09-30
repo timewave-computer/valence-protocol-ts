@@ -5,30 +5,28 @@ import { ConnectCosmosPage } from '@/ui/cosmos';
 import { ConnectEthereumPage } from '@/ui/evm';
 import { ConnectSolanaPage } from '@/ui/solana';
 import { motion } from 'framer-motion';
+import { getDomainCount } from '@/ui/util';
 
 export const ModalContentRoot = () => {
   const config = useDomainConfig();
-
-  const configEntries = Object.entries(config)
-    .filter(([_, value]) => !value.hide)
-    .map(([key, value]) => ({ domain: key, value }));
+  const domainDisplayCount = getDomainCount(config);
 
   const navigationStack = useModalNavigation();
 
-  if (configEntries.length === 0) {
+  if (domainDisplayCount === 0) {
     throw new Error(
-      'At least one domain must be configured in the domain clients config.'
+      'At least one domain must be configured and enabled in the domain clients config.'
     );
   }
 
-  if (configEntries.length === 1) {
-    if (configEntries[0].domain === 'solana') {
+  if (domainDisplayCount === 1) {
+    if (config.solana && !config.solana.hide) {
       return <ConnectSolanaPage />;
     }
-    if (configEntries[0].domain === 'evm') {
+    if (config.evm && !config.evm.hide) {
       return <ConnectEthereumPage />;
     }
-    if (configEntries[0].domain === 'cosmos') {
+    if (config.cosmos && !config.cosmos.hide) {
       return <ConnectCosmosPage />;
     }
     throw new Error(

@@ -1,8 +1,12 @@
 'use client';
 import { useEffect } from 'react';
 import { solanaWalletAtom, useIsSolanaChainConnected } from '@/hooks/solana';
-import { getSolanaTargetCluster, useDomainModal } from '@/index';
-import { useSolanaConfig } from '@valence-protocol/domain-clients-react';
+import {
+  getDomainCount,
+  getSolanaTargetCluster,
+  useDomainModal,
+} from '@/index';
+import { useDomainConfig } from '@valence-protocol/domain-clients-react';
 import { useWalletUi, useWalletUiCluster } from '@wallet-ui/react';
 import { useAtomValue } from 'jotai';
 import { AccountCard, ConnectionRoot } from '@/ui/common';
@@ -11,20 +15,21 @@ export const SolanaConnection = () => {
   const solanaWallet = useAtomValue(solanaWalletAtom);
   const { disconnect, account } = useWalletUi();
   const isConnected = useIsSolanaChainConnected();
-  const config = useSolanaConfig();
+  const config = useDomainConfig();
+  const domainDisplayCount = getDomainCount(config);
   const { targetChains } = useDomainModal();
   const { clusters, setCluster, cluster } = useWalletUiCluster();
 
   useEffect(() => {
     const targetClusterId =
-      getSolanaTargetCluster(targetChains) ?? config.defaultClusterId;
+      getSolanaTargetCluster(targetChains) ?? config.solana?.defaultClusterId;
     const targetCluster = clusters.find(c => c.id === targetClusterId);
     if (targetCluster) {
       setCluster(targetCluster.id);
     }
-  }, [clusters, targetChains, config.defaultClusterId, setCluster]);
+  }, [clusters, targetChains, config.solana?.defaultClusterId, setCluster]);
 
-  if (!config) {
+  if (!config.solana) {
     throw new Error(
       'Attempted to use SolanaConnectionManager with undefined solana config'
     );
@@ -36,7 +41,9 @@ export const SolanaConnection = () => {
   }
 
   return (
-    <ConnectionRoot title='Solana Wallet'>
+    <ConnectionRoot
+      title={domainDisplayCount < 2 ? undefined : 'Solana Wallet'}
+    >
       <AccountCard
         wallet={solanaWallet?.walletInfo}
         address={account?.address}
