@@ -11,7 +11,6 @@
 
 - f5e3bd9: fix bug where there is a duplicate title if using modal with single domain
 - Updated dependencies [b84d219]
-- Updated dependencies [b84d219]
   - @valence-protocol/domain-clients-core@0.5.0
   - @valence-protocol/domain-clients-react@0.5.0
 
