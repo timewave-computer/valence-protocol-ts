@@ -20,5 +20,5 @@ export const cosmosConfig: CosmosConfig = {
       },
     },
   },
-  defaultChainId: neutrontestnet.chainId,
+  defaultChainId: neutron.chainId,
 };

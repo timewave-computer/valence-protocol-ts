@@ -16,5 +16,5 @@ const wagmiConfig = createEvmConfig({
 
 export const evmConfig = {
   wagmiConfig,
-  defaultChainId: sepolia.id,
+  defaultChainId: mainnet.id,
 };
