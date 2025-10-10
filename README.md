@@ -1,12 +1,16 @@
-# Valence Protocol TS Documentation
+# Valence Protocol TS
 
-This library was built to make it easier to build cross-domain applications in JS. It unites ecosystem-specific tooling, provides some helpful abstractions but gives you the flexibility to do anything more specific, and offers a configurable modal to manage connections across one or more domains you would like to support in your app.
+A TypeScript monorepo with multiple libraries and a reusable modal component for React, distributed via npm.
 
-Valence Protocol TS currently has support for these ecosystems:
+These libraries were created to make it easier to build applications for cross-chain applications built with [Valence Protocol](https://github.com/timewave-computer/valence-protocol). The libraries support Ethereum, Solana, and Cosmos.
 
-1. Ethereum
-2. Solana
-3. Cosmos
+## Packages
+
+| Package                                                                                                          | Version                                                                                                                                                         | Downloads                                                                                                                                                          | Description                                                     |
+| ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| [`@valence-protocol/domain-clients-core`](https://www.npmjs.com/package/@valence-protocol/domain-clients-core)   | [![npm version](https://img.shields.io/npm/v/@valence-protocol/domain-clients-core.svg)](https://www.npmjs.com/package/@valence-protocol/domain-clients-core)   | [![npm downloads](https://img.shields.io/npm/dm/@valence-protocol/domain-clients-core.svg)](https://www.npmjs.com/package/@valence-protocol/domain-clients-core)   | Core TypeScript client library for interacting with domain APIs |
+| [`@valence-protocol/domain-clients-react`](https://www.npmjs.com/package/@valence-protocol/domain-clients-react) | [![npm version](https://img.shields.io/npm/v/@valence-protocol/domain-clients-react.svg)](https://www.npmjs.com/package/@valence-protocol/domain-clients-react) | [![npm downloads](https://img.shields.io/npm/dm/@valence-protocol/domain-clients-react.svg)](https://www.npmjs.com/package/@valence-protocol/domain-clients-react) | React hooks and context providers for domain client logic       |
+| [`@valence-protocol/domain-modal-react`](https://www.npmjs.com/package/@valence-protocol/domain-modal-react)     | [![npm version](https://img.shields.io/npm/v/@valence-protocol/domain-modal-react.svg)](https://www.npmjs.com/package/@valence-protocol/domain-modal-react)     | [![npm downloads](https://img.shields.io/npm/dm/@valence-protocol/domain-modal-react.svg)](https://www.npmjs.com/package/@valence-protocol/domain-modal-react)     | Reusable React modal component library for Valence apps         |
 
 Libraries are in their early stage. APIs subject to change.
 

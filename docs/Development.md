@@ -25,6 +25,15 @@ This repository is a [Turborepo](https://turbo.build/) monorepo managed with [pn
    ```
 
    This will run the `build` pipeline for all packages and apps using Turborepo.
+   3. **Start project in Development mode:**
+
+   ```sh
+   turbo dev
+   ## or
+   turbo dev --filter @valence-protocol/domain-clients-example
+   ```
+
+   This will start the main application in developer mode. If a package does not refresh, you can manually rebuild it with `turbo build --filter <PACKAGE_NAME>`
 
 3. **Run linting:**
 
@@ -80,7 +89,3 @@ turbo dev
 
 turbo dev --filter @valence-protocol/domain-clients-example
 ```
-
-## Troubleshooting
-
-Sometimes the dependencies get out of whack and you get errors that random config is missing or an import cant be found. `rm -rf node_modules && pnpm install && turbo dev` should resolve it.
