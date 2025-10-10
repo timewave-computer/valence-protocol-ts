@@ -1,16 +1,38 @@
-# Valence Protocol TS Documentation
+# Valence Protocol TS
 
-This library was built to make it easier to build cross-domain applications in JS. It unites ecosystem-specific tooling, provides some helpful abstractions but gives you the flexibility to do anything more specific, and offers a configurable modal to manage connections across one or more domains you would like to support in your app.
-
-Valence Protocol TS currently has support for these ecosystems:
-
-1. Ethereum
-2. Solana
-3. Cosmos
+Typescript libraries and multi-chain modal component created to simplify building cross-chain applications deployed with [Valence Protocol](https://github.com/timewave-computer/valence-protocol). These are the TS equivalent to [Valence Domain Clients](https://github.com/timewave-computer/valence-domain-clients) in Rust. The library supports Ethereum, Solana, and Cosmos.
 
 Libraries are in their early stage. APIs subject to change.
 
-For developer docs, see `docs` folder.
+For developer and deployment docs, see `docs` folder.
+
+## Demo
+
+![Demo](/demo.gif)
+
+Libraries are tree-shakeable, and can be configured to support only the chains and ecosystems the project needs.
+
+Ecosystem-specific tooling is imported as a peer dependency, and `valence-protocol-ts` provides an optional, loose wrapper to abstract common operations. Signers and wallet info can be accessed with React hooks. Detailed explanation below.
+
+```javascript
+import {
+  useSigningSolanaClient,
+} from '@valence-protocol/domain-clients-react/solana';
+
+// React component
+const solanaSigningClient = useSolanaSigningClient({clusterId:'solana:devent'})
+solanaSigningClient.getSolBalance({...})
+solanaSigningClient.transfer({...})
+
+```
+
+## Packages
+
+| Package                                                                                                          | Version                                                                                                                                                         | Downloads                                                                                                                                                          | Description                                                     |
+| ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| [`@valence-protocol/domain-clients-core`](https://www.npmjs.com/package/@valence-protocol/domain-clients-core)   | [![npm version](https://img.shields.io/npm/v/@valence-protocol/domain-clients-core.svg)](https://www.npmjs.com/package/@valence-protocol/domain-clients-core)   | [![npm downloads](https://img.shields.io/npm/dm/@valence-protocol/domain-clients-core.svg)](https://www.npmjs.com/package/@valence-protocol/domain-clients-core)   | Core TypeScript client library for interacting with domain APIs |
+| [`@valence-protocol/domain-clients-react`](https://www.npmjs.com/package/@valence-protocol/domain-clients-react) | [![npm version](https://img.shields.io/npm/v/@valence-protocol/domain-clients-react.svg)](https://www.npmjs.com/package/@valence-protocol/domain-clients-react) | [![npm downloads](https://img.shields.io/npm/dm/@valence-protocol/domain-clients-react.svg)](https://www.npmjs.com/package/@valence-protocol/domain-clients-react) | React hooks and context providers for domain client logic       |
+| [`@valence-protocol/domain-modal-react`](https://www.npmjs.com/package/@valence-protocol/domain-modal-react)     | [![npm version](https://img.shields.io/npm/v/@valence-protocol/domain-modal-react.svg)](https://www.npmjs.com/package/@valence-protocol/domain-modal-react)     | [![npm downloads](https://img.shields.io/npm/dm/@valence-protocol/domain-modal-react.svg)](https://www.npmjs.com/package/@valence-protocol/domain-modal-react)     | Reusable React modal component library for Valence apps         |
 
 ## Getting started
 
@@ -49,7 +71,7 @@ With graz, you will also need to add a post-install script to generate chain inf
 ```
 
 3. Define config.
-   Copy [these](https://github.com/timewave-computer/valence-protocol-ts/tree/next/apps/domain-clients-example/src/config/domainClientsConfig) config files as an example. Only include the domains you are interested in working with.
+   Use the [example app config files](https://github.com/timewave-computer/valence-protocol-ts/blob/main/apps/domain-clients-example/src/config/domainClientsConfig/domainClients.config.ts) as a template. Only include the domains and chains you would like to support in your project.
 
 Example of the root config:
 
@@ -63,7 +85,7 @@ export const domainClientsConfig: DomainClientsConfig = {
 };
 ```
 
-4. Wrap your app root in a `DomainModalProvider` and `ReactQueryProvider` and import css. For Next.js 14+, you will need to wrap the providers in a client component.
+4. Wrap your app root in a `DomainModalProvider` and `ReactQueryProvider` For Next.js 14+, you will need to wrap the providers in a client component.
 
 ```javascript
 // AppProvider.tsx (for Next.js 14+)
@@ -85,8 +107,10 @@ export const AppProviders = ({ children }: { children: React.ReactNode }) => {
 };
 ```
 
+5. Import css
+
 ```javascript
-// layout.tsx or similar application root
+// layout.tsx (for Next.js) or similar application root
 
 import '@valence-protocol/domain-modal-react/styles.css';
 
@@ -132,7 +156,7 @@ import {
   useSigningSolanaClient,
 } from '@valence-protocol/domain-clients-react/solana';
 
-// component
+// React component
 const solanaSigningClient = useSolanaSigningClient({clusterId:'solana:devent'})
 solanaSigningClient.getSolBalance({...})
 solanaSigningClient.transfer({...})
